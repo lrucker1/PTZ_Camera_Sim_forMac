@@ -1,0 +1,571 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		94E884A62948679500344162 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E884A52948679500344162 /* AppDelegate.m */; };
+		94E884A82948679600344162 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94E884A72948679600344162 /* Assets.xcassets */; };
+		94E884AB2948679600344162 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94E884A92948679600344162 /* MainMenu.xib */; };
+		94E884AD2948679600344162 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E884AC2948679600344162 /* main.m */; };
+		94E884B82948679700344162 /* PTZ_Camera_SimTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E884B72948679700344162 /* PTZ_Camera_SimTests.m */; };
+		94E884C22948679700344162 /* PTZ_Camera_SimUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E884C12948679700344162 /* PTZ_Camera_SimUITests.m */; };
+		94E884C42948679700344162 /* PTZ_Camera_SimUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E884C32948679700344162 /* PTZ_Camera_SimUITestsLaunchTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		94E884B42948679700344162 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94E884992948679500344162 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94E884A02948679500344162;
+			remoteInfo = "PTZ Camera Sim";
+		};
+		94E884BE2948679700344162 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94E884992948679500344162 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94E884A02948679500344162;
+			remoteInfo = "PTZ Camera Sim";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		94E884A12948679500344162 /* PTZ Camera Sim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PTZ Camera Sim.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94E884A42948679500344162 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		94E884A52948679500344162 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		94E884A72948679600344162 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		94E884AA2948679600344162 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		94E884AC2948679600344162 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		94E884AE2948679600344162 /* PTZ_Camera_Sim.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PTZ_Camera_Sim.entitlements; sourceTree = "<group>"; };
+		94E884B32948679700344162 /* PTZ Camera SimTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PTZ Camera SimTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94E884B72948679700344162 /* PTZ_Camera_SimTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTZ_Camera_SimTests.m; sourceTree = "<group>"; };
+		94E884BD2948679700344162 /* PTZ Camera SimUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PTZ Camera SimUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94E884C12948679700344162 /* PTZ_Camera_SimUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTZ_Camera_SimUITests.m; sourceTree = "<group>"; };
+		94E884C32948679700344162 /* PTZ_Camera_SimUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTZ_Camera_SimUITestsLaunchTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94E8849E2948679500344162 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94E884B02948679700344162 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94E884BA2948679700344162 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		94E884982948679500344162 = {
+			isa = PBXGroup;
+			children = (
+				94E884A32948679500344162 /* PTZ Camera Sim */,
+				94E884B62948679700344162 /* PTZ Camera SimTests */,
+				94E884C02948679700344162 /* PTZ Camera SimUITests */,
+				94E884A22948679500344162 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		94E884A22948679500344162 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94E884A12948679500344162 /* PTZ Camera Sim.app */,
+				94E884B32948679700344162 /* PTZ Camera SimTests.xctest */,
+				94E884BD2948679700344162 /* PTZ Camera SimUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		94E884A32948679500344162 /* PTZ Camera Sim */ = {
+			isa = PBXGroup;
+			children = (
+				94E884A42948679500344162 /* AppDelegate.h */,
+				94E884A52948679500344162 /* AppDelegate.m */,
+				94E884A72948679600344162 /* Assets.xcassets */,
+				94E884A92948679600344162 /* MainMenu.xib */,
+				94E884AC2948679600344162 /* main.m */,
+				94E884AE2948679600344162 /* PTZ_Camera_Sim.entitlements */,
+			);
+			path = "PTZ Camera Sim";
+			sourceTree = "<group>";
+		};
+		94E884B62948679700344162 /* PTZ Camera SimTests */ = {
+			isa = PBXGroup;
+			children = (
+				94E884B72948679700344162 /* PTZ_Camera_SimTests.m */,
+			);
+			path = "PTZ Camera SimTests";
+			sourceTree = "<group>";
+		};
+		94E884C02948679700344162 /* PTZ Camera SimUITests */ = {
+			isa = PBXGroup;
+			children = (
+				94E884C12948679700344162 /* PTZ_Camera_SimUITests.m */,
+				94E884C32948679700344162 /* PTZ_Camera_SimUITestsLaunchTests.m */,
+			);
+			path = "PTZ Camera SimUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		94E884A02948679500344162 /* PTZ Camera Sim */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94E884C72948679700344162 /* Build configuration list for PBXNativeTarget "PTZ Camera Sim" */;
+			buildPhases = (
+				94E8849D2948679500344162 /* Sources */,
+				94E8849E2948679500344162 /* Frameworks */,
+				94E8849F2948679500344162 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PTZ Camera Sim";
+			productName = "PTZ Camera Sim";
+			productReference = 94E884A12948679500344162 /* PTZ Camera Sim.app */;
+			productType = "com.apple.product-type.application";
+		};
+		94E884B22948679700344162 /* PTZ Camera SimTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94E884CA2948679700344162 /* Build configuration list for PBXNativeTarget "PTZ Camera SimTests" */;
+			buildPhases = (
+				94E884AF2948679700344162 /* Sources */,
+				94E884B02948679700344162 /* Frameworks */,
+				94E884B12948679700344162 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94E884B52948679700344162 /* PBXTargetDependency */,
+			);
+			name = "PTZ Camera SimTests";
+			productName = "PTZ Camera SimTests";
+			productReference = 94E884B32948679700344162 /* PTZ Camera SimTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		94E884BC2948679700344162 /* PTZ Camera SimUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94E884CD2948679700344162 /* Build configuration list for PBXNativeTarget "PTZ Camera SimUITests" */;
+			buildPhases = (
+				94E884B92948679700344162 /* Sources */,
+				94E884BA2948679700344162 /* Frameworks */,
+				94E884BB2948679700344162 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94E884BF2948679700344162 /* PBXTargetDependency */,
+			);
+			name = "PTZ Camera SimUITests";
+			productName = "PTZ Camera SimUITests";
+			productReference = 94E884BD2948679700344162 /* PTZ Camera SimUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		94E884992948679500344162 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					94E884A02948679500344162 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					94E884B22948679700344162 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 94E884A02948679500344162;
+					};
+					94E884BC2948679700344162 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 94E884A02948679500344162;
+					};
+				};
+			};
+			buildConfigurationList = 94E8849C2948679500344162 /* Build configuration list for PBXProject "PTZ Camera Sim" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 94E884982948679500344162;
+			productRefGroup = 94E884A22948679500344162 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94E884A02948679500344162 /* PTZ Camera Sim */,
+				94E884B22948679700344162 /* PTZ Camera SimTests */,
+				94E884BC2948679700344162 /* PTZ Camera SimUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94E8849F2948679500344162 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94E884A82948679600344162 /* Assets.xcassets in Resources */,
+				94E884AB2948679600344162 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94E884B12948679700344162 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94E884BB2948679700344162 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94E8849D2948679500344162 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94E884AD2948679600344162 /* main.m in Sources */,
+				94E884A62948679500344162 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94E884AF2948679700344162 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94E884B82948679700344162 /* PTZ_Camera_SimTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94E884B92948679700344162 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94E884C42948679700344162 /* PTZ_Camera_SimUITestsLaunchTests.m in Sources */,
+				94E884C22948679700344162 /* PTZ_Camera_SimUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		94E884B52948679700344162 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94E884A02948679500344162 /* PTZ Camera Sim */;
+			targetProxy = 94E884B42948679700344162 /* PBXContainerItemProxy */;
+		};
+		94E884BF2948679700344162 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94E884A02948679500344162 /* PTZ Camera Sim */;
+			targetProxy = 94E884BE2948679700344162 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		94E884A92948679600344162 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94E884AA2948679600344162 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		94E884C52948679700344162 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		94E884C62948679700344162 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		94E884C82948679700344162 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PTZ Camera Sim/PTZ_Camera_Sim.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP9V4XB5;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "lrucker.PTZ-Camera-Sim";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		94E884C92948679700344162 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "PTZ Camera Sim/PTZ_Camera_Sim.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP9V4XB5;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "lrucker.PTZ-Camera-Sim";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		94E884CB2948679700344162 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP9V4XB5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "lrucker.PTZ-Camera-SimTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PTZ Camera Sim.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PTZ Camera Sim";
+			};
+			name = Debug;
+		};
+		94E884CC2948679700344162 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP9V4XB5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "lrucker.PTZ-Camera-SimTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PTZ Camera Sim.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PTZ Camera Sim";
+			};
+			name = Release;
+		};
+		94E884CE2948679700344162 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP9V4XB5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "lrucker.PTZ-Camera-SimUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_TARGET_NAME = "PTZ Camera Sim";
+			};
+			name = Debug;
+		};
+		94E884CF2948679700344162 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP9V4XB5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "lrucker.PTZ-Camera-SimUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_TARGET_NAME = "PTZ Camera Sim";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		94E8849C2948679500344162 /* Build configuration list for PBXProject "PTZ Camera Sim" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94E884C52948679700344162 /* Debug */,
+				94E884C62948679700344162 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94E884C72948679700344162 /* Build configuration list for PBXNativeTarget "PTZ Camera Sim" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94E884C82948679700344162 /* Debug */,
+				94E884C92948679700344162 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94E884CA2948679700344162 /* Build configuration list for PBXNativeTarget "PTZ Camera SimTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94E884CB2948679700344162 /* Debug */,
+				94E884CC2948679700344162 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94E884CD2948679700344162 /* Build configuration list for PBXNativeTarget "PTZ Camera SimUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94E884CE2948679700344162 /* Debug */,
+				94E884CF2948679700344162 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 94E884992948679500344162 /* Project object */;
+}
