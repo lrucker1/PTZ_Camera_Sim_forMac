@@ -158,6 +158,7 @@ int handle_camera(PTZCamera *camera) {
                         switch (messageParameters.memoryParameters.mode) {
                             case JR_VISCA_MEMORY_MODE_SET:
                                 fprintf(stdout, "set %d ", messageParameters.memoryParameters.memory);
+                                [camera saveAtIndex:messageParameters.memoryParameters.memory];
                                 break;
                             case JR_VISCA_MEMORY_MODE_RESET:
                                 fprintf(stdout, "reset %d ", messageParameters.memoryParameters.memory);

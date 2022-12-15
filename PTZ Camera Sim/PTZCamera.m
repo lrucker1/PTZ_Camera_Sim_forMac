@@ -9,6 +9,7 @@
 #import "PTZCamera.h"
 
 #define RANGE_MAX 0x200
+#define RND_MASK 0xFF
 #define ZOOM_MAX 0x100
 #define PT_MAX 0x100
 #define PT_MIN -0x100
@@ -36,7 +37,8 @@
 }
 
 + (NSInteger)randomPT {
-    return MIN(random(), RANGE_MAX) - RANGE_SHIFT;
+    NSInteger sign = (random() & 0x01) ? 1 : -1;
+    return (random() & RND_MASK) * sign;
 }
 
 - (instancetype)init {
@@ -51,12 +53,6 @@
         _recallQueue = dispatch_queue_create("recallQueue", NULL);
     }
     return self;
-}
-
-- (void)getRecallPan:(NSInteger*)pan tilt:(NSInteger*)tilt zoom:(NSInteger*)zoom index:(NSInteger)index {
-    if (pan) *pan = [[self class] randomPT];
-    if (tilt) *tilt = [[self class] randomPT];
-    if (zoom) *zoom = MIN(random(), ZOOM_MAX);
 }
 
 - (void)setZoomScale:(CGFloat)z {
@@ -95,7 +91,7 @@
 
 - (void)decTilt:(NSUInteger)delta {
     NSInteger newTilt = self.tilt - delta;
-    self.tilt = MIN(PT_MIN, newTilt);
+    self.tilt = MAX(PT_MIN, newTilt);
 }
 
 
@@ -107,6 +103,26 @@
 - (void)zoomOut:(NSUInteger)delta {
     NSInteger newZoom = self.zoom - delta;
     self.zoom = MAX(0, newZoom);
+}
+
+- (void)saveAtIndex:(NSInteger)index {
+    if (self.scenes == nil) {
+        self.scenes = [NSMutableDictionary new];
+    }
+    [self.scenes setObject:@[@(_pan), @(_tilt), @(_zoom)] forKey:@(index)];
+}
+
+- (void)getRecallPan:(NSInteger*)pan tilt:(NSInteger*)tilt zoom:(NSInteger*)zoom index:(NSInteger)index {
+    NSArray *data = [self.scenes objectForKey:@(index)];
+    if (data == nil) {
+        if (pan) *pan = [[self class] randomPT];
+        if (tilt) *tilt = [[self class] randomPT];
+        if (zoom) *zoom = (random() & 0xFF);
+    } else {
+        if (pan) *pan = [[data objectAtIndex:0] integerValue];
+        if (tilt) *tilt = [[data objectAtIndex:1] integerValue];
+        if (zoom) *zoom = [[data objectAtIndex:2] unsignedIntegerValue];
+    }
 }
 
 - (void)recallAtIndex:(NSInteger)index

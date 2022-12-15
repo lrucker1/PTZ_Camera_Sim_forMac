@@ -20,10 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSUInteger tiltSpeed;
 @property NSUInteger panSpeed;
 @property NSUInteger zoomSpeed;
+@property (strong) NSMutableDictionary *scenes;
 
 @property dispatch_queue_t recallQueue;
 
 - (void)recallAtIndex:(NSInteger)index;
+- (void)saveAtIndex:(NSInteger)index;
+
 - (void)incPan:(NSUInteger)delta;
 - (void)incTilt:(NSUInteger)delta;
 - (void)decPan:(NSUInteger)delta;

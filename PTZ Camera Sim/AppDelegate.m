@@ -70,7 +70,8 @@ static AppDelegate *selfType;
               options:0
               context:&selfType];
 
-
+    self.scrollView.minMagnification = 1;
+    self.scrollView.maxMagnification = 20;
     self.camera = [PTZCamera new];
     [self updateZoomFactor];
 
@@ -84,46 +85,28 @@ static AppDelegate *selfType;
 
 }
 
-- (CGFloat)zoomFactor {
-    CGFloat zoom = self.camera.zoomScale;
-    CGFloat fullZoom = 1.0;
-    NSSize imSize = self.imageView.image.size;
-    NSSize clipSize = self.clipView.bounds.size;
-    if (imSize.width > 0 && imSize.height > 0 && clipSize.width > 0 && clipSize.height > 0) {
-        CGFloat clipAspectRatio = clipSize.width / clipSize.height;
-        CGFloat imAspectRatio = imSize.width / imSize.height;
-        
-        if (clipAspectRatio > imAspectRatio) {
-            fullZoom = clipSize.height / imSize.height;
-        } else {
-            fullZoom = clipSize.width / imSize.width;
-        }
-    }
-    // 0 : all the way out (fullZoom). Max: all the way in
-    return (1 + zoom * 4) * fullZoom;
-
-}
-- (void)updateZoomFactor {
-    // 0 : all the way out (fullZoom). Max: all the way in
-    // But once we're faking PT too, we never want to show the whole image.
-    CGFloat zoomFactor = [self zoomFactor];
-
-    if (self.imageView.image != nil) {
-        self.viewHeightConstraint.constant = self.imageView.image.size.height * zoomFactor;
-        self.viewWidthConstraint.constant = self.imageView.image.size.width * zoomFactor;
-    }
-    // Zoom affects scroll location.
-    [self updateScrollPosition];
-}
-
-- (void)updateScrollPosition {
+- (NSPoint)scrollPoint {
+    NSPoint point = NSZeroPoint;
     NSSize scrollSize = self.scrollView.bounds.size;
     if (scrollSize.width > 0 && scrollSize.height > 0) {
         CGFloat panScale = self.camera.panScale;
         CGFloat tiltScale = self.camera.tiltScale;
-        NSPoint point = NSMakePoint(panScale * scrollSize.width, tiltScale * scrollSize.height);
-        [self.scrollView.contentView scrollPoint:point];
+        point = NSMakePoint(panScale * scrollSize.width, tiltScale * scrollSize.height);
     }
+    return point;
+}
+
+
+- (void)updateScrollPosition {
+    [self.scrollView.contentView scrollPoint:[self scrollPoint]];
+}
+
+- (void)updateZoomFactor {
+    // 0 : all the way out (fullZoom). Max: all the way in. But we don't want to zoom all the way out on the image itself, because then there's no room to move. Except the scrollview wasn't designed for that and it doesn't quite work.
+    CGFloat offset = self.scrollView.minMagnification;
+    CGFloat zoom = self.camera.zoomScale * (self.scrollView.maxMagnification - offset);
+    [self.scrollView setMagnification:offset + zoom];
+    [self updateScrollPosition];
 }
 
 - (IBAction)panLeft:(id)sender {
