@@ -6,9 +6,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PTZCamera.h"
+
+@class PTZClipView;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
+{
+    dispatch_queue_t socketQueue;    
+}
 
+@property (strong) PTZCamera *camera;
+@property (strong) IBOutlet NSLayoutConstraint *viewHeightConstraint;
+@property (strong) IBOutlet NSLayoutConstraint *viewWidthConstraint;
+@property (strong) IBOutlet NSImageView *imageView;
+@property (strong) IBOutlet NSClipView *clipView;
+@property (strong) IBOutlet NSScrollView *scrollView;
 
 @end
 
