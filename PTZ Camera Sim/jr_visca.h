@@ -47,10 +47,33 @@
 
 #define JR_VISCA_MESSAGE_MEMORY 17
 
+#define JR_VISCA_MESSAGE_CLEAR 18
+
+#define JR_VISCA_MESSAGE_PRESET_RECALL_SPEED 19
+
+#define JR_VISCA_MESSAGE_ABSOLUTE_PAN_TILT 20
+
+#define JR_VISCA_MESSAGE_HOME 21
+
+#define JR_VISCA_MESSAGE_RESET 22
+
 struct jr_viscaPanTiltPositionInqResponseParameters {
     int16_t panPosition;
     int16_t tiltPosition;
 };
+
+// AbsolutePosition 81 01 06 02 VV WW 0Y 0Y 0Y 0Y 0Z 0Z 0Z 0Z FF
+// VV: Pan speed 0x01 (low speed) to 0x18 (high speed)
+// WW: Tilt speed 0x01 (low speed) to 0x14 (high speed)
+// YYYY: Pan Position
+// ZZZZ: Tilt Position
+struct jr_viscaAbsolutePanTiltPositionParameters {
+    int16_t panPosition;
+    int16_t tiltPosition;
+    uint8_t panSpeed;
+    uint8_t tiltSpeed;
+};
+
 
 struct jr_viscaZoomPositionParameters {
     int16_t zoomPosition;
@@ -66,6 +89,11 @@ struct jr_viscaZoomVariableParameters {
 };
 
 
+struct jr_viscaPresetSpeedParameters {
+    // 1-0x18
+    uint8_t presetSpeed;
+};
+
 struct jr_viscaCameraNumberParameters {
     // 1-7
     uint8_t cameraNum;
@@ -75,6 +103,7 @@ struct jr_viscaCameraNumberParameters {
 struct jr_viscaMemoryParameters {
     // 1-127
     uint8_t memory;
+    // 0=reset, 1=set, 2=recall
     uint8_t mode;
 };
 
@@ -106,6 +135,8 @@ union jr_viscaMessageParameters
     struct jr_viscaPanTiltDriveParameters panTiltDriveParameters;
     struct jr_viscaCameraNumberParameters cameraNumberParameters;
     struct jr_viscaMemoryParameters memoryParameters;
+    struct jr_viscaPresetSpeedParameters presetSpeedParameters;
+    struct jr_viscaAbsolutePanTiltPositionParameters absolutePanTiltPositionParameters;
 };
 
 /**

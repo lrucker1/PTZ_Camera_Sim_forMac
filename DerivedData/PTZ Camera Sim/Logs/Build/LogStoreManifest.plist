@@ -176,6 +176,40 @@
 			<key>uniqueIdentifier</key>
 			<string>0831BBB8-AF7C-4DC1-AE34-587FEE992CF5</string>
 		</dict>
+		<key>087765E5-A38C-430D-84FA-BC3D1AC5AF14</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>087765E5-A38C-430D-84FA-BC3D1AC5AF14.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692952458.76882398</real>
+			<key>timeStoppedRecording</key>
+			<real>692952459.23764098</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>087765E5-A38C-430D-84FA-BC3D1AC5AF14</string>
+		</dict>
 		<key>090EE36E-6DF1-4BCF-811B-AEEF5334EB18</key>
 		<dict>
 			<key>className</key>
@@ -243,6 +277,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>0AC3C4A0-36BD-42D9-BA47-FC70686BDA4A</string>
+		</dict>
+		<key>0C14D6A7-C8FB-4D46-B53A-4150633AFDB1</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>0C14D6A7-C8FB-4D46-B53A-4150633AFDB1.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693007631.88060403</real>
+			<key>timeStoppedRecording</key>
+			<real>693007632.48056602</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>0C14D6A7-C8FB-4D46-B53A-4150633AFDB1</string>
 		</dict>
 		<key>0C36A7A0-B039-4EA7-AF45-8413D89DF8B7</key>
 		<dict>
@@ -380,6 +448,40 @@
 			<key>uniqueIdentifier</key>
 			<string>11FBF5FE-38E8-4D57-991B-2756F696AF24</string>
 		</dict>
+		<key>138EBEE0-F0CF-4C14-AC4B-011FE17F8729</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>138EBEE0-F0CF-4C14-AC4B-011FE17F8729.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693005025.48444104</real>
+			<key>timeStoppedRecording</key>
+			<real>693005026.12088001</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>138EBEE0-F0CF-4C14-AC4B-011FE17F8729</string>
+		</dict>
 		<key>1574DCC7-78B3-4FAD-90F4-E43F317CC125</key>
 		<dict>
 			<key>className</key>
@@ -516,6 +618,40 @@
 			<key>uniqueIdentifier</key>
 			<string>1C041240-7589-4704-BB2A-CE9F1E995048</string>
 		</dict>
+		<key>1C9509BA-35F2-4A57-BA15-762ABA929A69</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>1C9509BA-35F2-4A57-BA15-762ABA929A69.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693004817.54644406</real>
+			<key>timeStoppedRecording</key>
+			<real>693004818.05533302</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>1C9509BA-35F2-4A57-BA15-762ABA929A69</string>
+		</dict>
 		<key>1D8CDFE4-FA95-43E9-9F0E-6CD7B8E3E156</key>
 		<dict>
 			<key>className</key>
@@ -549,6 +685,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>1D8CDFE4-FA95-43E9-9F0E-6CD7B8E3E156</string>
+		</dict>
+		<key>1EB846B0-B6AF-4566-ABE9-A5D7E0F0BCB2</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>1EB846B0-B6AF-4566-ABE9-A5D7E0F0BCB2.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692951657.73966801</real>
+			<key>timeStoppedRecording</key>
+			<real>692951658.55069196</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>1EB846B0-B6AF-4566-ABE9-A5D7E0F0BCB2</string>
 		</dict>
 		<key>1F9F2E7A-F9C0-4144-89D3-ABC5594AC454</key>
 		<dict>
@@ -584,6 +754,74 @@
 			<key>uniqueIdentifier</key>
 			<string>1F9F2E7A-F9C0-4144-89D3-ABC5594AC454</string>
 		</dict>
+		<key>2260C470-2A6F-40A8-8FA8-89A6B146BC05</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>2260C470-2A6F-40A8-8FA8-89A6B146BC05.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693009363.77811205</real>
+			<key>timeStoppedRecording</key>
+			<real>693009364.93663394</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>2260C470-2A6F-40A8-8FA8-89A6B146BC05</string>
+		</dict>
+		<key>233396BE-EC88-4307-B040-C6A66CF16FCB</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>233396BE-EC88-4307-B040-C6A66CF16FCB.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012614.336496</real>
+			<key>timeStoppedRecording</key>
+			<real>693012615.20100605</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>233396BE-EC88-4307-B040-C6A66CF16FCB</string>
+		</dict>
 		<key>2353A1E1-0D1E-4303-91D3-E3941CCA31B1</key>
 		<dict>
 			<key>className</key>
@@ -617,6 +855,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>2353A1E1-0D1E-4303-91D3-E3941CCA31B1</string>
+		</dict>
+		<key>26FE00DA-D8AA-42D6-9C10-4B8FC11A9E12</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>26FE00DA-D8AA-42D6-9C10-4B8FC11A9E12.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693013849.28147101</real>
+			<key>timeStoppedRecording</key>
+			<real>693013849.94953501</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>26FE00DA-D8AA-42D6-9C10-4B8FC11A9E12</string>
 		</dict>
 		<key>2743820B-097B-4BFD-8ACF-979B3494D134</key>
 		<dict>
@@ -754,6 +1026,40 @@
 			<key>uniqueIdentifier</key>
 			<string>2AE31652-4BAA-457A-AB49-CC8B1E8ABF0C</string>
 		</dict>
+		<key>2D3E066D-0D68-4383-85D8-7E71A79F2E86</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>2D3E066D-0D68-4383-85D8-7E71A79F2E86.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692951517.19955897</real>
+			<key>timeStoppedRecording</key>
+			<real>692951517.25707805</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>2D3E066D-0D68-4383-85D8-7E71A79F2E86</string>
+		</dict>
 		<key>2D69C434-A46F-47D7-AEB3-888012295153</key>
 		<dict>
 			<key>className</key>
@@ -855,6 +1161,74 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>2F88433C-B914-490A-B33D-9E85972B717E</string>
+		</dict>
+		<key>30F01B8C-6A52-48BD-A62E-5E6B02BF9BC4</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>30F01B8C-6A52-48BD-A62E-5E6B02BF9BC4.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692951510.336941</real>
+			<key>timeStoppedRecording</key>
+			<real>692951511.20549095</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>30F01B8C-6A52-48BD-A62E-5E6B02BF9BC4</string>
+		</dict>
+		<key>318770DF-2F31-495B-804F-52500093C9F2</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>318770DF-2F31-495B-804F-52500093C9F2.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693019062.993976</real>
+			<key>timeStoppedRecording</key>
+			<real>693019063.51486194</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>318770DF-2F31-495B-804F-52500093C9F2</string>
 		</dict>
 		<key>31E98A59-AC73-4EC3-B60D-B9BED4F2212E</key>
 		<dict>
@@ -1366,6 +1740,40 @@
 			<key>uniqueIdentifier</key>
 			<string>4753D9DE-370C-4199-995F-E09B6292262F</string>
 		</dict>
+		<key>48E518FD-372F-42A8-95B8-AAF8EF0D50A5</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>48E518FD-372F-42A8-95B8-AAF8EF0D50A5.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693018276.23787796</real>
+			<key>timeStoppedRecording</key>
+			<real>693018277.07967699</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>48E518FD-372F-42A8-95B8-AAF8EF0D50A5</string>
+		</dict>
 		<key>4B97C2CC-DF67-43B2-8EAE-4A14ED14822E</key>
 		<dict>
 			<key>className</key>
@@ -1399,6 +1807,74 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>4B97C2CC-DF67-43B2-8EAE-4A14ED14822E</string>
+		</dict>
+		<key>4C1E2524-828F-43CC-9C7D-894831C7F0FF</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>4C1E2524-828F-43CC-9C7D-894831C7F0FF.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012838.25280094</real>
+			<key>timeStoppedRecording</key>
+			<real>693012838.64316499</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>4C1E2524-828F-43CC-9C7D-894831C7F0FF</string>
+		</dict>
+		<key>4C60E91F-EF0D-4119-99EB-8CB790D7AD93</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>4C60E91F-EF0D-4119-99EB-8CB790D7AD93.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693007001.03445494</real>
+			<key>timeStoppedRecording</key>
+			<real>693007001.41146195</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>4C60E91F-EF0D-4119-99EB-8CB790D7AD93</string>
 		</dict>
 		<key>4CFADEC1-9594-4307-8126-A15E680B9A9A</key>
 		<dict>
@@ -1638,6 +2114,74 @@
 			<key>uniqueIdentifier</key>
 			<string>57F6D44B-C33E-4A46-8CF8-FE5210AFB814</string>
 		</dict>
+		<key>59117DFC-E2A5-4D6D-89D1-162E57F6BCB9</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>59117DFC-E2A5-4D6D-89D1-162E57F6BCB9.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012875.21164894</real>
+			<key>timeStoppedRecording</key>
+			<real>693012875.82087696</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>59117DFC-E2A5-4D6D-89D1-162E57F6BCB9</string>
+		</dict>
+		<key>59A70CA3-2549-4522-BC93-74EC2E73D731</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>59A70CA3-2549-4522-BC93-74EC2E73D731.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693007613.66163898</real>
+			<key>timeStoppedRecording</key>
+			<real>693007614.688905</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>59A70CA3-2549-4522-BC93-74EC2E73D731</string>
+		</dict>
 		<key>59B89551-BEB6-480E-BBEA-B2C91DE8E0A8</key>
 		<dict>
 			<key>className</key>
@@ -1705,6 +2249,74 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>5AB15715-ED74-401D-AF07-C2773F28D52C</string>
+		</dict>
+		<key>5C49D94E-A3C0-448F-951E-62A51A218BBA</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>5C49D94E-A3C0-448F-951E-62A51A218BBA.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692952243.33430898</real>
+			<key>timeStoppedRecording</key>
+			<real>692952243.79708004</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>5C49D94E-A3C0-448F-951E-62A51A218BBA</string>
+		</dict>
+		<key>5C5D730D-4DA8-4351-B2D7-C6549B7F94D1</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>5C5D730D-4DA8-4351-B2D7-C6549B7F94D1.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693019102.20243704</real>
+			<key>timeStoppedRecording</key>
+			<real>693019102.75637996</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>5C5D730D-4DA8-4351-B2D7-C6549B7F94D1</string>
 		</dict>
 		<key>5DC2FCF4-A084-440F-90CC-B1EA9FE0ED21</key>
 		<dict>
@@ -1910,6 +2522,40 @@
 			<key>uniqueIdentifier</key>
 			<string>642F15D8-D51D-48FE-8949-8A69C42A9558</string>
 		</dict>
+		<key>65C3FA0E-4D02-4478-97AA-5C2B3689B1B2</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>65C3FA0E-4D02-4478-97AA-5C2B3689B1B2.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693007466.054829</real>
+			<key>timeStoppedRecording</key>
+			<real>693007468.21896005</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>65C3FA0E-4D02-4478-97AA-5C2B3689B1B2</string>
+		</dict>
 		<key>670B4C95-7E24-4FD1-829F-3FB44A94D001</key>
 		<dict>
 			<key>className</key>
@@ -2011,6 +2657,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>6A56D15D-1F22-4B0C-89EF-134CC10765B7</string>
+		</dict>
+		<key>6B7D2939-7C53-4884-9C30-ED429826AAD0</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>6B7D2939-7C53-4884-9C30-ED429826AAD0.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693018906.33313406</real>
+			<key>timeStoppedRecording</key>
+			<real>693018907.12242997</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>6B7D2939-7C53-4884-9C30-ED429826AAD0</string>
 		</dict>
 		<key>6B7D96ED-8453-4A23-974C-287C0359EFB2</key>
 		<dict>
@@ -2216,6 +2896,74 @@
 			<key>uniqueIdentifier</key>
 			<string>6E1F8860-376E-46AC-9EC9-7A71842513D0</string>
 		</dict>
+		<key>74BCF5C3-EAA4-463A-A286-CC0603034269</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>74BCF5C3-EAA4-463A-A286-CC0603034269.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012787.11742699</real>
+			<key>timeStoppedRecording</key>
+			<real>693012790.64271796</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>74BCF5C3-EAA4-463A-A286-CC0603034269</string>
+		</dict>
+		<key>74E9DAF1-04A3-4690-9431-3E0F24D84EEF</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>74E9DAF1-04A3-4690-9431-3E0F24D84EEF.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012482.174595</real>
+			<key>timeStoppedRecording</key>
+			<real>693012482.82332504</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>74E9DAF1-04A3-4690-9431-3E0F24D84EEF</string>
+		</dict>
 		<key>7504D346-C137-4FE2-9EF9-2D1AB47EBBDF</key>
 		<dict>
 			<key>className</key>
@@ -2386,6 +3134,74 @@
 			<key>uniqueIdentifier</key>
 			<string>79790DE6-509C-4D4B-AD20-1978CBA75F91</string>
 		</dict>
+		<key>7B678B50-44A1-425F-950B-2CD42D085F6E</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>7B678B50-44A1-425F-950B-2CD42D085F6E.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693006920.96436405</real>
+			<key>timeStoppedRecording</key>
+			<real>693006921.32193506</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>7B678B50-44A1-425F-950B-2CD42D085F6E</string>
+		</dict>
+		<key>7C5711FB-7386-4997-9F6E-4D7A581991CA</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>7C5711FB-7386-4997-9F6E-4D7A581991CA.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692952946.52680302</real>
+			<key>timeStoppedRecording</key>
+			<real>692952946.97845602</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>7C5711FB-7386-4997-9F6E-4D7A581991CA</string>
+		</dict>
 		<key>7CD3E5FA-59DF-4618-8C88-E5B6D2485422</key>
 		<dict>
 			<key>className</key>
@@ -2453,6 +3269,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>7D251DD0-52D5-4040-AAA7-606FF3C8448D</string>
+		</dict>
+		<key>7E22F5AF-CCAD-41E8-AFC6-FC7FB70F84A9</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>7E22F5AF-CCAD-41E8-AFC6-FC7FB70F84A9.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693004910.90821695</real>
+			<key>timeStoppedRecording</key>
+			<real>693004911.50783205</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>7E22F5AF-CCAD-41E8-AFC6-FC7FB70F84A9</string>
 		</dict>
 		<key>7FF8ADAA-CA78-4AFB-A833-7F0AB73F726D</key>
 		<dict>
@@ -2624,6 +3474,40 @@
 			<key>uniqueIdentifier</key>
 			<string>8587B1A2-1FB2-408A-900C-AE9B4703E1D1</string>
 		</dict>
+		<key>86B411D1-140C-46CA-9043-B8B8C68E5FC7</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>86B411D1-140C-46CA-9043-B8B8C68E5FC7.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693004452.61660099</real>
+			<key>timeStoppedRecording</key>
+			<real>693004453.65208697</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>86B411D1-140C-46CA-9043-B8B8C68E5FC7</string>
+		</dict>
 		<key>878AB0DC-BD02-4E39-A6AA-052C4AD1092C</key>
 		<dict>
 			<key>className</key>
@@ -2760,6 +3644,74 @@
 			<key>uniqueIdentifier</key>
 			<string>8905692A-E874-4415-AEB9-536FCC71C785</string>
 		</dict>
+		<key>89490D4A-2EDD-49C4-94A8-D275C9989321</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>89490D4A-2EDD-49C4-94A8-D275C9989321.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693013861.82718301</real>
+			<key>timeStoppedRecording</key>
+			<real>693013862.52240098</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>89490D4A-2EDD-49C4-94A8-D275C9989321</string>
+		</dict>
+		<key>8A7E901B-C348-4107-86BB-0381FF2D42CC</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>8A7E901B-C348-4107-86BB-0381FF2D42CC.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012915.31961906</real>
+			<key>timeStoppedRecording</key>
+			<real>693012915.93007302</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>8A7E901B-C348-4107-86BB-0381FF2D42CC</string>
+		</dict>
 		<key>8BBB7B9A-49E3-4AA9-9667-AC4E146A2293</key>
 		<dict>
 			<key>className</key>
@@ -2862,6 +3814,40 @@
 			<key>uniqueIdentifier</key>
 			<string>91DFEEA2-25EE-4032-BDCD-231FCB2D8402</string>
 		</dict>
+		<key>96086479-6903-4CAD-A793-91E9BDF135C0</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>96086479-6903-4CAD-A793-91E9BDF135C0.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693011686.56637597</real>
+			<key>timeStoppedRecording</key>
+			<real>693011687.26604795</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>96086479-6903-4CAD-A793-91E9BDF135C0</string>
+		</dict>
 		<key>96AF7CF9-4ECF-45B9-81C6-0E59053D2C47</key>
 		<dict>
 			<key>className</key>
@@ -2930,6 +3916,40 @@
 			<key>uniqueIdentifier</key>
 			<string>97370478-48AD-4A3C-A154-B7308ADCB15A</string>
 		</dict>
+		<key>97E96C15-4EEB-4390-9D7A-04FE03C26CC5</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>97E96C15-4EEB-4390-9D7A-04FE03C26CC5.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692952784.57736504</real>
+			<key>timeStoppedRecording</key>
+			<real>692952785.26385796</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>97E96C15-4EEB-4390-9D7A-04FE03C26CC5</string>
+		</dict>
 		<key>9868D219-2DCB-421C-AEC9-0B336888794B</key>
 		<dict>
 			<key>className</key>
@@ -2963,6 +3983,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>9868D219-2DCB-421C-AEC9-0B336888794B</string>
+		</dict>
+		<key>99D7E590-8551-4EDD-B114-1F79989089A5</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>99D7E590-8551-4EDD-B114-1F79989089A5.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693011643.339064</real>
+			<key>timeStoppedRecording</key>
+			<real>693011644.32484698</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>99D7E590-8551-4EDD-B114-1F79989089A5</string>
 		</dict>
 		<key>9B13B78B-324F-47B0-AD62-7ACCF99A5A4D</key>
 		<dict>
@@ -3066,6 +4120,74 @@
 			<key>uniqueIdentifier</key>
 			<string>9D7E03B5-7980-443F-912F-CAC7DF6BE0C6</string>
 		</dict>
+		<key>9E0875CA-75C7-4DB9-B556-81914B5D70F3</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>9E0875CA-75C7-4DB9-B556-81914B5D70F3.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692951908.27041698</real>
+			<key>timeStoppedRecording</key>
+			<real>692951909.00319898</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>9E0875CA-75C7-4DB9-B556-81914B5D70F3</string>
+		</dict>
+		<key>9ED8D124-9393-4F8A-ABA5-AB3E955DBF43</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>9ED8D124-9393-4F8A-ABA5-AB3E955DBF43.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012198.95005596</real>
+			<key>timeStoppedRecording</key>
+			<real>693012199.89695895</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>9ED8D124-9393-4F8A-ABA5-AB3E955DBF43</string>
+		</dict>
 		<key>A0D17243-0BF2-4A02-9176-33438A90F930</key>
 		<dict>
 			<key>className</key>
@@ -3134,6 +4256,40 @@
 			<key>uniqueIdentifier</key>
 			<string>A126AC1B-667D-4EFA-9A2C-94AA2E5C9B98</string>
 		</dict>
+		<key>A1A90458-DA41-4F17-B986-733A946F0013</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>A1A90458-DA41-4F17-B986-733A946F0013.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693011951.20026302</real>
+			<key>timeStoppedRecording</key>
+			<real>693011952.12410498</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>A1A90458-DA41-4F17-B986-733A946F0013</string>
+		</dict>
 		<key>A49D2C5C-0924-44D4-A345-ECF07885F706</key>
 		<dict>
 			<key>className</key>
@@ -3168,6 +4324,40 @@
 			<key>uniqueIdentifier</key>
 			<string>A49D2C5C-0924-44D4-A345-ECF07885F706</string>
 		</dict>
+		<key>A4BEFD5D-A8EF-457E-8EC9-36D7216580D3</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>A4BEFD5D-A8EF-457E-8EC9-36D7216580D3.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693013064.99340701</real>
+			<key>timeStoppedRecording</key>
+			<real>693013065.58749998</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>A4BEFD5D-A8EF-457E-8EC9-36D7216580D3</string>
+		</dict>
 		<key>A6785AB6-394A-467C-9108-A1DFF54FFE32</key>
 		<dict>
 			<key>className</key>
@@ -3201,6 +4391,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>A6785AB6-394A-467C-9108-A1DFF54FFE32</string>
+		</dict>
+		<key>A6D15E00-1B5F-4CFB-AE9A-F00928FB8F6C</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>A6D15E00-1B5F-4CFB-AE9A-F00928FB8F6C.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692952845.87915003</real>
+			<key>timeStoppedRecording</key>
+			<real>692952846.33280301</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>A6D15E00-1B5F-4CFB-AE9A-F00928FB8F6C</string>
 		</dict>
 		<key>A7539EF2-F681-4A3E-A987-CD54DB284A9B</key>
 		<dict>
@@ -3304,6 +4528,40 @@
 			<key>uniqueIdentifier</key>
 			<string>ABC1EADF-ACFA-4777-90FF-B89A3A3D4C7D</string>
 		</dict>
+		<key>ACA354A3-0A1D-40FE-AD78-0B8CC053918C</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>ACA354A3-0A1D-40FE-AD78-0B8CC053918C.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693017852.49849701</real>
+			<key>timeStoppedRecording</key>
+			<real>693017853.62895596</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>ACA354A3-0A1D-40FE-AD78-0B8CC053918C</string>
+		</dict>
 		<key>ACCC52AC-9E67-4A77-844D-4AB041C29896</key>
 		<dict>
 			<key>className</key>
@@ -3371,6 +4629,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>AF859834-41DF-4A98-A2EE-55DCDF6C3EEB</string>
+		</dict>
+		<key>AFD93D13-A49F-4D26-ABE9-52B78EFE4943</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>AFD93D13-A49F-4D26-ABE9-52B78EFE4943.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693013784.54536998</real>
+			<key>timeStoppedRecording</key>
+			<real>693013785.52607</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>AFD93D13-A49F-4D26-ABE9-52B78EFE4943</string>
 		</dict>
 		<key>B40A5476-0D89-4EFF-B09E-A97EAA25F57C</key>
 		<dict>
@@ -3473,6 +4765,74 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>B65C9F2E-0C3C-465A-BAF2-540953645454</string>
+		</dict>
+		<key>B68EAAF6-8259-47D4-B3BC-7ED093A53497</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>B68EAAF6-8259-47D4-B3BC-7ED093A53497.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693007121.96081495</real>
+			<key>timeStoppedRecording</key>
+			<real>693007122.66000998</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>B68EAAF6-8259-47D4-B3BC-7ED093A53497</string>
+		</dict>
+		<key>B808BE67-C31C-43D8-9150-94943C3FC450</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>B808BE67-C31C-43D8-9150-94943C3FC450.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693007039.88972199</real>
+			<key>timeStoppedRecording</key>
+			<real>693007040.83534098</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>B808BE67-C31C-43D8-9150-94943C3FC450</string>
 		</dict>
 		<key>BEC91763-EDEC-406E-82AE-29D17EF225F6</key>
 		<dict>
@@ -3984,6 +5344,40 @@
 			<key>uniqueIdentifier</key>
 			<string>DA263EB5-D03C-4F10-BAA2-0F7C66C84F74</string>
 		</dict>
+		<key>DB1A122A-9EC7-4E77-8876-23AC88FDFE98</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>DB1A122A-9EC7-4E77-8876-23AC88FDFE98.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>692952865.52448499</real>
+			<key>timeStoppedRecording</key>
+			<real>692952865.58358502</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>DB1A122A-9EC7-4E77-8876-23AC88FDFE98</string>
+		</dict>
 		<key>DC35A954-D022-434C-A758-0920A514005D</key>
 		<dict>
 			<key>className</key>
@@ -4018,6 +5412,40 @@
 			<key>uniqueIdentifier</key>
 			<string>DC35A954-D022-434C-A758-0920A514005D</string>
 		</dict>
+		<key>DE5FD8C2-A355-44F5-8442-EC5585202A67</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>DE5FD8C2-A355-44F5-8442-EC5585202A67.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693018341.57682395</real>
+			<key>timeStoppedRecording</key>
+			<real>693018342.25321901</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>DE5FD8C2-A355-44F5-8442-EC5585202A67</string>
+		</dict>
 		<key>DF0AC15A-C712-44E9-B330-CAF8A843AE39</key>
 		<dict>
 			<key>className</key>
@@ -4051,6 +5479,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>DF0AC15A-C712-44E9-B330-CAF8A843AE39</string>
+		</dict>
+		<key>E2675A85-851E-4E6C-82A0-E59A1E1D51D0</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>E2675A85-851E-4E6C-82A0-E59A1E1D51D0.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693006649.07472396</real>
+			<key>timeStoppedRecording</key>
+			<real>693006649.15123403</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>E2675A85-851E-4E6C-82A0-E59A1E1D51D0</string>
 		</dict>
 		<key>E47181FD-C5F7-4589-A1D0-35237D2653E3</key>
 		<dict>
@@ -4460,6 +5922,40 @@
 			<key>uniqueIdentifier</key>
 			<string>F0B5E66D-3B31-4CEE-AEED-A9B4DA21CFE1</string>
 		</dict>
+		<key>F0C8E14C-3E44-4DC4-9DDC-159A20BFB778</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>F0C8E14C-3E44-4DC4-9DDC-159A20BFB778.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693006645.19635201</real>
+			<key>timeStoppedRecording</key>
+			<real>693006646.28816402</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>F0C8E14C-3E44-4DC4-9DDC-159A20BFB778</string>
+		</dict>
 		<key>F18469B0-2976-4718-A39F-8A1C2AB2685E</key>
 		<dict>
 			<key>className</key>
@@ -4493,6 +5989,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>F18469B0-2976-4718-A39F-8A1C2AB2685E</string>
+		</dict>
+		<key>F3964F7C-35C5-496A-99CD-9D45EBB8DC20</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>F3964F7C-35C5-496A-99CD-9D45EBB8DC20.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693003145.88966703</real>
+			<key>timeStoppedRecording</key>
+			<real>693003146.88555503</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>F3964F7C-35C5-496A-99CD-9D45EBB8DC20</string>
 		</dict>
 		<key>F4C52B22-2E96-43C1-B3A0-B7B7983BE082</key>
 		<dict>
@@ -4630,6 +6160,40 @@
 			<key>uniqueIdentifier</key>
 			<string>F7ED39FE-D500-4BF7-9945-E2292A75381D</string>
 		</dict>
+		<key>FAE4BC4A-08B4-4497-A9A5-518980CCA5BC</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>FAE4BC4A-08B4-4497-A9A5-518980CCA5BC.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693017945.55749404</real>
+			<key>timeStoppedRecording</key>
+			<real>693017946.26249397</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>FAE4BC4A-08B4-4497-A9A5-518980CCA5BC</string>
+		</dict>
 		<key>FAFFDD01-7FE3-4E8B-8D69-68133408DF2B</key>
 		<dict>
 			<key>className</key>
@@ -4697,6 +6261,40 @@
 			<string>Build PTZ Camera Sim</string>
 			<key>uniqueIdentifier</key>
 			<string>FD05EA2C-29DB-4BD8-A004-AA1BC74AC8F1</string>
+		</dict>
+		<key>FDADEF12-0F71-4A2E-9C17-A9F74E73C549</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>FDADEF12-0F71-4A2E-9C17-A9F74E73C549.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>PTZ Camera Sim project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>PTZ Camera Sim</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>timeStartedRecording</key>
+			<real>693012383.01077604</real>
+			<key>timeStoppedRecording</key>
+			<real>693012384.13141298</real>
+			<key>title</key>
+			<string>Build PTZ Camera Sim</string>
+			<key>uniqueIdentifier</key>
+			<string>FDADEF12-0F71-4A2E-9C17-A9F74E73C549</string>
 		</dict>
 	</dict>
 </dict>

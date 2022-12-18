@@ -43,8 +43,10 @@ static AppDelegate *selfType;
 
 - (void)handlePipeNotification:(NSNotification *)notification {
     [_pipeReadHandle readInBackgroundAndNotify];
-    NSString *stdOutString = [[NSString alloc] initWithData: [[notification userInfo] objectForKey: NSFileHandleNotificationDataItem] encoding: NSASCIIStringEncoding];
-    [self logMessage:stdOutString];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *stdOutString = [[NSString alloc] initWithData: [[notification userInfo] objectForKey: NSFileHandleNotificationDataItem] encoding: NSASCIIStringEncoding];
+        [self logMessage:stdOutString];
+    });
 }
 
 - (void)configConsoleRedirect {
@@ -70,8 +72,9 @@ static AppDelegate *selfType;
               options:0
               context:&selfType];
 
-    self.scrollView.minMagnification = 1;
-    self.scrollView.maxMagnification = 20;
+    //  We don't want to zoom all the way out on the image itself, because then there's no room to pan/tilt.
+    self.scrollView.minMagnification = 1.1;
+    self.scrollView.maxMagnification = 25;
     self.camera = [PTZCamera new];
     [self updateZoomFactor];
 
@@ -87,7 +90,9 @@ static AppDelegate *selfType;
 
 - (NSPoint)scrollPoint {
     NSPoint point = NSZeroPoint;
-    NSSize scrollSize = self.scrollView.bounds.size;
+    NSSize docSize = self.scrollView.documentView.bounds.size;
+    NSSize contentSize = self.scrollView.contentView.bounds.size;
+    NSSize scrollSize = NSMakeSize(docSize.width - contentSize.width, docSize.height - contentSize.height);
     if (scrollSize.width > 0 && scrollSize.height > 0) {
         CGFloat panScale = self.camera.panScale;
         CGFloat tiltScale = self.camera.tiltScale;
@@ -98,14 +103,16 @@ static AppDelegate *selfType;
 
 
 - (void)updateScrollPosition {
-    [self.scrollView.contentView scrollPoint:[self scrollPoint]];
+    [self.scrollView.documentView scrollPoint:[self scrollPoint]];
 }
 
 - (void)updateZoomFactor {
-    // 0 : all the way out (fullZoom). Max: all the way in. But we don't want to zoom all the way out on the image itself, because then there's no room to move. Except the scrollview wasn't designed for that and it doesn't quite work.
+    // 0 : all the way out (fullZoom). Max: all the way in.
     CGFloat offset = self.scrollView.minMagnification;
     CGFloat zoom = self.camera.zoomScale * (self.scrollView.maxMagnification - offset);
-    [self.scrollView setMagnification:offset + zoom];
+    NSRect contentBounds = self.scrollView.contentView.frame;
+    NSPoint centerPoint = NSMakePoint(NSMidX(contentBounds), NSMidY(contentBounds));
+    [self.scrollView setMagnification:offset + zoom centeredAtPoint:centerPoint];
     [self updateScrollPosition];
 }
 

@@ -15,7 +15,18 @@
 #define PT_MIN -0x100
 #define RANGE_SHIFT (0x100)
 
+@interface PTZCamera ()
+@property (readwrite) NSInteger tilt;
+@property (readwrite) NSInteger pan;
+@property (readwrite) NSUInteger zoom;
+@property NSUInteger tiltSpeed;
+@property NSUInteger panSpeed;
+@property NSUInteger zoomSpeed;
+
+@end
+
 @implementation PTZCamera
+
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey: (NSString *)key // IN
 {
@@ -50,6 +61,7 @@
         _panSpeed = 5;
         _tiltSpeed = 5;
         _zoomSpeed = 5;
+        _presetSpeed = 24; // Real camera default
         _recallQueue = dispatch_queue_create("recallQueue", NULL);
     }
     return self;
@@ -113,6 +125,12 @@
 }
 
 - (void)getRecallPan:(NSInteger*)pan tilt:(NSInteger*)tilt zoom:(NSInteger*)zoom index:(NSInteger)index {
+    if (index == 0) {
+        if (pan) *pan = 0;
+        if (tilt) *tilt = 0;
+        if (zoom) *zoom = self.zoom;
+        return;
+    }
     NSArray *data = [self.scenes objectForKey:@(index)];
     if (data == nil) {
         if (pan) *pan = [[self class] randomPT];
@@ -125,6 +143,120 @@
     }
 }
 
+- (void)zoomToPosition:(NSUInteger)newZoom {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.zoom = newZoom;
+    });
+}
+
+- (void)applyPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt {
+    panS = MAX(1, MIN(panS, 0x18));
+    tiltS = MAX(1, MIN(tiltS, 0x14));
+    fprintf(stdout, "pan %ld -> %ld at %lu, tilt %ld -> %ld at %lu\n", (long)self.pan, (long)targetPan, (unsigned long)panS, (long)self.tilt, (long)targetTilt, (unsigned long)tiltS);
+    dispatch_async(_recallQueue, ^{
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSInteger dPan = targetPan - self.pan;
+                NSInteger dTilt = targetTilt - self.tilt;
+
+                if (labs(dPan) <= panS) {
+                    self.pan = targetPan;
+                } else if (dPan > 0) {
+                    self.pan += panS;
+                } else {
+                    self.pan -= panS;
+                }
+                if (labs(dTilt) <= tiltS) {
+                    self.tilt = targetTilt;
+                } else if (dTilt > 0) {
+                    self.tilt += tiltS;
+                } else {
+                    self.tilt -= tiltS;
+                }
+               // fprintf(stdout, "recall tilt %ld pan %ld", self.tilt, self.pan);
+            });
+        } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+        dispatch_async(dispatch_get_main_queue(), ^{
+            fprintf(stdout, "pan/tilt done");
+        });
+    });
+}
+
+- (void)cameraHome {
+    [self recallAtIndex:0];
+}
+
+- (void)cameraReset {
+    __block NSInteger targetPan = 0, targetTilt = 0;
+    dispatch_block_t block = ^{
+        NSInteger dPan = targetPan - self.pan;
+        NSInteger dTilt = targetTilt - self.tilt;
+        NSUInteger speed = 24; // Max
+
+        if (labs(dPan) <= speed) {
+            self.pan = targetPan;
+        } else if (dPan > 0) {
+            self.pan += speed;
+        } else {
+            self.pan -= speed;
+        }
+        if (labs(dTilt) <= speed) {
+            self.tilt = targetTilt;
+        } else if (dTilt > 0) {
+            self.tilt += speed;
+        } else {
+            self.tilt -= speed;
+        }
+       // fprintf(stdout, "recall tilt %ld pan %ld", self.tilt, self.pan);
+    };
+    dispatch_async(_recallQueue, ^{
+        
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), block);
+        } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+        
+        targetTilt = PT_MIN;
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), block);
+         } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+        
+        targetTilt = PT_MAX;
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), block);
+         } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+
+        targetTilt = 0;
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), block);
+         } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+
+        targetPan = PT_MIN;
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), block);
+         } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+
+        targetPan = PT_MAX;
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), block);
+         } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+
+        targetPan = 0;
+        do {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), block);
+         } while ((self.pan != targetPan) || (self.tilt != targetTilt));
+        fprintf(stdout, "reset done");
+     });
+
+}
+
 - (void)recallAtIndex:(NSInteger)index
 {
     NSInteger targetPan, targetTilt, targetZoom;
@@ -134,37 +266,37 @@
     dispatch_async(_recallQueue, ^{
         do {
             nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_sync(dispatch_get_main_queue(), ^{
                 NSInteger dPan = targetPan - self.pan;
                 NSInteger dTilt = targetTilt - self.tilt;
                 NSInteger dZoom = targetZoom - self.zoom;
-                if (labs(dPan) <= self.panSpeed) {
+                NSUInteger speed = self.presetSpeed;
+
+                if (labs(dPan) <= speed) {
                     self.pan = targetPan;
                 } else if (dPan > 0) {
-                    self.pan += self.panSpeed;
+                    self.pan += speed;
                 } else {
-                    self.pan -= self.panSpeed;
+                    self.pan -= speed;
                 }
-                if (labs(dTilt) <= self.tiltSpeed) {
+                if (labs(dTilt) <= speed) {
                     self.tilt = targetTilt;
                 } else if (dTilt > 0) {
-                    self.tilt += self.tiltSpeed;
+                    self.tilt += speed;
                 } else {
-                    self.tilt -= self.tiltSpeed;
+                    self.tilt -= speed;
                 }
-                if (labs(dZoom) <= self.zoomSpeed) {
+                if (labs(dZoom) <= speed) {
                     self.zoom = targetZoom;
                 } else if (dZoom > 0) {
-                    self.zoom += self.zoomSpeed;
+                    self.zoom += speed;
                 } else {
-                    self.zoom -= self.zoomSpeed;
+                    self.zoom -= speed;
                 }
                // fprintf(stdout, "recall tilt %ld pan %ld", self.tilt, self.pan);
             });
         } while ((self.pan != targetPan) || (self.tilt != targetTilt) || (self.zoom != targetZoom));
-        dispatch_async(dispatch_get_main_queue(), ^{
-            fprintf(stdout, "recall done");
-        });
+        fprintf(stdout, "recall done");
     });
 }
 

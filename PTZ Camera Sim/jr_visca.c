@@ -141,6 +141,25 @@ void jr_visca_handlePanTiltPositionInqResponseParameters(jr_viscaFrame* frame, u
     }
 }
 
+// AbsolutePosition [81] 01 06 02 [3]VV [4]WW [5]0Y 0Y 0Y 0Y [9]0Z 0Z 0Z 0Z FF
+// VV: Pan speed 0x01 (low speed) to 0x18 (high speed)
+// WW: Tilt speed 0x01 (low speed) to 0x14 (high speed)
+// YYYY: Pan Position
+// ZZZZ: Tilt Position
+void jr_visca_handleAbsolutePanTiltPositionParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
+    if (isDecodingFrame) {
+        messageParameters->absolutePanTiltPositionParameters.panSpeed = frame->data[3] & 0xf;
+        messageParameters->absolutePanTiltPositionParameters.tiltSpeed = frame->data[4] & 0xf;
+        messageParameters->absolutePanTiltPositionParameters.panPosition = _jr_viscaRead16FromBuffer(frame->data + 5);
+        messageParameters->absolutePanTiltPositionParameters.tiltPosition = _jr_viscaRead16FromBuffer(frame->data + 9);
+    } else {
+        frame->data[3] = messageParameters->absolutePanTiltPositionParameters.panSpeed;
+        frame->data[4] = messageParameters->absolutePanTiltPositionParameters.tiltSpeed;
+        _jr_viscaWrite16ToBuffer(messageParameters->absolutePanTiltPositionParameters.panPosition, frame->data + 5);
+        _jr_viscaWrite16ToBuffer(messageParameters->absolutePanTiltPositionParameters.tiltPosition, frame->data + 9);
+    }
+}
+
 void jr_visca_handleZoomPositionInqResponseParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
     if (isDecodingFrame) {
         messageParameters->zoomPositionParameters.zoomPosition = _jr_viscaRead16FromBuffer(frame->data + 1);
@@ -173,6 +192,15 @@ void jr_visca_handleZoomVariableParameters(jr_viscaFrame* frame, union jr_viscaM
     }
 }
 
+void jr_visca_handlePresetSpeedParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
+    if (isDecodingFrame) {
+        uint8_t speed = frame->data[3] & 0xff;
+        speed = (speed < 1) ? 1 : ((speed > 0x18) ? 0x18 : speed);
+        messageParameters->presetSpeedParameters.presetSpeed = speed;
+    } else {
+        frame->data[3] += messageParameters->presetSpeedParameters.presetSpeed;
+    }
+}
 
 void jr_visca_handleMemoryParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
     if (isDecodingFrame) {
@@ -328,6 +356,42 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_MEMORY,
         &jr_visca_handleMemoryParameters
     },
+    {
+        {0x01, 0x00, 0x01},
+        {0xff, 0xff, 0xff},
+        3,
+        JR_VISCA_MESSAGE_CLEAR,
+        NULL
+    },
+    {   // 01 06 01 pp
+        {0x01, 0x06, 0x01, 0x00},
+        {0xff, 0xff, 0xff, 0x00},
+        4,
+        JR_VISCA_MESSAGE_PRESET_RECALL_SPEED,
+        &jr_visca_handlePresetSpeedParameters
+    },
+    {   // 01 06 02        VV    WW     0Y 0Y 0Y 0Y              0Z 0Z 0Z 0Z
+        {0x01, 0x06, 0x02, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00},
+        {0xff, 0xff, 0xff, 0x00, 0x00,  0xf0, 0xf0, 0xf0, 0xf0,  0xf0, 0xf0, 0xf0, 0xf0},
+        13,
+        JR_VISCA_MESSAGE_ABSOLUTE_PAN_TILT,
+        &jr_visca_handleAbsolutePanTiltPositionParameters
+    },
+    {   // Home 81 01 06 04 FF
+        {0x01, 0x06, 0x04},
+        {0xff, 0xff, 0xff},
+        3,
+        JR_VISCA_MESSAGE_HOME,
+        NULL
+    },
+    {   // Reset 81 01 06 05 FF
+        {0x01, 0x06, 0x05},
+        {0xff, 0xff, 0xff},
+        3,
+        JR_VISCA_MESSAGE_RESET,
+        NULL
+    },
+    
     { {}, {}, 0, 0, NULL} // Final definition must have `signatureLength` == 0.
 };
 

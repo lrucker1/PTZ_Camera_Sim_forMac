@@ -11,21 +11,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PTZCamera : NSObject
 
-@property NSInteger tilt;
-@property NSInteger pan;
-@property NSUInteger zoom;
+// Protect from writes that aren't on main.
+@property (readonly) NSInteger tilt;
+@property (readonly) NSInteger pan;
+@property (readonly) NSUInteger zoom;
 @property CGFloat zoomScale;
 @property (readonly) CGFloat panScale, tiltScale;
 
-@property NSUInteger tiltSpeed;
-@property NSUInteger panSpeed;
-@property NSUInteger zoomSpeed;
+// Does not affect UI, so it's thread safe.
+@property NSUInteger presetSpeed;
 @property (strong) NSMutableDictionary *scenes;
 
 @property dispatch_queue_t recallQueue;
 
 - (void)recallAtIndex:(NSInteger)index;
 - (void)saveAtIndex:(NSInteger)index;
+- (void)applyPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt;
 
 - (void)incPan:(NSUInteger)delta;
 - (void)incTilt:(NSUInteger)delta;
@@ -34,6 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)zoomIn:(NSUInteger)delta;
 - (void)zoomOut:(NSUInteger)delta;
 
+- (void)zoomToPosition:(NSUInteger)zoom;
+- (void)cameraHome;
+- (void)cameraReset;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -19,8 +19,6 @@
                 <outlet property="console" destination="nYF-8s-C02" id="wZB-to-s3a"/>
                 <outlet property="imageView" destination="QjU-Fd-6N9" id="kQz-K3-Fol"/>
                 <outlet property="scrollView" destination="Efn-K0-PjI" id="Lbs-1U-QRP"/>
-                <outlet property="viewHeightConstraint" destination="rSk-4w-lmy" id="ynf-EV-l0d"/>
-                <outlet property="viewWidthConstraint" destination="fTH-XZ-xkF" id="HFk-Q2-MNs"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -701,7 +699,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" drawsBackground="NO" id="Bc1-eX-QBC">
                             <rect key="frame" x="0.0" y="0.0" width="473" height="360"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView wantsLayer="YES" editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="nYF-8s-C02">
                                     <rect key="frame" x="0.0" y="0.0" width="473" height="360"/>
@@ -812,28 +810,18 @@
                             <rect key="frame" x="1" y="1" width="361" height="202"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <view translatesAutoresizingMaskIntoConstraints="NO" id="jsC-h8-byA">
+                                <view id="jsC-h8-byA">
                                     <rect key="frame" x="0.0" y="-96" width="400" height="250"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <subviews>
-                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QjU-Fd-6N9">
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QjU-Fd-6N9">
                                             <rect key="frame" x="0.0" y="0.0" width="400" height="250"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="Stanford_Memorial_Church" id="Xq9-d2-f1z"/>
                                         </imageView>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="QjU-Fd-6N9" firstAttribute="width" secondItem="jsC-h8-byA" secondAttribute="width" id="0pK-Gu-IMK"/>
-                                        <constraint firstItem="QjU-Fd-6N9" firstAttribute="height" secondItem="jsC-h8-byA" secondAttribute="height" id="I3h-T3-kta"/>
-                                        <constraint firstItem="QjU-Fd-6N9" firstAttribute="centerY" secondItem="jsC-h8-byA" secondAttribute="centerY" id="OM7-LP-1Dj"/>
-                                        <constraint firstAttribute="width" constant="400" id="fTH-XZ-xkF"/>
-                                        <constraint firstItem="QjU-Fd-6N9" firstAttribute="centerX" secondItem="jsC-h8-byA" secondAttribute="centerX" id="jvx-YJ-KRI"/>
-                                        <constraint firstAttribute="height" constant="250" id="rSk-4w-lmy"/>
-                                    </constraints>
                                 </view>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="jsC-h8-byA" firstAttribute="leading" secondItem="piG-CQ-SJc" secondAttribute="leading" id="QUZ-Fe-et4"/>
-                                <constraint firstItem="jsC-h8-byA" firstAttribute="top" secondItem="piG-CQ-SJc" secondAttribute="top" constant="48" id="uig-Yi-uSX"/>
-                            </constraints>
                         </clipView>
                         <constraints>
                             <constraint firstAttribute="height" constant="204" id="BFN-Xe-DD5"/>

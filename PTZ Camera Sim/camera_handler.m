@@ -104,22 +104,28 @@ int handle_camera(PTZCamera *camera) {
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_DIRECT:
                         fprintf(stdout, "zoom direct to position %x\n", messageParameters.zoomPositionParameters.zoomPosition);
-                        camera.zoom = messageParameters.zoomPositionParameters.zoomPosition;
+                        [camera zoomToPosition:messageParameters.zoomPositionParameters.zoomPosition];
+                        sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_STOP:
                         fprintf(stdout, "zoom stop\n");
+                        sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_STANDARD:
                         fprintf(stdout, "zoom in standard\n");
+                        sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_WIDE_STANDARD:
                         fprintf(stdout, "zoom out standard\n");
+                        sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE:
                         fprintf(stdout, "zoom in at %x\n", messageParameters.zoomVariableParameters.zoomSpeed);
+                        sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE:
                         fprintf(stdout, "zoom out at %x\n", messageParameters.zoomVariableParameters.zoomSpeed);
+                        sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_PAN_TILT_DRIVE:
                         fprintf(stdout, "pan tilt drive: ");
@@ -147,7 +153,8 @@ int handle_camera(PTZCamera *camera) {
                                 break;
                         }
                         fprintf(stdout, "\n");
-                        
+                        sendAckCompletion(1, clientSocket);
+
                         break;
                     case JR_VISCA_MESSAGE_CAMERA_NUMBER:
                         fprintf(stdout, "camera number inq\n");
@@ -169,6 +176,35 @@ int handle_camera(PTZCamera *camera) {
                                 break;
                         }
                         fprintf(stdout, "\n");
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_CLEAR:
+                        fprintf(stdout, "clear\n");
+                        sendAckCompletion(1, clientSocket); // actually should just send completion
+                        break;
+                    case JR_VISCA_MESSAGE_HOME:
+                        fprintf(stdout, "home\n");
+                        [camera cameraHome];
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_RESET:
+                        fprintf(stdout, "reset\n");
+                        [camera cameraReset];
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_PRESET_RECALL_SPEED:
+                        camera.presetSpeed = messageParameters.presetSpeedParameters.presetSpeed;
+                        hex_print(buffer, consumed);
+                        fprintf(stdout, "preset speed %lu\n", (unsigned long)camera.presetSpeed);
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_ABSOLUTE_PAN_TILT:
+                        [camera applyPanSpeed:messageParameters.absolutePanTiltPositionParameters.panSpeed
+                                    tiltSpeed:messageParameters.absolutePanTiltPositionParameters.tiltSpeed
+                                          pan:messageParameters.absolutePanTiltPositionParameters.panPosition
+                                         tilt:messageParameters.absolutePanTiltPositionParameters.tiltPosition];
+                        hex_print(buffer, consumed);
+                        fprintf(stdout, "preset speed %lu\n", (unsigned long)camera.presetSpeed);
                         sendAckCompletion(1, clientSocket);
                         break;
                     default:
