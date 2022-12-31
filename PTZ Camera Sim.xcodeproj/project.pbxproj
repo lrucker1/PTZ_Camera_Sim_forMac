@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		94039E6E294B05F1009FAE39 /* PTZClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94039E6D294B05F1009FAE39 /* PTZClipView.m */; };
 		94039E70294B24E3009FAE39 /* Stanford_Memorial_Church.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94039E6F294B24E3009FAE39 /* Stanford_Memorial_Church.jpg */; };
+		9425790E295FE9030057859B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9425790D295FE9030057859B /* .gitignore */; };
 		94E884A62948679500344162 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E884A52948679500344162 /* AppDelegate.m */; };
 		94E884A82948679600344162 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94E884A72948679600344162 /* Assets.xcassets */; };
 		94E884AB2948679600344162 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94E884A92948679600344162 /* MainMenu.xib */; };
@@ -44,6 +45,7 @@
 		94039E6C294B05F1009FAE39 /* PTZClipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTZClipView.h; sourceTree = "<group>"; };
 		94039E6D294B05F1009FAE39 /* PTZClipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTZClipView.m; sourceTree = "<group>"; };
 		94039E6F294B24E3009FAE39 /* Stanford_Memorial_Church.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Stanford_Memorial_Church.jpg; sourceTree = "<group>"; };
+		9425790D295FE9030057859B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		94E884A12948679500344162 /* PTZ Camera Sim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PTZ Camera Sim.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94E884A42948679500344162 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		94E884A52948679500344162 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				94E88570294A552000344162 /* PTZCamera.h */,
+				9425790D295FE9030057859B /* .gitignore */,
 				94E88571294A552000344162 /* PTZCamera.m */,
 				94E884A42948679500344162 /* AppDelegate.h */,
 				94E884A52948679500344162 /* AppDelegate.m */,
@@ -259,6 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9425790E295FE9030057859B /* .gitignore in Resources */,
 				94039E70294B24E3009FAE39 /* Stanford_Memorial_Church.jpg in Resources */,
 				94E884A82948679600344162 /* Assets.xcassets in Resources */,
 				94E884AB2948679600344162 /* MainMenu.xib in Resources */,
