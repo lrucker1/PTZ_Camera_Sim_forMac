@@ -25,11 +25,16 @@ NS_ASSUME_NONNULL_BEGIN
 // thread-safe visca command support
 - (void)recallAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
 - (void)saveAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
-- (void)applyPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock;
+- (void)absolutePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock;
+- (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock ;
 - (void)cameraHome:(dispatch_block_t)doneBlock;
 - (void)cameraReset:(dispatch_block_t)doneBlock;
 - (void)cameraCancel:(dispatch_block_t)cancelBlock;
-- (void)zoomToPosition:(NSUInteger)zoom;
+- (void)absoluteZoom:(NSUInteger)zoom;
+- (void)relativeZoomIn:(NSUInteger)zoomDelta;
+- (void)relativeZoomOut:(NSUInteger)zoomDelta;
+
+- (void)toggleMenu;
 - (void)showMenu:(BOOL)visible;
 - (void)applyPresetSpeed:(NSUInteger)speed;
 - (void)setSocketFD:(int)socketFD;

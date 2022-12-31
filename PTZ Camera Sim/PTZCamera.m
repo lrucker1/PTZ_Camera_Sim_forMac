@@ -9,6 +9,7 @@
 
 #import "PTZCamera.h"
 #import "AppDelegate.h"
+#import "jr_visca.h"
 
 #define RANGE_MAX 0x200
 #define RND_MASK 0xFF
@@ -186,9 +187,21 @@
     }
 }
 
-- (void)zoomToPosition:(NSUInteger)newZoom {
+- (void)absoluteZoom:(NSUInteger)newZoom {
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.zoom = newZoom;
+        self.zoom = MAX(0, MIN(newZoom, ZOOM_MAX));
+    });
+}
+
+- (void)relativeZoomIn:(NSUInteger)zoomDelta {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self zoomIn:zoomDelta];
+    });
+}
+
+- (void)relativeZoomOut:(NSUInteger)zoomDelta {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self zoomOut:zoomDelta];
     });
 }
 
@@ -198,13 +211,52 @@
     });
 }
 
+- (void)toggleMenu {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.menuVisible = !self.menuVisible;
+    });
+}
+
 - (void)showMenu:(BOOL)visible {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.menuVisible = visible;
     });
 }
 
-- (void)applyPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock {
+- (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock {
+    NSInteger pan = self.pan;
+    NSInteger tilt = self.tilt;
+    switch (panDirection) {
+        case JR_VISCA_PAN_DIRECTION_LEFT:
+            pan -= panS;
+            break;
+        case JR_VISCA_PAN_DIRECTION_RIGHT:
+            pan += panS;
+            break;
+        case JR_VISCA_PAN_DIRECTION_STOP:
+            break;
+    }
+
+    switch (tiltDirection) {
+        case JR_VISCA_TILT_DIRECTION_DOWN:
+            tilt -= tiltS;
+            break;
+        case JR_VISCA_TILT_DIRECTION_UP:
+            tilt += tiltS;
+            break;
+        case JR_VISCA_TILT_DIRECTION_STOP:
+            break;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.pan = MIN(PT_MIN, MAX(pan, PT_MAX));
+        self.tilt = MIN(PT_MIN, MAX(tilt, PT_MAX));
+        if (doneBlock) {
+            doneBlock();
+        }
+    });
+}
+
+- (void)absolutePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock {
     panS = MAX(1, MIN(panS, 0x18));
     tiltS = MAX(1, MIN(tiltS, 0x14));
     fprintf(stdout, "pan %ld -> %ld at %lu, tilt %ld -> %ld at %lu\n", (long)self.pan, (long)targetPan, (unsigned long)panS, (long)self.tilt, (long)targetTilt, (unsigned long)tiltS);
