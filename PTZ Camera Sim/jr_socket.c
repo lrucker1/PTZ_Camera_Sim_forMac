@@ -23,6 +23,7 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 #include "jr_socket.h"
 
 int jr_socket_setupServerSocket(int port, jr_server_socket *serverSocket) {
@@ -73,8 +74,8 @@ int jr_socket_accept(jr_server_socket serverSocket, jr_socket *socket) {
     return 0;
 }
 
-ssize_t jr_socket_receive(jr_socket socket, char* buffer, ssize_t buffer_size) {
-    ssize_t result = recv(socket._socket, buffer, buffer_size, 0);
+int jr_socket_receive(jr_socket socket, char* buffer, int buffer_size) {
+    int result = (int)recv(socket._socket, buffer, buffer_size, 0);
     if (result == -1) {
         perror("recv");
         return -1;
@@ -83,9 +84,9 @@ ssize_t jr_socket_receive(jr_socket socket, char* buffer, ssize_t buffer_size) {
     return result;
 }
 
-ssize_t jr_socket_send(jr_socket socket, char* buffer, ssize_t buffer_size) {
+int jr_socket_send(jr_socket socket, char* buffer, int buffer_size) {
     while (buffer_size) {
-        ssize_t result = send(socket._socket, buffer, buffer_size, 0);
+        int result = (int)send(socket._socket, buffer, buffer_size, 0);
         if (result == -1) {
             perror("send");
             return -1;

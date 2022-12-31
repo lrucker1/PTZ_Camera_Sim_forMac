@@ -57,6 +57,10 @@
 
 #define JR_VISCA_MESSAGE_RESET 22
 
+#define JR_VISCA_MESSAGE_CANCEL 23
+
+#define JR_VISCA_MESSAGE_CANCEL_REPLY 24
+
 struct jr_viscaPanTiltPositionInqResponseParameters {
     int16_t panPosition;
     int16_t tiltPosition;

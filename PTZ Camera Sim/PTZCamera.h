@@ -15,19 +15,26 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSInteger tilt;
 @property (readonly) NSInteger pan;
 @property (readonly) NSUInteger zoom;
-@property CGFloat zoomScale;
+@property (readonly) BOOL menuVisible;
+@property (readonly) NSUInteger presetSpeed;
+
+// Utilities to convert to 0,1.0 range for camera view.
+@property (readonly) CGFloat zoomScale;
 @property (readonly) CGFloat panScale, tiltScale;
 
-// Does not affect UI, so it's thread safe.
-@property NSUInteger presetSpeed;
-@property (strong) NSMutableDictionary *scenes;
+// thread-safe visca command support
+- (void)recallAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
+- (void)saveAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
+- (void)applyPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock;
+- (void)cameraHome:(dispatch_block_t)doneBlock;
+- (void)cameraReset:(dispatch_block_t)doneBlock;
+- (void)cameraCancel:(dispatch_block_t)cancelBlock;
+- (void)zoomToPosition:(NSUInteger)zoom;
+- (void)showMenu:(BOOL)visible;
+- (void)applyPresetSpeed:(NSUInteger)speed;
+- (void)setSocketFD:(int)socketFD;
 
-@property dispatch_queue_t recallQueue;
-
-- (void)recallAtIndex:(NSInteger)index;
-- (void)saveAtIndex:(NSInteger)index;
-- (void)applyPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt;
-
+// utilities
 - (void)incPan:(NSUInteger)delta;
 - (void)incTilt:(NSUInteger)delta;
 - (void)decPan:(NSUInteger)delta;
@@ -35,9 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)zoomIn:(NSUInteger)delta;
 - (void)zoomOut:(NSUInteger)delta;
 
-- (void)zoomToPosition:(NSUInteger)zoom;
-- (void)cameraHome;
-- (void)cameraReset;
 @end
 
 NS_ASSUME_NONNULL_END

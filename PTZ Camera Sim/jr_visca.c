@@ -69,8 +69,8 @@ int jr_viscaDataToFrame(uint8_t *data, int dataLength, jr_viscaFrame *frame) {
         return -1;
     }
 
-    // Pretty sure "sender" is "camera number +8", as a few protocol lists mention. But others just list them all as 0x90, and nobody seems to care about "receiver". But cameraNum (address set) is 0x88!
     // First byte is header containing sender and receiver addresses.
+    // Except for Address Set (aka Camera Number) and IFClear(Broadcast), which are 0x88, but they don't apply to visca over IP.
     frame->sender = (data[0] >> 4) & 0x7;
     frame->receiver = data[0] & 0xF;
 
@@ -170,17 +170,18 @@ void jr_visca_handleZoomPositionInqResponseParameters(jr_viscaFrame* frame, unio
 
 void jr_visca_handleAckCompletionParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
     if (isDecodingFrame) {
-        messageParameters->ackCompletionParameters.socketNumber = frame->data[1] & 0xf;
+        messageParameters->ackCompletionParameters.socketNumber = frame->data[0] & 0xf;
     } else {
-        frame->data[1] += messageParameters->ackCompletionParameters.socketNumber;
+        frame->data[0] += messageParameters->ackCompletionParameters.socketNumber;
     }
 }
 
 void jr_visca_handleCameraNumberParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
+    // Request: 88 30 01 FF, reply: 88 30 0w FF, w is 2-8 (camera+1)
     if (isDecodingFrame) {
         messageParameters->cameraNumberParameters.cameraNum = frame->data[1] & 0xf;
     } else {
-        frame->data[1] = messageParameters->cameraNumberParameters.cameraNum;
+        frame->data[1] += messageParameters->cameraNumberParameters.cameraNum;
     }
 }
 
@@ -198,7 +199,7 @@ void jr_visca_handlePresetSpeedParameters(jr_viscaFrame* frame, union jr_viscaMe
         speed = (speed < 1) ? 1 : ((speed > 0x18) ? 0x18 : speed);
         messageParameters->presetSpeedParameters.presetSpeed = speed;
     } else {
-        frame->data[3] += messageParameters->presetSpeedParameters.presetSpeed;
+        frame->data[3] = messageParameters->presetSpeedParameters.presetSpeed;
     }
 }
 
@@ -207,7 +208,7 @@ void jr_visca_handleMemoryParameters(jr_viscaFrame* frame, union jr_viscaMessage
         messageParameters->memoryParameters.memory = frame->data[4] & 0xff;
         messageParameters->memoryParameters.mode = frame->data[3] & 0xff;
     } else {
-        frame->data[4] += messageParameters->memoryParameters.memory;
+        frame->data[4] = messageParameters->memoryParameters.memory;
     }
 }
 
@@ -343,7 +344,7 @@ jr_viscaMessageDefinition definitions[] = {
         &jr_visca_handlePanTiltDriveParameters
     },
     {
-        {0x30, 0x01}, // Request: 88 30 01 FF, reply: 88 30 0w FF, w is 2-8 (camera+1)
+        {0x30, 0x01},
         {0xff, 0xff},
         2,
         JR_VISCA_MESSAGE_CAMERA_NUMBER,
@@ -391,7 +392,20 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_RESET,
         NULL
     },
-    
+    {   // Cancel 81 2z FF - supported by some cameras but apparently not PTZOptics, which returns syntax error instead of cancel reply. But it does interrupt the current operation.
+        {0x20},
+        {0xf0},
+        1,
+        JR_VISCA_MESSAGE_CANCEL,
+        NULL
+    },
+    {
+        {0x60, 0x04},
+        {0xf0, 0xff},
+        2,
+        JR_VISCA_MESSAGE_CANCEL_REPLY,
+        &jr_visca_handleAckCompletionParameters
+    },
     { {}, {}, 0, 0, NULL} // Final definition must have `signatureLength` == 0.
 };
 

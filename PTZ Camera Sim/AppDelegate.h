@@ -22,5 +22,7 @@
 @property (strong) IBOutlet NSClipView *clipView;
 @property (strong) IBOutlet NSScrollView *scrollView;
 
+- (void)writeCameraSnapshot;
+
 @end
 

@@ -28,7 +28,6 @@ typedef struct _jr_server_socket {
     int _serverSocket;
 } jr_server_socket;
 
-
 int jr_socket_setupServerSocket(int port, jr_server_socket *serverSocket);
 
 int jr_socket_accept(jr_server_socket serverSocket, jr_socket *socket);
@@ -39,14 +38,14 @@ int jr_socket_accept(jr_server_socket serverSocket, jr_socket *socket);
  * Returns actual number of bytes received on success, -1 on error, or
  * 0 on an orderly shutdown of the connection.
  */
-ssize_t jr_socket_receive(jr_socket socket, char* buffer, ssize_t buffer_size);
+int jr_socket_receive(jr_socket socket, char* buffer, int buffer_size);
 
 /**
  * Sends all the bytes given in the buffer.
  * 
  * Returns 0 on success, -1 on error.
  */
-ssize_t jr_socket_send(jr_socket socket, char* buffer, ssize_t buffer_size);
+int jr_socket_send(jr_socket socket, char* buffer, int buffer_size);
 
 void jr_socket_closeSocket(jr_socket socket);
 

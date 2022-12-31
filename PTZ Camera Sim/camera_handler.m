@@ -9,12 +9,15 @@
 #include <time.h>
 #include "PTZCamera.h"
 
+#define IP_CAMERA_NUMBER 1
+
 void sendMessage(int messageType, union jr_viscaMessageParameters parameters, jr_socket socket) {
     uint8_t resultData[18];
-    /* Original code assumed everything it sends is a 0x90 reply (0x80 + (frame.sender << 4) + frame.receiver), hardcoded "sender" (camera number) of 1.
-     * but VISCA_set_address is 0x88!
+    /* First byte of Address Set (Camera Num) and IPClear(Broadcast) is 0x88
+     X = 1 to 7: Address of the unit (Locked to “X = 1” for VISCA over IP)
+     Y = 9 to F: Address of the unit +8 (Locked to “Y = 9” for VISCA over IP)
      */
-    uint8_t sender = (messageType == JR_VISCA_MESSAGE_CAMERA_NUMBER) ? 0 : 1;
+    uint8_t sender = (messageType == JR_VISCA_MESSAGE_CAMERA_NUMBER) ? 0 : IP_CAMERA_NUMBER;
     uint8_t receiver = (messageType == JR_VISCA_MESSAGE_CAMERA_NUMBER) ? 8 : 0;
     int dataLength = jr_viscaEncodeMessage(resultData, sizeof(resultData), messageType, parameters, sender, receiver);
     if (dataLength < 0) {
@@ -38,6 +41,24 @@ void sendAckCompletion(uint8_t socketNumber, jr_socket socket) {
     sendMessage(JR_VISCA_MESSAGE_COMPLETION, parameters, socket);
 }
 
+void sendAck(uint8_t socketNumber, jr_socket socket) {
+    union jr_viscaMessageParameters parameters;
+    parameters.ackCompletionParameters.socketNumber = socketNumber;
+    sendMessage(JR_VISCA_MESSAGE_ACK, parameters, socket);
+}
+
+void sendCompletion(uint8_t socketNumber, jr_socket socket) {
+    union jr_viscaMessageParameters parameters;
+    parameters.ackCompletionParameters.socketNumber = socketNumber;
+    sendMessage(JR_VISCA_MESSAGE_COMPLETION, parameters, socket);
+}
+
+void sendCancelReply(uint8_t socketNumber, jr_socket socket) {
+    union jr_viscaMessageParameters parameters;
+    parameters.ackCompletionParameters.socketNumber = socketNumber;
+    sendMessage(JR_VISCA_MESSAGE_CANCEL_REPLY, parameters, socket);
+}
+
 int handle_camera(PTZCamera *camera) {
     jr_server_socket serverSocket;
 
@@ -51,6 +72,8 @@ int handle_camera(PTZCamera *camera) {
         fprintf(stderr, "Accept failed");
         return -2;
     }
+    
+    [camera setSocketFD:serverSocket._serverSocket];
     
     fprintf(stdout, "ready\n");
     
@@ -158,51 +181,63 @@ int handle_camera(PTZCamera *camera) {
                         break;
                     case JR_VISCA_MESSAGE_CAMERA_NUMBER:
                         fprintf(stdout, "camera number inq\n");
-                        response.cameraNumberParameters.cameraNum = 2;
+                        response.cameraNumberParameters.cameraNum = IP_CAMERA_NUMBER;
                         sendMessage(JR_VISCA_MESSAGE_CAMERA_NUMBER, response, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_MEMORY:
                         switch (messageParameters.memoryParameters.mode) {
                             case JR_VISCA_MEMORY_MODE_SET:
                                 fprintf(stdout, "set %d ", messageParameters.memoryParameters.memory);
-                                [camera saveAtIndex:messageParameters.memoryParameters.memory];
-                                break;
+                                sendAck(1, clientSocket);
+                                [camera saveAtIndex:messageParameters.memoryParameters.memory
+                                             onDone:^{sendCompletion(1, clientSocket);}];
+                               break;
                             case JR_VISCA_MEMORY_MODE_RESET:
                                 fprintf(stdout, "reset %d ", messageParameters.memoryParameters.memory);
+                                sendAckCompletion(1, clientSocket);
                                 break;
                             case JR_VISCA_MEMORY_MODE_RECALL:
                                 fprintf(stdout, "recall %d ", messageParameters.memoryParameters.memory);
-                                [camera recallAtIndex:messageParameters.memoryParameters.memory];
+                                sendAck(1, clientSocket);
+                                [camera recallAtIndex:messageParameters.memoryParameters.memory
+                                               onDone:^{sendCompletion(1, clientSocket);}];
                                 break;
                         }
                         fprintf(stdout, "\n");
-                        sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_CLEAR:
                         fprintf(stdout, "clear\n");
-                        sendAckCompletion(1, clientSocket); // actually should just send completion
+                        sendCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_HOME:
                         fprintf(stdout, "home\n");
-                        [camera cameraHome];
-                        sendAckCompletion(1, clientSocket);
+                        sendAck(1, clientSocket);
+                        [camera cameraHome:^{sendAckCompletion(1, clientSocket);}];
+                        sendCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_RESET:
                         fprintf(stdout, "reset\n");
-                        [camera cameraReset];
-                        sendAckCompletion(1, clientSocket);
+                        sendAck(1, clientSocket);
+                        [camera cameraReset:^{sendCompletion(1, clientSocket);}];
+                        break;
+                    case JR_VISCA_MESSAGE_CANCEL:
+                        fprintf(stdout, "cancel\n");
+                        sendAck(1, clientSocket);
+                        [camera cameraCancel:^{sendCancelReply(1, clientSocket);}];
                         break;
                     case JR_VISCA_MESSAGE_PRESET_RECALL_SPEED:
-                        camera.presetSpeed = messageParameters.presetSpeedParameters.presetSpeed;
+                        [camera applyPresetSpeed: messageParameters.presetSpeedParameters.presetSpeed];
                         hex_print(buffer, consumed);
                         fprintf(stdout, "preset speed %lu\n", (unsigned long)camera.presetSpeed);
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ABSOLUTE_PAN_TILT:
+                        sendAck(1, clientSocket);
                         [camera applyPanSpeed:messageParameters.absolutePanTiltPositionParameters.panSpeed
                                     tiltSpeed:messageParameters.absolutePanTiltPositionParameters.tiltSpeed
                                           pan:messageParameters.absolutePanTiltPositionParameters.panPosition
-                                         tilt:messageParameters.absolutePanTiltPositionParameters.tiltPosition];
+                                         tilt:messageParameters.absolutePanTiltPositionParameters.tiltPosition
+                                       onDone:^{sendCompletion(1, clientSocket);}];
                         hex_print(buffer, consumed);
                         fprintf(stdout, "preset speed %lu\n", (unsigned long)camera.presetSpeed);
                         sendAckCompletion(1, clientSocket);

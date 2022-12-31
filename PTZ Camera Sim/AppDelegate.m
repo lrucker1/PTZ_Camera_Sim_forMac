@@ -12,6 +12,11 @@
 
 #define PORT 5678
 
+// Note: by default you don't have write access.
+// See https://www.ddiinnxx.com/setting-web-server-mac-os-x-sierra/
+// and https://www.maketecheasier.com/setup-local-web-server-all-platforms/#web-server-macos
+static NSString *PTZLocalhostImageFile = @"/Library/WebServer/Documents/snapshot.jpg";
+
 static AppDelegate *selfType;
 
 @interface NSAttributedString (PTZAdditions)
@@ -101,6 +106,29 @@ static AppDelegate *selfType;
     return point;
 }
 
+- (void)writeCameraSnapshot {
+    NSImage *camImage = self.imageView.image;
+    NSSize docSize = self.scrollView.documentView.bounds.size;
+    NSSize imgSize = camImage.size;
+    NSRect visRect = self.scrollView.documentVisibleRect;
+    // The scaling to make the image shrink to fit, separate from magnification, which visRect has already dealt with.
+    CGFloat xScale = imgSize.width / docSize.width;
+    CGFloat yScale = imgSize.height / docSize.height;
+
+    visRect.origin = NSMakePoint(visRect.origin.x * xScale, visRect.origin.y * yScale);
+    visRect.size = NSMakeSize(visRect.size.width * xScale, visRect.size.height * yScale);
+    NSImage* image = [[NSImage alloc] initWithSize:docSize];
+    [image lockFocus];
+    NSRect dest = { NSZeroPoint, docSize };
+    [camImage drawInRect:dest fromRect:visRect operation:NSCompositingOperationCopy fraction:1];
+    [image unlockFocus];
+
+    NSData *imageData = [image TIFFRepresentation];
+    NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
+    NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+    imageData = [imageRep representationUsingType:NSBitmapImageFileTypeJPEG properties:imageProps];
+    [imageData writeToFile:PTZLocalhostImageFile atomically:YES];
+}
 
 - (void)updateScrollPosition {
     [self.scrollView.documentView scrollPoint:[self scrollPoint]];
@@ -110,10 +138,15 @@ static AppDelegate *selfType;
     // 0 : all the way out (fullZoom). Max: all the way in.
     CGFloat offset = self.scrollView.minMagnification;
     CGFloat zoom = self.camera.zoomScale * (self.scrollView.maxMagnification - offset);
-    NSRect contentBounds = self.scrollView.contentView.frame;
-    NSPoint centerPoint = NSMakePoint(NSMidX(contentBounds), NSMidY(contentBounds));
+    // Center on the middle of the visible rect. This is so not obvious.
+    NSRect visibleRect = self.scrollView.documentVisibleRect;
+    NSPoint centerPoint = NSMakePoint(NSMidX(visibleRect), NSMidY(visibleRect));
     [self.scrollView setMagnification:offset + zoom centeredAtPoint:centerPoint];
     [self updateScrollPosition];
+}
+
+- (IBAction)cameraHome:(id)sender {
+    [self.camera cameraHome:^{}];
 }
 
 - (IBAction)panLeft:(id)sender {

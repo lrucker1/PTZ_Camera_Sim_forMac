@@ -21,7 +21,6 @@
 		94E8856C2949428800344162 /* jr_visca.c in Sources */ = {isa = PBXBuildFile; fileRef = 94E885692949428800344162 /* jr_visca.c */; };
 		94E8856E294942A000344162 /* camera_handler.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E8856D294942A000344162 /* camera_handler.m */; };
 		94E88572294A552000344162 /* PTZCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E88571294A552000344162 /* PTZCamera.m */; };
-		94E88574294A7DE800344162 /* cameraView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94E88573294A7DE800344162 /* cameraView.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +66,6 @@
 		94E8856F294942D100344162 /* camera_handler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera_handler.h; sourceTree = "<group>"; };
 		94E88570294A552000344162 /* PTZCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTZCamera.h; sourceTree = "<group>"; };
 		94E88571294A552000344162 /* PTZCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PTZCamera.m; sourceTree = "<group>"; };
-		94E88573294A7DE800344162 /* cameraView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cameraView.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +129,6 @@
 				94E885692949428800344162 /* jr_visca.c */,
 				94E885642949428400344162 /* jr_visca.h */,
 				94039E6F294B24E3009FAE39 /* Stanford_Memorial_Church.jpg */,
-				94E88573294A7DE800344162 /* cameraView.jpg */,
 				94E884A72948679600344162 /* Assets.xcassets */,
 				94E884A92948679600344162 /* MainMenu.xib */,
 				94039E6C294B05F1009FAE39 /* PTZClipView.h */,
@@ -262,7 +259,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94E88574294A7DE800344162 /* cameraView.jpg in Resources */,
 				94039E70294B24E3009FAE39 /* Stanford_Memorial_Church.jpg in Resources */,
 				94E884A82948679600344162 /* Assets.xcassets in Resources */,
 				94E884AB2948679600344162 /* MainMenu.xib in Resources */,
