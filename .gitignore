@@ -33,4 +33,7 @@ xcuserdata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
+# Local resource
+Stanford_Memorial_Church.jpg
+
 # End of https://www.gitignore.io/api/xcode

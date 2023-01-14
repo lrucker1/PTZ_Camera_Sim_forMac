@@ -8,7 +8,6 @@
 #import <Quartz/Quartz.h>
 #import "AppDelegate.h"
 #import "camera_handler.h"
-#import "PTZClipView.h"
 
 #define PORT 5678
 
@@ -40,10 +39,21 @@ static AppDelegate *selfType;
 @property (strong) IBOutlet NSTextView *console;
 @property (strong) NSFileHandle* pipeReadHandle;
 @property (strong) NSPipe *pipe;
+@property (copy) NSImage *baseImage;
 
 @end
 
 @implementation AppDelegate
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey: (NSString *)key // IN
+{
+    NSMutableSet *keyPaths = [NSMutableSet set];
+    
+    if (   [key isEqualToString:@"menuFocus"]) {
+        [keyPaths addObject:@"camera.focus"];
+    }
+    return keyPaths;
+}
 
 
 - (void)handlePipeNotification:(NSNotification *)notification {
@@ -63,32 +73,29 @@ static AppDelegate *selfType;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    static NSArray *paths = @[@"camera.zoom", @"camera.pan", @"camera.tilt", @"camera.autofocus", @"camera.focus", @"camera.colorTempIndex", @"camera.wbMode", @"camera.bwMode", @"camera.flipH", @"camera.flipV"];
     // Insert code here to initialize your application
-    [self addObserver:self
-           forKeyPath:@"camera.zoom"
-              options:0
-              context:&selfType];
-    [self addObserver:self
-           forKeyPath:@"camera.pan"
-              options:0
-              context:&selfType];
-    [self addObserver:self
-           forKeyPath:@"camera.tilt"
-              options:0
-              context:&selfType];
-
+    for (NSString *path in paths) {
+        [self addObserver:self
+               forKeyPath:path
+                  options:0
+                  context:&selfType];
+    }
     //  We don't want to zoom all the way out on the image itself, because then there's no room to pan/tilt.
     self.scrollView.minMagnification = 1.1;
     self.scrollView.maxMagnification = 25;
+    self.baseImage = self.imageView.image;
     self.camera = [PTZCamera new];
     [self updateZoomFactor];
 
     [self configConsoleRedirect];
     socketQueue = dispatch_queue_create("socketQueue", NULL);
     dispatch_async(socketQueue, ^{
-        while (1) {
-            handle_camera(self.camera);
-        }
+        int result;
+        do {
+            result = handle_camera(self.camera);
+        } while (result == 0);
+        printf("handle_camera failed, result = %d", result);
     });
 
 }
@@ -106,6 +113,7 @@ static AppDelegate *selfType;
     return point;
 }
 
+// snapshot.jpg resolution options: 1920x1080 960x600 480x300
 - (void)writeCameraSnapshot {
     NSImage *camImage = self.imageView.image;
     NSSize docSize = self.scrollView.documentView.bounds.size;
@@ -145,6 +153,22 @@ static AppDelegate *selfType;
     [self updateScrollPosition];
 }
 
+// Real cameras generate the snapshot.jpg on demand, but it's accessed through the web server (port 80) and we are only simulating the camera port (5678).
+- (IBAction)takeSnapshot:(id)sender {
+    [self writeCameraSnapshot];
+}
+
+// For reasons not immediately apparent (maybe the font?) KVO is treating the value as a string.
+- (NSString *)menuFocus {
+    return [NSString stringWithFormat:@"%d", (int)self.camera.focus];
+}
+
+- (void)setMenuFocus:(NSString *)menuFocusStr {
+    NSInteger menuFocus = [menuFocusStr integerValue];
+    menuFocus = MAX(0, MIN(menuFocus, FOCUS_MAX));
+    [self.camera focusDirect:menuFocus];
+}
+
 - (IBAction)cameraHome:(id)sender {
     [self.camera cameraHome:^{}];
 }
@@ -171,6 +195,58 @@ static AppDelegate *selfType;
 
 - (IBAction)zoomOut:(id)sender {
     [self.camera zoomOut:5];
+}
+
+// To simulate focus vs autofocus, we blur the image.
+- (void)applyImageFilters {
+    BOOL useFocusFilter = self.camera.autofocus == NO && self.camera.focusPixelRadius > 1;
+    BOOL useTempFilter = self.camera.wbMode == WB_MODE_COLOR;
+    BOOL mirrorX = self.camera.flipH;
+    BOOL mirrorY = self.camera.flipV;
+    BOOL useFlipFilter = mirrorX || mirrorY;
+    BOOL useBlackWhiteFilter = self.camera.bwMode;
+    if (!useFocusFilter && !useTempFilter && !useFlipFilter && !useBlackWhiteFilter) {
+        self.imageView.image = [self.baseImage copy];
+        return;
+    }
+    
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CIImage *inputImage = [CIImage imageWithData:[self.baseImage TIFFRepresentation]];
+
+    if (useFocusFilter) {
+        CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
+        [blurFilter setDefaults];
+        [blurFilter setValue:inputImage forKey:@"inputImage"];
+        CGFloat blurLevel = self.camera.focusPixelRadius;
+        [blurFilter setValue:[NSNumber numberWithFloat:blurLevel] forKey:@"inputRadius"];
+        inputImage = [blurFilter valueForKey:@"outputImage"];
+    }
+    if (useTempFilter) {
+        // Tweak it; the image is already warm. Camera range is 2500-8000, filter range is 0-13000
+        NSInteger colorTemp = self.camera.colorTemp+3000;
+
+        CIFilter *tempFilter = [CIFilter filterWithName:@"CITemperatureAndTint"];
+        [tempFilter setDefaults];
+        [tempFilter setValue:inputImage forKey:@"inputImage"];
+        [tempFilter setValue:[CIVector vectorWithX:colorTemp Y:0] forKey:@"inputTargetNeutral"];
+        inputImage = [tempFilter valueForKey:@"outputImage"];
+    }
+    if (useFlipFilter) {
+        inputImage = [inputImage imageByApplyingTransform:CGAffineTransformMakeScale(mirrorX?-1:1, mirrorY?-1:1)];
+        inputImage = [inputImage imageByApplyingTransform:CGAffineTransformMakeTranslation(mirrorX?self.imageView.image.size.width:0, mirrorY?self.imageView.image.size.height:0)];
+    }
+    // CIColorMonochrome for CAM_PictureEffect B&W
+    if (useBlackWhiteFilter) {
+        CIFilter *tempFilter = [CIFilter filterWithName:@"CIColorMonochrome"];
+        [tempFilter setDefaults];
+        [tempFilter setValue:inputImage forKey:@"inputImage"];
+        [tempFilter setValue:[CIColor grayColor] forKey:@"inputColor"];
+        inputImage = [tempFilter valueForKey:@"outputImage"];
+    }
+    CGImageRef cgImage = [context createCGImage:inputImage fromRect:inputImage.extent];
+    self.imageView.image = [[NSImage alloc] initWithCGImage:cgImage size:self.baseImage.size];
+
+    // Create an NSImage with the same size as the original; extent is not the same.
 }
 
 - (void)logError:(NSString *)msg
@@ -238,7 +314,15 @@ static AppDelegate *selfType;
                             context:context];
    } else if ([keyPath isEqualToString:@"camera.zoom"]) {
       [self updateZoomFactor];
-   } else {
+   } else if (   [keyPath isEqualToString:@"camera.autofocus"]
+              || [keyPath isEqualToString:@"camera.focus"]
+              || [keyPath isEqualToString:@"camera.colorTempIndex"]
+              || [keyPath isEqualToString:@"camera.wbMode"]
+              || [keyPath isEqualToString:@"camera.bwMode"]
+              || [keyPath isEqualToString:@"camera.flipH"]
+              || [keyPath isEqualToString:@"camera.flipV"]) {
+      [self applyImageFilters];
+   } else { // pan, tilt.
       [self updateScrollPosition];
    }
 }

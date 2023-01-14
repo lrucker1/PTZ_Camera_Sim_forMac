@@ -8,8 +8,6 @@
 #import <Cocoa/Cocoa.h>
 #import "PTZCamera.h"
 
-@class PTZClipView;
-
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 {
     dispatch_queue_t socketQueue;    

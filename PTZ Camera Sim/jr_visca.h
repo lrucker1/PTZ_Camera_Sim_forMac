@@ -26,10 +26,6 @@
 
 #define JR_VISCA_MESSAGE_PAN_TILT_POSITION_INQ 1
 #define JR_VISCA_MESSAGE_PAN_TILT_POSITION_INQ_RESPONSE 2
-#define JR_VISCA_MESSAGE_ZOOM_POSITION_INQ 3
-#define JR_VISCA_MESSAGE_ZOOM_POSITION_INQ_RESPONSE 4
-#define JR_VISCA_MESSAGE_FOCUS_AUTOMATIC 5
-#define JR_VISCA_MESSAGE_FOCUS_MANUAL 6
 
 #define JR_VISCA_MESSAGE_ACK 7
 #define JR_VISCA_MESSAGE_COMPLETION 8
@@ -39,7 +35,6 @@
 #define JR_VISCA_MESSAGE_ZOOM_WIDE_STANDARD 11
 #define JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE 12
 #define JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE 13
-#define JR_VISCA_MESSAGE_ZOOM_DIRECT 14
 
 #define JR_VISCA_MESSAGE_PAN_TILT_DRIVE 15
 
@@ -59,7 +54,86 @@
 
 #define JR_VISCA_MESSAGE_CANCEL 23
 
-#define JR_VISCA_MESSAGE_CANCEL_REPLY 24
+// Number convention for camera commands [81 01 04] and inqs [81 90 04]
+// Set: 0x8yy, where yy is the cmd ID
+// Inq: 0x9yy
+// Reply: 0x9pyy, where p is 5 for normal (0x50) replies, or 6 if 0x60
+// The code does not care, it just makes debugging and rearranging code easier.
+// Response types:
+//  OneByte: 90 50 0x FF
+//  PQ:      90 50 0p 0q FF
+//  ZZZP:    90 50 00 00 00 0p FF
+//  ZZPQ:    90 50 00 00 0p 0q FF
+//  PQRS:    90 50 0p 0q 0r 0s FF
+// ZZPQ and ZZZP can be treated as PQRS
+#define JR_VISCA_MESSAGE_ERROR_REPLY 0x9601
+#define JR_VISCA_MESSAGE_ONE_BYTE_RESPONSE 0x9501
+#define JR_VISCA_MESSAGE_P_RESPONSE 0x9502
+#define JR_VISCA_MESSAGE_PQ_INQ_RESPONSE 0x9503
+#define JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE 0x9504
+#define JR_VISCA_MESSAGE_ZZZP_INQ_RESPONSE JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE
+#define JR_VISCA_MESSAGE_ZZPQ_INQ_RESPONSE JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE
+
+#define JR_VISCA_MESSAGE_BRIGHT_DIRECT 0x80D
+#define JR_VISCA_MESSAGE_BRIGHT_POS_INQ 0x94D
+
+#define JR_VISCA_MESSAGE_COLOR_TEMP_DIRECT 0x820
+#define JR_VISCA_MESSAGE_COLOR_TEMP_INQ 0x920
+
+#define JR_VISCA_MESSAGE_FLICKER_MODE 0x823
+#define JR_VISCA_MESSAGE_FLICKER_MODE_INQ 0x955
+
+#define JR_VISCA_MESSAGE_GAIN_LIMIT 0x82C
+#define JR_VISCA_MESSAGE_GAIN_LIMIT_INQ 0x92C
+
+#define JR_VISCA_MESSAGE_WB_MODE 0x835
+#define JR_VISCA_MESSAGE_WB_MODE_INQ 0x935
+
+#define JR_VISCA_MESSAGE_FOCUS_AUTOMATIC 0x8382
+#define JR_VISCA_MESSAGE_FOCUS_MANUAL 0x8383
+#define JR_VISCA_MESSAGE_FOCUS_AF_MODE_INQ 0x938
+
+#define JR_VISCA_MESSAGE_AE_MODE 0x839
+#define JR_VISCA_MESSAGE_AE_MODE_INQ 0x939
+
+#define JR_VISCA_MESSAGE_APERTURE_VALUE 0x842
+#define JR_VISCA_MESSAGE_APERTURE_VALUE_INQ 0x942
+
+#define JR_VISCA_MESSAGE_RGAIN_VALUE 0x843
+#define JR_VISCA_MESSAGE_RGAIN_VALUE_INQ 0x943
+
+#define JR_VISCA_MESSAGE_BGAIN_VALUE 0x844
+#define JR_VISCA_MESSAGE_BGAIN_VALUE_INQ 0x944
+
+#define JR_VISCA_MESSAGE_ZOOM_DIRECT 0x847
+#define JR_VISCA_MESSAGE_ZOOM_POSITION_INQ 0x947
+
+#define JR_VISCA_MESSAGE_FOCUS_VALUE 0x848
+#define JR_VISCA_MESSAGE_FOCUS_VALUE_INQ 0x948
+
+#define JR_VISCA_MESSAGE_COLOR_GAIN_DIRECT 0x849
+#define JR_VISCA_MESSAGE_COLOR_GAIN_INQ 0x949
+
+#define JR_VISCA_MESSAGE_COLOR_HUE_DIRECT 0x84F
+#define JR_VISCA_MESSAGE_COLOR_HUE_INQ 0x94F
+
+#define JR_VISCA_MESSAGE_LR_REVERSE 0x861
+#define JR_VISCA_MESSAGE_LR_REVERSE_INQ 0x961
+
+#define JR_VISCA_MESSAGE_PICTURE_EFFECT 0x863
+#define JR_VISCA_MESSAGE_PICTURE_EFFECT_INQ 0x963
+
+#define JR_VISCA_MESSAGE_PICTURE_FLIP 0x866
+#define JR_VISCA_MESSAGE_PICTURE_FLIP_INQ 0x966
+
+#define JR_VISCA_MESSAGE_BRIGHTNESS 0x8A1
+#define JR_VISCA_MESSAGE_BRIGHTNESS_INQ 0x9A1
+
+#define JR_VISCA_MESSAGE_CONTRAST 0x8A2
+#define JR_VISCA_MESSAGE_CONTRAST_INQ 0x9A2
+
+#define JR_VISCA_MESSAGE_AWB_SENS 0x8A9
+#define JR_VISCA_MESSAGE_AWB_SENS_INQ 0x9A9
 
 struct jr_viscaPanTiltPositionInqResponseParameters {
     int16_t panPosition;
@@ -78,13 +152,19 @@ struct jr_viscaAbsolutePanTiltPositionParameters {
     uint8_t tiltSpeed;
 };
 
-
-struct jr_viscaZoomPositionParameters {
-    int16_t zoomPosition;
-};
-
 struct jr_viscaAckCompletionParameters {
     uint8_t socketNumber;
+};
+
+#define JR_VISCA_ERROR_SYNTAX 0x02
+#define JR_VISCA_ERROR_BUFFER_FULL 0x03
+#define JR_VISCA_ERROR_CANCELLED 0x04
+#define JR_VISCA_ERROR_NO_SOCKET 0x05
+#define JR_VISCA_ERROR_NOT_EXECUTABLE 0x41
+
+struct jr_viscaErrorReplyParameters {
+    uint8_t socketNumber;
+    uint8_t errorType;
 };
 
 struct jr_viscaZoomVariableParameters {
@@ -130,10 +210,29 @@ struct jr_viscaPanTiltDriveParameters {
     uint8_t tiltDirection; // JR_VISCA_TILT_DIRECTION_*
 };
 
+#define JR_VISCA_AF_MODE_AUTO 0x02
+#define JR_VISCA_AF_MODE_MANUAL 0x03
+
+#define JR_VISCA_PICTURE_FX_MODE_OFF 0x00
+#define JR_VISCA_PICTURE_FX_MODE_BW 0x04
+
+#define JR_VISCA_ON 0x02
+#define JR_VISCA_OFF 0x03
+#define BOOL_TO_ONOFF(b) ((b) ? JR_VISCA_ON : JR_VISCA_OFF)
+#define ONOFF_TO_BOOL(b) ((b) == JR_VISCA_ON)
+
+struct jr_viscaOneByteParameters {
+    uint8_t byteValue;
+};
+
+struct jr_viscaInt16Parameters {
+    int16_t int16Value;
+};
+
+
 union jr_viscaMessageParameters
 {
     struct jr_viscaPanTiltPositionInqResponseParameters panTiltPositionInqResponseParameters;
-    struct jr_viscaZoomPositionParameters zoomPositionParameters;
     struct jr_viscaZoomVariableParameters zoomVariableParameters;
     struct jr_viscaAckCompletionParameters ackCompletionParameters;
     struct jr_viscaPanTiltDriveParameters panTiltDriveParameters;
@@ -141,6 +240,9 @@ union jr_viscaMessageParameters
     struct jr_viscaMemoryParameters memoryParameters;
     struct jr_viscaPresetSpeedParameters presetSpeedParameters;
     struct jr_viscaAbsolutePanTiltPositionParameters absolutePanTiltPositionParameters;
+    struct jr_viscaOneByteParameters oneByteParameters;
+    struct jr_viscaInt16Parameters int16Parameters;
+    struct jr_viscaErrorReplyParameters errorReplyParameters;
 };
 
 /**

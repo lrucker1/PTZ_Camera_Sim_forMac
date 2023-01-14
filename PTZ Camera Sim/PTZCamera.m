@@ -20,16 +20,47 @@
 
 #define SPEED_MAX 24
 
+
+@interface NSDictionary (PTZ_Sim_Extras)
+- (NSInteger)sim_numberForKey:(NSString *)key ifNil:(NSInteger)value;
+@end
+
+@implementation NSDictionary (PTZ_Sim_Extras)
+- (NSInteger)sim_numberForKey:(NSString *)key ifNil:(NSInteger)value {
+    NSNumber *num = [self objectForKey:key];
+    return num ? [num integerValue]: value;
+}
+@end
+
+@interface PTZCameraScene : NSObject
+// Old firmware saved values
+@property (readwrite) NSInteger tilt;
+@property (readwrite) NSInteger pan;
+@property (readwrite) NSUInteger zoom;
+@property BOOL autofocus;
+// New firmware saved values
+// https://help.ptzoptics.com/support/discussions/topics/13000031504
+
+@end
+
+
 @interface PTZCamera ()
 @property (readwrite) NSInteger tilt;
 @property (readwrite) NSInteger pan;
 @property (readwrite) NSUInteger zoom;
 @property (readwrite) NSUInteger presetSpeed;
+@property (readwrite) NSUInteger focus;
+@property (readwrite) NSUInteger wbMode;
+@property (readwrite) NSUInteger colorTempIndex;
+@property (readwrite) BOOL bwMode;
+@property (readwrite) BOOL flipH;
+@property (readwrite) BOOL flipV;
 
 @property NSUInteger tiltSpeed;
 @property NSUInteger panSpeed;
 @property NSUInteger zoomSpeed;
 @property BOOL menuVisible;
+@property BOOL autofocus;
 @property NSString *ipAddress;
 
 @property BOOL commandRunning;
@@ -37,6 +68,24 @@
 @property (strong) NSMutableDictionary *scenes;
 
 @property dispatch_queue_t recallQueue;
+
+@end
+
+@implementation PTZCameraScene
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
+    self = [super init];
+    if (self) {
+        _pan = [dict[@"pan"] integerValue];
+        _tilt = [dict[@"tilt"] integerValue];
+        _zoom = [dict[@"zoom"] integerValue];
+        _autofocus = [dict[@"autofocus"] boolValue];
+    }
+    return self;
+}
+
+- (NSDictionary *)dictionaryValue {
+    return @{@"pan":@(_pan), @"tilt":@(_tilt), @"zoom": @(_zoom), @"autofocus":@(_autofocus)};
+}
 
 @end
 
@@ -68,8 +117,15 @@
         _panSpeed = 5;
         _tiltSpeed = 5;
         _zoomSpeed = 5;
+        _focus = 80;
+        _autofocus = YES;
         _presetSpeed = SPEED_MAX; // Real camera default
+        _colorTempIndex = 0x37;
         _recallQueue = dispatch_queue_create("recallQueue", NULL);
+        NSDictionary *defaultScenes = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"Scenes"];
+        if (defaultScenes) {
+            _scenes = [NSMutableDictionary dictionaryWithDictionary:defaultScenes];
+        }
     }
     return self;
 }
@@ -124,6 +180,19 @@
     return (t + RANGE_SHIFT) / RANGE_MAX;
 }
 
+// PTZ: 0x00: 2500K ~ 0x37: 8000K
+- (NSUInteger)colorTemp {
+    return (self.colorTempIndex * 100) + 2500;
+}
+
+// Focus Position Direct 81 01 04 48 0p 0q 0r 0s FF
+// Focus Position Inq [81 09 04 48 FF] reply [90 50 0p 0q 0r 0s FF]
+// Convert to a range from 0-20 for the fake camera.
+- (CGFloat)focusPixelRadius {
+    CGFloat f = _focus;
+    return (f / FOCUS_MAX) * 20.0;
+}
+
 - (void)incPan:(NSUInteger)delta {
     NSInteger newPan = self.pan + delta;
     self.pan = MIN(PT_MAX, newPan);
@@ -155,12 +224,26 @@
     self.zoom = MAX(0, newZoom);
 }
 
-- (void)saveAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock {
+- (NSDictionary *)sceneDictionaryValue {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UseOldFirmwareForPresets"]) {
+        return @{@"pan":@(_pan), @"tilt":@(_tilt), @"zoom": @(_zoom), @"autofocus":@(_autofocus)};
+    }
+    return @{@"pan":@(_pan), @"tilt":@(_tilt), @"zoom": @(_zoom), @"autofocus":@(_autofocus), @"focus":@(_focus), @"wbMode":@(_wbMode), @"colorTempIndex":@(_colorTempIndex)};
+}
+
+- (void)writeScenesToDefaults {
+    if (self.scenes != nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:self.scenes forKey:@"Scenes"];
+    }
+}
+
+- (void)cameraSetAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.scenes == nil) {
             self.scenes = [NSMutableDictionary new];
         }
-        [self.scenes setObject:@[@(self.pan), @(self.tilt), @(self.zoom)] forKey:@(index)];
+        [self.scenes setObject:[self sceneDictionaryValue] forKey:[NSString stringWithFormat:@"%ld", (long)index]];
+        [self writeScenesToDefaults];
         [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
         if (doneBlock) {
             doneBlock();
@@ -168,23 +251,29 @@
     });
 }
 
-- (void)getRecallPan:(NSInteger*)pan tilt:(NSInteger*)tilt zoom:(NSInteger*)zoom index:(NSInteger)index {
+// PTZOptics cameras don't return "Completion" if there's no scene to recall. This may be a bug but strictRecallMode will let us find a workaround.
+- (BOOL)strictRecallMode {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"StrictRecallMode"];
+}
+
+- (NSDictionary *)getRecallAtIndex:(NSInteger)index {
+    NSDictionary *data = [self.scenes objectForKey:[NSString stringWithFormat:@"%ld", (long)index]];
     if (index == 0) {
-        if (pan) *pan = 0;
-        if (tilt) *tilt = 0;
-        if (zoom) *zoom = self.zoom;
-        return;
+        if (data == nil) {
+            return @{@"pan":@(0), @"tilt":@(0), @"zoom": @(0), @"autofocus":@(YES), @"focus":@(80), @"wbMode":@(0), @"colorTempIndex":@(0x37)};
+        }
+        return data;
     }
-    NSArray *data = [self.scenes objectForKey:@(index)];
-    if (data == nil) {
-        if (pan) *pan = [[self class] randomPT];
-        if (tilt) *tilt = [[self class] randomPT];
-        if (zoom) *zoom = (random() & 0xFF);
-    } else {
-        if (pan) *pan = [[data objectAtIndex:0] integerValue];
-        if (tilt) *tilt = [[data objectAtIndex:1] integerValue];
-        if (zoom) *zoom = [[data objectAtIndex:2] unsignedIntegerValue];
+    if (data == nil && !self.strictRecallMode) {
+        return @{@"pan":@([[self class] randomPT]), @"tilt":@([[self class] randomPT]), @"zoom": @(random() & 0xFF), @"autofocus":@(YES), @"focus":@(80), @"wbMode":@(0), @"colorTempIndex":@(0x37)};
     }
+    return data;
+}
+
+- (void)focusDirect:(NSUInteger)newFocus {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.focus = MAX(0, MIN(newFocus, FOCUS_MAX));
+    });
 }
 
 - (void)absoluteZoom:(NSUInteger)newZoom {
@@ -205,9 +294,51 @@
     });
 }
 
-- (void)applyPresetSpeed:(NSUInteger)newSpeed {
+- (void)safeSetNumber:(NSInteger)value forKey:(NSString *)key {
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.presetSpeed = newSpeed;
+        [self setValue:@(value) forKey:key];
+    });
+}
+
+- (void)setPictureEffectMode:(NSUInteger)picFX {
+    self.bwMode = (picFX == JR_VISCA_PICTURE_FX_MODE_BW);
+}
+
+- (NSUInteger)pictureEffectMode {
+    return self.bwMode ? JR_VISCA_PICTURE_FX_MODE_BW : JR_VISCA_PICTURE_FX_MODE_OFF;
+}
+
+- (void)setFlipHOnOff:(NSUInteger)flip {
+    self.flipH = ONOFF_TO_BOOL(flip);
+}
+
+- (NSUInteger)flipHOnOff {
+    return BOOL_TO_ONOFF(self.flipH);
+}
+
+- (void)setFlipVOnOff:(NSUInteger)flip {
+    self.flipV = ONOFF_TO_BOOL(flip);
+}
+
+- (NSUInteger)flipVOnOff {
+    return BOOL_TO_ONOFF(self.flipV);
+}
+
+- (void)focusAutomatic {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.autofocus = YES;
+    });
+}
+
+- (void)focusManual {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.autofocus = NO;
+    });
+}
+
+- (void)toggleAutofocus {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.autofocus = !self.autofocus;
     });
 }
 
@@ -394,9 +525,17 @@
 
 - (void)recallAtIndex:(NSInteger)index withSpeed:(NSUInteger)speed onDone:(dispatch_block_t)doneBlock {
     
-    NSInteger targetPan, targetTilt, targetZoom;
-    [self getRecallPan:&targetPan tilt:&targetTilt zoom:&targetZoom index:index];
-    fprintf(stdout, "recall tilt %ld -> %ld, pan %ld -> %ld, zoom %ld -> %ld", (long)self.tilt, (long)targetTilt, (long)self.pan, (long)targetPan, (long)self.zoom, (long)targetZoom);
+    NSDictionary *scene = [self getRecallAtIndex:index];
+    if (scene != nil) {
+        fprintf(stdout, "recall %s", [[scene debugDescription] UTF8String]);
+    } else {
+        fprintf(stdout, "recall failed\n");
+        return; // Yes, without calling the done block. This is emulating a PTZOptics camera bug.
+    }
+
+    NSInteger targetPan = [scene[@"pan"] integerValue];
+    NSInteger targetTilt = [scene[@"tilt"] integerValue];
+    NSInteger targetZoom = [scene[@"zoom"] integerValue];
 
     dispatch_async(_recallQueue, ^{
         self.commandRunning = YES;
@@ -431,6 +570,10 @@
                // fprintf(stdout, "recall tilt %ld pan %ld", self.tilt, self.pan);
             });
         } while (self.cancelBlock == nil && ((self.pan != targetPan) || (self.tilt != targetTilt) || (self.zoom != targetZoom)));
+        self.wbMode = [scene sim_numberForKey:@"wbMode" ifNil:0];
+        self.colorTempIndex = [scene sim_numberForKey:@"colorTempIndex" ifNil:0x37];
+        self.autofocus = [scene sim_numberForKey:@"autofocus" ifNil:YES];
+        self.focus = [scene sim_numberForKey:@"focus" ifNil:80];
         fprintf(stdout, "recall done\n");
         if (self.cancelBlock) {
             dispatch_sync(dispatch_get_main_queue(), self.cancelBlock);
