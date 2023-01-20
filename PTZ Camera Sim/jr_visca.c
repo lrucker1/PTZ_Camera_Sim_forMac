@@ -17,6 +17,14 @@
     along with libjr_visca.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/*
+            Command Packet      Note
+ Inquiry    8X QQ RR ... FF     QQ1) = Command/Inquiry,
+                                RR2) = category code
+ 1) QQ = 01 (Command), 09 (Inquiry)
+ 2) RR = 00 (Interface), 04 (camera 1), 06 (Pan/Tilter)
+ */
+
 #include "jr_visca.h"
 
 #include <string.h>

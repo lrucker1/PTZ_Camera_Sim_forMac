@@ -79,6 +79,7 @@
         _tilt = [dict[@"tilt"] integerValue];
         _zoom = [dict[@"zoom"] integerValue];
         _autofocus = [dict[@"autofocus"] boolValue];
+        // iris default = F2.8 on Sony
     }
     return self;
 }
@@ -305,7 +306,7 @@
 }
 
 - (NSUInteger)pictureEffectMode {
-    return self.bwMode ? JR_VISCA_PICTURE_FX_MODE_BW : JR_VISCA_PICTURE_FX_MODE_OFF;
+    return self.bwMode ? JR_VISCA_PICTURE_FX_MODE_BW : JR_VISCA_PICTURE_FX_MODE_OFF_REPLY;
 }
 
 - (void)setFlipHOnOff:(NSUInteger)flip {

@@ -213,7 +213,19 @@ struct jr_viscaPanTiltDriveParameters {
 #define JR_VISCA_AF_MODE_AUTO 0x02
 #define JR_VISCA_AF_MODE_MANUAL 0x03
 
+/*
+ * You really won't believe this (PTZOptics. Sony supports all the modes)
+ * CAM_PictureEffect Off    81 01 04 63 00 FF
+                     B&W    81 01 04 63 04 FF
+
+ * CAM_PictureEffectModeInq
+ *   Reply          Off 90 50 02 FF
+                    BW  90 50 04 FF
+ * Yes. It's asymmetric.
+ * 02 is "Negative" mode. I think someone got confused.
+ */
 #define JR_VISCA_PICTURE_FX_MODE_OFF 0x00
+#define JR_VISCA_PICTURE_FX_MODE_OFF_REPLY 0x02
 #define JR_VISCA_PICTURE_FX_MODE_BW 0x04
 
 #define JR_VISCA_ON 0x02

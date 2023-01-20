@@ -73,7 +73,7 @@ static AppDelegate *selfType;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    static NSArray *paths = @[@"camera.zoom", @"camera.pan", @"camera.tilt", @"camera.autofocus", @"camera.focus", @"camera.colorTempIndex", @"camera.wbMode", @"camera.bwMode", @"camera.flipH", @"camera.flipV"];
+    NSArray *paths = @[@"camera.zoom", @"camera.pan", @"camera.tilt", @"camera.autofocus", @"camera.focus", @"camera.colorTempIndex", @"camera.wbMode", @"camera.bwMode", @"camera.flipH", @"camera.flipV"];
     // Insert code here to initialize your application
     for (NSString *path in paths) {
         [self addObserver:self
@@ -206,7 +206,9 @@ static AppDelegate *selfType;
     BOOL useFlipFilter = mirrorX || mirrorY;
     BOOL useBlackWhiteFilter = self.camera.bwMode;
     if (!useFocusFilter && !useTempFilter && !useFlipFilter && !useBlackWhiteFilter) {
-        self.imageView.image = [self.baseImage copy];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageView.image = [self.baseImage copy];
+        });
         return;
     }
     
@@ -244,7 +246,9 @@ static AppDelegate *selfType;
         inputImage = [tempFilter valueForKey:@"outputImage"];
     }
     CGImageRef cgImage = [context createCGImage:inputImage fromRect:inputImage.extent];
-    self.imageView.image = [[NSImage alloc] initWithCGImage:cgImage size:self.baseImage.size];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.imageView.image = [[NSImage alloc] initWithCGImage:cgImage size:self.baseImage.size];
+    });
 
     // Create an NSImage with the same size as the original; extent is not the same.
 }

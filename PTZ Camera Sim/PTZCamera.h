@@ -63,7 +63,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)focusAutomatic;
 - (void)focusManual;
 - (void)showMenu:(BOOL)visible;
-- (void)applyPresetSpeed:(NSUInteger)speed;
 - (void)setSocketFD:(int)socketFD;
 
 // utilities
