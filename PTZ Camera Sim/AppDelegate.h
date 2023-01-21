@@ -8,7 +8,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PTZCamera.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate>
 {
     dispatch_queue_t socketQueue;    
 }

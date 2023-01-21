@@ -134,10 +134,50 @@ static AppDelegate *selfType;
     NSData *imageData = [image TIFFRepresentation];
     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+    CFDataRef bookmark = (__bridge CFDataRef)([[NSUserDefaults standardUserDefaults] objectForKey:@"WebServerBookmark"]);
     imageData = [imageRep representationUsingType:NSBitmapImageFileTypeJPEG properties:imageProps];
-    [imageData writeToFile:PTZLocalhostImageFile atomically:YES];
+    if (bookmark == nil) {
+        [self getSandboxPermission:imageData];
+    } else {
+        CFErrorRef error = NULL;
+        Boolean isStale;
+        CFURLRef urlRef = CFURLCreateByResolvingBookmarkData(kCFAllocatorDefault, bookmark, kCFURLBookmarkResolutionWithSecurityScope, nil, NULL, &isStale, &error);
+        if (isStale || error != NULL) {
+            [self getSandboxPermission:imageData];
+        } else {
+            CFURLStartAccessingSecurityScopedResource(urlRef);
+            [imageData writeToFile:PTZLocalhostImageFile atomically:YES];
+            CFURLStopAccessingSecurityScopedResource(urlRef);
+        }
+        CFRelease(urlRef);
+    }
+    
 }
 
+- (void)getSandboxPermission:(NSData *)imageData {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.message = NSLocalizedString(@"Sandbox requires permission to write the image snapshot to /Library/WebServer/Documents.", @"Sandbox Panel message");
+    
+    NSURL *directoryURL = [NSURL fileURLWithPath:[PTZLocalhostImageFile stringByDeletingLastPathComponent]];
+    panel.directoryURL = directoryURL;
+    panel.canChooseFiles = NO;
+    panel.canChooseDirectories = YES;
+    panel.canCreateDirectories = NO;
+    panel.delegate = self;
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSModalResponseOK) {
+            if ([panel.URL isEqualTo:directoryURL]) {
+                 CFErrorRef error = NULL;
+                 CFDataRef bookmark = CFURLCreateBookmarkData(kCFAllocatorDefault, (__bridge CFURLRef)(directoryURL),
+                         kCFURLBookmarkCreationWithSecurityScope, nil, nil, &error);
+                if (error == NULL) {
+                    [[NSUserDefaults standardUserDefaults] setObject:(__bridge id _Nullable)(bookmark) forKey:@"WebServerBookmark"];
+                }
+                [imageData writeToFile:PTZLocalhostImageFile atomically:YES];
+            }
+        }
+   }];
+}
 - (void)updateScrollPosition {
     [self.scrollView.documentView scrollPoint:[self scrollPoint]];
 }
