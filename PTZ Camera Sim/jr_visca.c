@@ -616,7 +616,8 @@ int jr_viscaDecodeFrame(jr_viscaFrame frame, union jr_viscaMessageParameters *me
     while (definitions[i].signatureLength) {
         uint8_t maskedFrame[JR_VISCA_MAX_ENCODED_MESSAGE_DATA_LENGTH - 2];
         _jr_viscaMemAnd(frame.data, definitions[i].signatureMask, maskedFrame, frame.dataLength);
-        if (memcmp(maskedFrame, definitions[i].signature, definitions[i].signatureLength) == 0) {
+        if (   (frame.dataLength == definitions[i].signatureLength)
+            && (memcmp(maskedFrame, definitions[i].signature, definitions[i].signatureLength) == 0)) {
             if (definitions[i].handleParameters != NULL) {
                 definitions[i].handleParameters(&frame, messageParameters, true);
             }

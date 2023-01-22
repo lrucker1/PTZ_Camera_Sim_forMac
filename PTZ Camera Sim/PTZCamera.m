@@ -380,8 +380,12 @@
             break;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.pan = MIN(PT_MIN, MAX(pan, PT_MAX));
-        self.tilt = MIN(PT_MIN, MAX(tilt, PT_MAX));
+        if (panDirection != JR_VISCA_PAN_DIRECTION_STOP) {
+            self.pan = MAX(PT_MIN, MIN(pan, PT_MAX));
+        }
+        if (tiltDirection != JR_VISCA_TILT_DIRECTION_STOP) {
+            self.tilt = MAX(PT_MIN, MIN(tilt, PT_MAX));
+        }
         if (doneBlock) {
             doneBlock();
         }

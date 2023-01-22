@@ -151,10 +151,12 @@ int handle_camera(PTZCamera *camera) {
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_STANDARD:
                         fprintf(stdout, "zoom in standard\n");
+                        [camera relativeZoomIn:1];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_WIDE_STANDARD:
                         fprintf(stdout, "zoom out standard\n");
+                        [camera relativeZoomOut:1];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE:
@@ -167,7 +169,7 @@ int handle_camera(PTZCamera *camera) {
                         [camera relativeZoomOut:messageParameters.zoomVariableParameters.zoomSpeed];
                         sendAckCompletion(1, clientSocket);
                         break;
-                    case JR_VISCA_MESSAGE_PAN_TILT_DRIVE:
+                    case JR_VISCA_MESSAGE_PAN_TILT_DRIVE: {
                         fprintf(stdout, "pan tilt drive: ");
                         switch (messageParameters.panTiltDriveParameters.panDirection) {
                             case JR_VISCA_PAN_DIRECTION_LEFT:
@@ -193,13 +195,13 @@ int handle_camera(PTZCamera *camera) {
                                 break;
                         }
                         [camera relativePanSpeed:messageParameters.panTiltDriveParameters.panSpeed
-                                        tiltSpeed:messageParameters.panTiltDriveParameters.tiltSpeed
-                                         panDirection:messageParameters.panTiltDriveParameters.panDirection
-                                         tiltDirection:messageParameters.panTiltDriveParameters.tiltDirection
-                                       onDone:^{sendCompletion(1, clientSocket);}];
+                                       tiltSpeed:messageParameters.panTiltDriveParameters.tiltSpeed
+                                    panDirection:messageParameters.panTiltDriveParameters.panDirection
+                                   tiltDirection:messageParameters.panTiltDriveParameters.tiltDirection
+                                          onDone:^{sendCompletion(1, clientSocket);}];
                         fprintf(stdout, "\n");
                         sendAckCompletion(1, clientSocket);
-
+                        }
                         break;
                     case JR_VISCA_MESSAGE_CAMERA_NUMBER:
                         fprintf(stdout, "camera number inq\n");
@@ -208,7 +210,8 @@ int handle_camera(PTZCamera *camera) {
                         break;
                     case JR_VISCA_MESSAGE_MEMORY:
                         if (messageParameters.memoryParameters.memory == 95) {
-                            // This is toggle menu. No really. That's what the doc says, that's how real cameras work. Despite the doc, memory params above 90 don't even work.
+                            // PTZOptics cameras: This is toggle menu. No really. That's what the doc says, that's how real cameras work. Hidden in the support website, it mentions that presets 90-99 are reserved.
+                            // Other cameras: ???
                             fprintf(stdout, "toggle menu\n");
                             [camera toggleMenu];
                             sendAckCompletion(1, clientSocket);
