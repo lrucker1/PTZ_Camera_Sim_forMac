@@ -213,11 +213,11 @@ void jr_visca_handleCameraNumberParameters(jr_viscaFrame* frame, union jr_viscaM
     }
 }
 
-void jr_visca_handleZoomVariableParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
+void jr_visca_handleZoomFocusVariableParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
     if (isDecodingFrame) {
-        messageParameters->zoomVariableParameters.zoomSpeed = frame->data[3] & 0xf;
+        messageParameters->oneByteParameters.byteValue = frame->data[3] & 0xf;
     } else {
-        frame->data[3] += messageParameters->zoomVariableParameters.zoomSpeed;
+        frame->data[3] += messageParameters->oneByteParameters.byteValue;
     }
 }
 
@@ -444,14 +444,31 @@ jr_viscaMessageDefinition definitions[] = {
         {0xff, 0xff, 0xff, 0xf0},
         4,
         JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE,
-        &jr_visca_handleZoomVariableParameters
+        &jr_visca_handleZoomFocusVariableParameters
     },
     {
         {0x01, 0x04, 0x07, 0x30},
         {0xff, 0xff, 0xff, 0xf0},
         4,
         JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE,
-        &jr_visca_handleZoomVariableParameters
+        &jr_visca_handleZoomFocusVariableParameters
+    },
+    MESSAGE_SUBCOMMAND_SET(0x08, 0x00, JR_VISCA_MESSAGE_FOCUS_STOP),
+    MESSAGE_SUBCOMMAND_SET(0x08, 0x02, JR_VISCA_MESSAGE_FOCUS_FAR_STANDARD),
+    MESSAGE_SUBCOMMAND_SET(0x08, 0x03, JR_VISCA_MESSAGE_FOCUS_NEAR_STANDARD),
+    {
+        {0x01, 0x04, 0x08, 0x20},
+        {0xff, 0xff, 0xff, 0xf0},
+        4,
+        JR_VISCA_MESSAGE_FOCUS_FAR_VARIABLE,
+        &jr_visca_handleZoomFocusVariableParameters
+    },
+    {
+        {0x01, 0x04, 0x08, 0x30},
+        {0xff, 0xff, 0xff, 0xf0},
+        4,
+        JR_VISCA_MESSAGE_FOCUS_NEAR_VARIABLE,
+        &jr_visca_handleZoomFocusVariableParameters
     },
     // Pan_TiltDrive
     {
@@ -517,6 +534,20 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_CANCEL,
         NULL
     },
+    {   // CAM_OSD Menu Enter 81 01 06 06 05 FF
+        {0x01, 0x06, 0x06, 0x05},
+        {0xff, 0xff, 0xff, 0xff},
+        4,
+        JR_VISCA_MESSAGE_MENU_ENTER,
+        NULL
+    },
+    {   // CAM_OSD Menu Return 81 01 06 06 04 FF
+        {0x01, 0x06, 0x06, 0x05},
+        {0xff, 0xff, 0xff, 0xff},
+        4,
+        JR_VISCA_MESSAGE_MENU_RETURN,
+        NULL
+    },
     {
         {0x60, 0x00},
         {0xf0, 0x00},
@@ -570,6 +601,12 @@ jr_viscaMessageDefinition definitions[] = {
     // p: Color Gain setting 0h (60%) to Eh (200%)
     MESSAGE_PQRS_VALUE_SET(0x49, JR_VISCA_MESSAGE_COLOR_GAIN_DIRECT),
     MESSAGE_INQ(0x49, JR_VISCA_MESSAGE_COLOR_GAIN_INQ),
+    // CAM_Shutter Direct 81 01 04 4A 00 00 0p 0q FF
+    MESSAGE_PQRS_VALUE_SET(0x4A, JR_VISCA_MESSAGE_SHUTTER_VALUE),
+    MESSAGE_INQ(0x4A, JR_VISCA_MESSAGE_SHUTTER_VALUE_INQ),
+    // Iris Direct 81 01 04 4B 00 00 0p 0q FF
+    MESSAGE_PQRS_VALUE_SET(0x4B, JR_VISCA_MESSAGE_IRIS_VALUE),
+    MESSAGE_INQ(0x4B, JR_VISCA_MESSAGE_IRIS_VALUE_INQ),
     // CAM_ColorHue Direct 81 01 04 4F 00 00 00 0p FF
     // p: Color Hue setting 0h (− 14 dgrees) to Eh ( +14 degrees)
     MESSAGE_PQRS_VALUE_SET(0x4F, JR_VISCA_MESSAGE_COLOR_HUE_DIRECT),
@@ -590,8 +627,8 @@ jr_viscaMessageDefinition definitions[] = {
     MESSAGE_PQRS_VALUE_SET(0xA1, JR_VISCA_MESSAGE_BRIGHTNESS),
     MESSAGE_INQ(0xA1, JR_VISCA_MESSAGE_BRIGHTNESS_INQ),
     // CAM_Contrast Direct 81 01 04 A2 00 00 0p 0q FF
-    MESSAGE_PQRS_VALUE_SET(0xA1, JR_VISCA_MESSAGE_CONTRAST),
-    MESSAGE_INQ(0xA1, JR_VISCA_MESSAGE_CONTRAST_INQ),
+    MESSAGE_PQRS_VALUE_SET(0xA2, JR_VISCA_MESSAGE_CONTRAST),
+    MESSAGE_INQ(0xA2, JR_VISCA_MESSAGE_CONTRAST_INQ),
     // CAM_AWBSensitivity 81 01 04 A9 xx FF
     // xx is 00=high 01=normal 02=low
     MESSAGE_ONE_BYTE_VALUE_SET(0xA9, JR_VISCA_MESSAGE_AWB_SENS),

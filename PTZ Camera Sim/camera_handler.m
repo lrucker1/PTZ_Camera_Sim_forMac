@@ -24,9 +24,11 @@ void sendMessage(int messageType, union jr_viscaMessageParameters parameters, jr
         fprintf(stderr, "error converting frame to data\n");
         return;
     }
+#if 0 // TODO: a pref for logging sends
      printf("send: ");
      hex_print((char*)resultData, dataLength);
      printf("\n");
+#endif
 
     if (jr_socket_send(socket, (char*)resultData, dataLength) == -1) {
         fprintf(stderr, "error sending response\n");
@@ -140,6 +142,26 @@ int handle_camera(PTZCamera *camera) {
                         response.int16Parameters.int16Value = camera.focus;
                         sendMessage(JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE, response, clientSocket);
                         break;
+                    case JR_VISCA_MESSAGE_BRIGHTNESS:
+                        SET_CAM_VALUE(@"brightness", messageParameters.int16Parameters.int16Value);
+                        fprintf(stdout, "brightness 0x%hx\n", messageParameters.int16Parameters.int16Value);
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                   case JR_VISCA_MESSAGE_BRIGHTNESS_INQ:
+                        fprintf(stdout, "brightness inq\n");
+                        response.int16Parameters.int16Value = camera.brightness;
+                        sendMessage(JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE, response, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_CONTRAST:
+                        SET_CAM_VALUE(@"contrast", messageParameters.int16Parameters.int16Value);
+                        fprintf(stdout, "contrast 0x%hx\n", messageParameters.int16Parameters.int16Value);
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_CONTRAST_INQ:
+                        fprintf(stdout, "contrast inq\n");
+                        response.int16Parameters.int16Value = camera.contrast;
+                        sendMessage(JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE, response, clientSocket);
+                        break;
                     case JR_VISCA_MESSAGE_ZOOM_DIRECT:
                         fprintf(stdout, "zoom direct to position %x\n", messageParameters.int16Parameters.int16Value);
                         [camera absoluteZoom:messageParameters.int16Parameters.int16Value];
@@ -159,18 +181,43 @@ int handle_camera(PTZCamera *camera) {
                         [camera relativeZoomOut:1];
                         sendAckCompletion(1, clientSocket);
                         break;
+                    case JR_VISCA_MESSAGE_FOCUS_FAR_VARIABLE:
+                        fprintf(stdout, "focus far at %x\n", messageParameters.oneByteParameters.byteValue);
+                        [camera relativeFocusFar:messageParameters.oneByteParameters.byteValue];
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_FOCUS_NEAR_VARIABLE:
+                        fprintf(stdout, "focus near at %x\n", messageParameters.oneByteParameters.byteValue);
+                        [camera relativeFocusNear:messageParameters.oneByteParameters.byteValue];
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_FOCUS_STOP:
+                        fprintf(stdout, "focus stop\n");
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_FOCUS_FAR_STANDARD:
+                        fprintf(stdout, "focus far standard\n");
+                        [camera relativeFocusFar:1];
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_FOCUS_NEAR_STANDARD:
+                        fprintf(stdout, "focus near standard\n");
+                        [camera relativeFocusNear:1];
+                        sendAckCompletion(1, clientSocket);
+                        break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE:
-                        fprintf(stdout, "zoom in at %x\n", messageParameters.zoomVariableParameters.zoomSpeed);
-                        [camera relativeZoomIn:messageParameters.zoomVariableParameters.zoomSpeed];
+                        fprintf(stdout, "zoom in at %x\n", messageParameters.oneByteParameters.byteValue);
+                        [camera relativeZoomIn:messageParameters.oneByteParameters.byteValue];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE:
-                        fprintf(stdout, "zoom out at %x\n", messageParameters.zoomVariableParameters.zoomSpeed);
-                        [camera relativeZoomOut:messageParameters.zoomVariableParameters.zoomSpeed];
+                        fprintf(stdout, "zoom out at %x\n", messageParameters.oneByteParameters.byteValue);
+                        [camera relativeZoomOut:messageParameters.oneByteParameters.byteValue];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_PAN_TILT_DRIVE: {
-                        fprintf(stdout, "pan tilt drive: ");
+                        fprintf(stdout, "pan tilt drive: pan 0x%hx tilt 0x%hx", messageParameters.panTiltDriveParameters.panSpeed,
+                                messageParameters.panTiltDriveParameters.tiltSpeed);
                         switch (messageParameters.panTiltDriveParameters.panDirection) {
                             case JR_VISCA_PAN_DIRECTION_LEFT:
                                 fprintf(stdout, "left %d ", messageParameters.panTiltDriveParameters.panSpeed);
@@ -257,7 +304,15 @@ int handle_camera(PTZCamera *camera) {
                         sendAck(1, clientSocket);
                         [camera cameraCancel:^{sendErrorReply(1, clientSocket, JR_VISCA_ERROR_CANCELLED);}];
                         break;
-                    case JR_VISCA_MESSAGE_PRESET_RECALL_SPEED:
+                    case JR_VISCA_MESSAGE_MENU_ENTER:
+                        fprintf(stdout, "menuEnter\n");
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_MENU_RETURN:
+                        fprintf(stdout, "menuEnter\n");
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                   case JR_VISCA_MESSAGE_PRESET_RECALL_SPEED:
                         SET_CAM_VALUE(@"presetSpeed", messageParameters.presetSpeedParameters.presetSpeed);
                         hex_print(buffer, consumed);
                         fprintf(stdout, "preset speed %hhu\n", messageParameters.presetSpeedParameters.presetSpeed);
@@ -354,11 +409,51 @@ int handle_camera(PTZCamera *camera) {
                         fprintf(stdout, "AWB Sens value= %d\n",  messageParameters.oneByteParameters.byteValue);
                         sendAckCompletion(1, clientSocket);
                         break;
-                    case JR_VISCA_MESSAGE_APERTURE_VALUE_INQ:
+                    case JR_VISCA_MESSAGE_AE_MODE:
+                        SET_CAM_VALUE(@"aeMode", messageParameters.oneByteParameters.byteValue);
+                            fprintf(stdout, "AE mode %lu\n", (unsigned long)messageParameters.oneByteParameters.byteValue);
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                   case JR_VISCA_MESSAGE_AE_MODE_INQ:
+                        fprintf(stdout, "AE Mode inq\n");
+                        response.oneByteParameters.byteValue = camera.aeMode;
+                        sendMessage(JR_VISCA_MESSAGE_ONE_BYTE_RESPONSE, response, clientSocket);
+                        break;
+                   case JR_VISCA_MESSAGE_APERTURE_VALUE_INQ:
                         fprintf(stdout, "Aperture inq\n");
                         response.int16Parameters.int16Value = camera.aperture;
                         sendMessage(JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE, response, clientSocket);
                         break;
+                    case JR_VISCA_MESSAGE_SHUTTER_VALUE:
+                        SET_CAM_VALUE(@"shutter", messageParameters.int16Parameters.int16Value);
+                        fprintf(stdout, "Shutter 0x%hx\n", messageParameters.int16Parameters.int16Value);
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                   case JR_VISCA_MESSAGE_SHUTTER_VALUE_INQ:
+                        response.int16Parameters.int16Value = camera.shutter;
+                        fprintf(stdout, "Shutter inq 0x%x\n", messageParameters.int16Parameters.int16Value);
+                        sendMessage(JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE, response, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_IRIS_VALUE:
+                        SET_CAM_VALUE(@"iris", messageParameters.int16Parameters.int16Value);
+                        fprintf(stdout, "iris 0x%hx\n", messageParameters.int16Parameters.int16Value);
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_IRIS_VALUE_INQ:
+                        fprintf(stdout, "Iris inq\n");
+                        response.int16Parameters.int16Value = camera.iris;
+                        sendMessage(JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE, response, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_BRIGHT_DIRECT:
+                        SET_CAM_VALUE(@"brightPos", messageParameters.int16Parameters.int16Value);
+                        fprintf(stdout, "bright 0x%hx\n", messageParameters.int16Parameters.int16Value);
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_BRIGHT_POS_INQ:
+                         fprintf(stdout, "BrightPos inq\n");
+                         response.int16Parameters.int16Value = camera.brightPos;
+                         sendMessage(JR_VISCA_MESSAGE_PQRS_INQ_RESPONSE, response, clientSocket);
+                         break;
                     case JR_VISCA_MESSAGE_BGAIN_VALUE_INQ:
                         fprintf(stdout, "Blue Gain inq\n");
                         response.int16Parameters.int16Value = camera.bGain;
@@ -386,18 +481,19 @@ int handle_camera(PTZCamera *camera) {
                         break;
 
                     default:
-                        // Sent by PTZOptics:
-                        // 81 01 06 06 05 ff - OSD/Menu Enter
-                        // 81 01 06 06 04 ff - OSD/Menu Return
                         {
                         BOOL unknown = messageType < 0;
                         fprintf(stdout, "%s: (0x%X) ", (unknown ? "unknown" : "unhandled"), messageType);
                         hex_print(buffer, consumed);
                         fprintf(stdout, "\n");
+#if 0
                         sendAck(1, clientSocket);
                         [camera cameraCancel:^{sendErrorReply(1, clientSocket, unknown ? JR_VISCA_ERROR_SYNTAX : JR_VISCA_ERROR_NOT_EXECUTABLE);}];
+#else
+                        sendAckCompletion(1, clientSocket);
+#endif
                         }
-                       break;
+                        break;
                 }
                 
                 count -= consumed;

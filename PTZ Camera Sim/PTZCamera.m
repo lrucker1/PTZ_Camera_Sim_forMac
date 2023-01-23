@@ -225,11 +225,24 @@
     self.zoom = MAX(0, newZoom);
 }
 
+- (NSArray *)presetKeys {
+    return @[@"pan", @"tilt", @"zoom", @"presetSpeed", @"focus", @"wbMode", @"colorTempIndex", @"pictureEffectMode", @"flipHOnOff", @"flipVOnOff", @"autofocus"];
+}
+
 - (NSDictionary *)sceneDictionaryValue {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"UseOldFirmwareForPresets"]) {
+        
         return @{@"pan":@(_pan), @"tilt":@(_tilt), @"zoom": @(_zoom), @"autofocus":@(_autofocus)};
     }
-    return @{@"pan":@(_pan), @"tilt":@(_tilt), @"zoom": @(_zoom), @"autofocus":@(_autofocus), @"focus":@(_focus), @"wbMode":@(_wbMode), @"colorTempIndex":@(_colorTempIndex)};
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    NSArray *keys = [self presetKeys];
+    for (NSString *key in keys) {
+        id obj = [self valueForKey:key];
+        if (obj) {
+            [dictionary setObject:obj forKey:key];
+        }
+    }
+    return dictionary;
 }
 
 - (void)writeScenesToDefaults {
@@ -277,21 +290,35 @@
     });
 }
 
+- (void)relativeFocusFar:(NSUInteger)delta {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSInteger newFocus = self.focus + delta;
+        self.focus = MAX(0, MIN(newFocus, FOCUS_MAX));
+    });
+}
+
+- (void)relativeFocusNear:(NSUInteger)delta {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSInteger newFocus = self.focus - delta;
+        self.focus = MAX(0, MIN(newFocus, FOCUS_MAX));
+    });
+}
+
 - (void)absoluteZoom:(NSUInteger)newZoom {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.zoom = MAX(0, MIN(newZoom, ZOOM_MAX));
     });
 }
 
-- (void)relativeZoomIn:(NSUInteger)zoomDelta {
+- (void)relativeZoomIn:(NSUInteger)delta {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self zoomIn:zoomDelta];
+        [self zoomIn:delta];
     });
 }
 
-- (void)relativeZoomOut:(NSUInteger)zoomDelta {
+- (void)relativeZoomOut:(NSUInteger)delta {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self zoomOut:zoomDelta];
+        [self zoomOut:delta];
     });
 }
 
@@ -355,7 +382,44 @@
     });
 }
 
+/* Doc says osd menu navigation uses exact same command structure as relative PanTilt, except with magic numbers for the speed:
+ Navigate Up 81 01 06 01 0E 0E 03 01 FF
+ PanTilt  Up 81 01 06 01 VV WW 03 01 FF
+ 
+ But the PTZOptics app doesn't send the magic numbers - and they're legit speeds, anyway - so I think the camera is modal.
+ That explains why the Home button doesn't work like the center button on the remote.
+ */
+- (void)navigateMenuPanDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection {
+    // Only one of left/right and up/down should be set.
+    // I used to translate events into keyboard navigation in my day job. That's why I'm not doing it now.
+    switch (panDirection) {
+        case JR_VISCA_PAN_DIRECTION_LEFT:
+            fprintf(stdout, "\nMenu Left");
+            break;
+        case JR_VISCA_PAN_DIRECTION_RIGHT:
+            fprintf(stdout, "\nMenu Right");
+            break;
+        case JR_VISCA_PAN_DIRECTION_STOP:
+            break;
+    }
+
+    switch (tiltDirection) {
+        case JR_VISCA_TILT_DIRECTION_DOWN:
+            fprintf(stdout, "\nMenu Down");
+            break;
+        case JR_VISCA_TILT_DIRECTION_UP:
+            fprintf(stdout, "\nMenu Up");
+            break;
+        case JR_VISCA_TILT_DIRECTION_STOP:
+            break;
+    }
+}
+
 - (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock {
+    if (self.menuVisible) {
+        [self navigateMenuPanDirection:panDirection tiltDirection:tiltDirection];
+        return;
+    }
     NSInteger pan = self.pan;
     NSInteger tilt = self.tilt;
     switch (panDirection) {
@@ -537,7 +601,16 @@
         fprintf(stdout, "recall failed\n");
         return; // Yes, without calling the done block. This is emulating a PTZOptics camera bug.
     }
-
+    
+    NSMutableArray *keys = [NSMutableArray arrayWithArray:[scene allKeys]];
+    [keys removeObjectsInArray:@[@"pan", @"tilt", @"zoom"]];
+    
+    for (NSString *key in keys) {
+        id obj = [scene objectForKey:key];
+        if (obj) {
+            [self setValue:obj forKey:key];
+        }
+    }
     NSInteger targetPan = [scene[@"pan"] integerValue];
     NSInteger targetTilt = [scene[@"tilt"] integerValue];
     NSInteger targetZoom = [scene[@"zoom"] integerValue];
@@ -575,10 +648,10 @@
                // fprintf(stdout, "recall tilt %ld pan %ld", self.tilt, self.pan);
             });
         } while (self.cancelBlock == nil && ((self.pan != targetPan) || (self.tilt != targetTilt) || (self.zoom != targetZoom)));
-        self.wbMode = [scene sim_numberForKey:@"wbMode" ifNil:0];
-        self.colorTempIndex = [scene sim_numberForKey:@"colorTempIndex" ifNil:0x37];
-        self.autofocus = [scene sim_numberForKey:@"autofocus" ifNil:YES];
-        self.focus = [scene sim_numberForKey:@"focus" ifNil:80];
+//        self.wbMode = [scene sim_numberForKey:@"wbMode" ifNil:0];
+//        self.colorTempIndex = [scene sim_numberForKey:@"colorTempIndex" ifNil:0x37];
+//        self.autofocus = [scene sim_numberForKey:@"autofocus" ifNil:YES];
+//        self.focus = [scene sim_numberForKey:@"focus" ifNil:80];
         fprintf(stdout, "recall done\n");
         if (self.cancelBlock) {
             dispatch_sync(dispatch_get_main_queue(), self.cancelBlock);

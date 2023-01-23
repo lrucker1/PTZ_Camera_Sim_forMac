@@ -36,6 +36,7 @@
 #define JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE 12
 #define JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE 13
 
+// PTZOptics: JR_VISCA_MESSAGE_PAN_TILT_DRIVE navigates the menu when it's up.
 #define JR_VISCA_MESSAGE_PAN_TILT_DRIVE 15
 
 #define JR_VISCA_MESSAGE_CAMERA_NUMBER 16
@@ -53,6 +54,22 @@
 #define JR_VISCA_MESSAGE_RESET 22
 
 #define JR_VISCA_MESSAGE_CANCEL 23
+
+// PTZOptics toggle is JR_VISCA_MESSAGE_MEMORY preset #95. No really.
+#define JR_VISCA_MESSAGE_MENU_ENTER 24
+
+#define JR_VISCA_MESSAGE_MENU_RETURN 25
+
+#define JR_VISCA_MESSAGE_FOCUS_STOP 26
+#define JR_VISCA_MESSAGE_FOCUS_FAR_STANDARD 27
+#define JR_VISCA_MESSAGE_FOCUS_NEAR_STANDARD 28
+#define JR_VISCA_MESSAGE_FOCUS_FAR_VARIABLE 29
+#define JR_VISCA_MESSAGE_FOCUS_NEAR_VARIABLE 30
+
+
+// Sony: 8x 01 06 06 pp FF : 02/03/10 on/off/toggle
+//       8x 01 7E 01 02 00 01 FF : Enter
+// If you want to emulate a Sony, this is your TODO message
 
 // Number convention for camera commands [81 01 04] and inqs [81 90 04]
 // Set: 0x8yy, where yy is the cmd ID
@@ -114,6 +131,12 @@
 #define JR_VISCA_MESSAGE_COLOR_GAIN_DIRECT 0x849
 #define JR_VISCA_MESSAGE_COLOR_GAIN_INQ 0x949
 
+#define JR_VISCA_MESSAGE_SHUTTER_VALUE 0x84A
+#define JR_VISCA_MESSAGE_SHUTTER_VALUE_INQ 0x94A
+
+#define JR_VISCA_MESSAGE_IRIS_VALUE 0x84B
+#define JR_VISCA_MESSAGE_IRIS_VALUE_INQ 0x94B
+
 #define JR_VISCA_MESSAGE_COLOR_HUE_DIRECT 0x84F
 #define JR_VISCA_MESSAGE_COLOR_HUE_INQ 0x94F
 
@@ -166,12 +189,6 @@ struct jr_viscaErrorReplyParameters {
     uint8_t socketNumber;
     uint8_t errorType;
 };
-
-struct jr_viscaZoomVariableParameters {
-    // 0-7, 0=slowest, 7=fastest
-    uint8_t zoomSpeed;
-};
-
 
 struct jr_viscaPresetSpeedParameters {
     // 1-0x18
@@ -245,7 +262,6 @@ struct jr_viscaInt16Parameters {
 union jr_viscaMessageParameters
 {
     struct jr_viscaPanTiltPositionInqResponseParameters panTiltPositionInqResponseParameters;
-    struct jr_viscaZoomVariableParameters zoomVariableParameters;
     struct jr_viscaAckCompletionParameters ackCompletionParameters;
     struct jr_viscaPanTiltDriveParameters panTiltDriveParameters;
     struct jr_viscaCameraNumberParameters cameraNumberParameters;

@@ -30,7 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSUInteger pictureEffectMode;
 @property (readonly) NSUInteger flipHOnOff;
 @property (readonly) NSUInteger flipVOnOff;
-@property (readonly) NSUInteger aperture;
+@property (readonly) NSUInteger aeMode;     // 39
+@property (readonly) NSUInteger aperture;   // 42
+@property (readonly) NSUInteger shutter;    // 4A
+@property (readonly) NSUInteger iris;       // 4B
+@property (readonly) NSUInteger brightPos;  // 4D
+@property (readonly) NSUInteger brightness; // A1
+@property (readonly) NSUInteger contrast;   // A2
 @property (readonly) NSUInteger bGain;
 @property (readonly) NSUInteger rGain;
 @property (readonly) NSUInteger colorgain;
@@ -54,9 +60,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cameraReset:(dispatch_block_t)doneBlock;
 - (void)cameraCancel:(dispatch_block_t)cancelBlock;
 - (void)absoluteZoom:(NSUInteger)zoom;
-- (void)relativeZoomIn:(NSUInteger)zoomDelta;
-- (void)relativeZoomOut:(NSUInteger)zoomDelta;
+- (void)relativeZoomIn:(NSUInteger)delta;
+- (void)relativeZoomOut:(NSUInteger)delta;
 - (void)focusDirect:(NSUInteger)focus;
+- (void)relativeFocusFar:(NSUInteger)delta;
+- (void)relativeFocusNear:(NSUInteger)delta;
 
 - (void)toggleMenu;
 - (void)toggleAutofocus;
