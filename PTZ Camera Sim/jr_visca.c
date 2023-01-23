@@ -23,6 +23,8 @@
                                 RR2) = category code
  1) QQ = 01 (Command), 09 (Inquiry)
  2) RR = 00 (Interface), 04 (camera 1), 06 (Pan/Tilter)
+ Sony also has a camera 2 0x07
+ Macros: 04 COMMAND, 06 SYSCMD
  */
 
 #include "jr_visca.h"
@@ -213,24 +215,6 @@ void jr_visca_handleCameraNumberParameters(jr_viscaFrame* frame, union jr_viscaM
     }
 }
 
-void jr_visca_handleZoomFocusVariableParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
-    if (isDecodingFrame) {
-        messageParameters->oneByteParameters.byteValue = frame->data[3] & 0xf;
-    } else {
-        frame->data[3] += messageParameters->oneByteParameters.byteValue;
-    }
-}
-
-void jr_visca_handlePresetSpeedParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
-    if (isDecodingFrame) {
-        uint8_t speed = frame->data[3] & 0xff;
-        speed = (speed < 1) ? 1 : ((speed > 0x18) ? 0x18 : speed);
-        messageParameters->presetSpeedParameters.presetSpeed = speed;
-    } else {
-        frame->data[3] = messageParameters->presetSpeedParameters.presetSpeed;
-    }
-}
-
 void jr_visca_handleMemoryParameters(jr_viscaFrame* frame, union jr_viscaMessageParameters *messageParameters, bool isDecodingFrame) {
     if (isDecodingFrame) {
         messageParameters->memoryParameters.memory = frame->data[4] & 0xff;
@@ -313,7 +297,7 @@ void jr_visca_handlePCommandParameters(jr_viscaFrame* frame, union jr_viscaMessa
     if (isDecodingFrame) {
         messageParameters->oneByteParameters.byteValue = frame->data[3] & 0x0f;
     } else {
-        frame->data[3] = messageParameters->oneByteParameters.byteValue;
+        frame->data[3] += messageParameters->oneByteParameters.byteValue;
     }
 }
 
@@ -371,6 +355,53 @@ void jr_visca_handlePCommandParameters(jr_viscaFrame* frame, union jr_viscaMessa
     NULL                            \
 }
 
+// Subcommands in the form Sp, where S is the command
+// See also MESSAGE_P_VALUE_SET
+#define MESSAGE_SUBCOMMAND_P_VALUE_SET(_cmd, _sub, _enum)   \
+{                                   \
+    {0x01, 0x04, (_cmd), (_sub)},   \
+    {0xff, 0xff, 0xff, 0xf0},       \
+    4,                              \
+    (_enum),                        \
+    jr_visca_handlePCommandParameters   \
+}
+
+#define SYSCMD_INQ(_cmd, _enum)     \
+{                                   \
+    {0x09, 0x06, (_cmd)},           \
+    {0xff, 0xff, 0xff},             \
+    3,                              \
+    (_enum),                        \
+    NULL                            \
+}
+
+#define SYSCMD_SET(_cmd, _enum)     \
+{                                   \
+    {0x01, 0x06, (_cmd)},           \
+    {0xff, 0xff, 0xff},             \
+    3,                              \
+    (_enum),                        \
+    NULL                            \
+}
+
+#define SYSCMD_SUBCOMMAND_SET(_cmd, _sub, _enum)   \
+{                                   \
+    {0x01, 0x06, (_cmd), (_sub)},   \
+    {0xff, 0xff, 0xff, 0xff},       \
+    4,                              \
+    (_enum),                        \
+    NULL                            \
+}
+
+#define SYSCMD_ONE_BYTE_VALUE_SET(_cmd, _enum) \
+{                                   \
+    {0x01, 0x06, (_cmd), 0x00},     \
+    {0xff, 0xff, 0xff, 0x00},       \
+    4,                              \
+    (_enum),                        \
+    &jr_visca_handleOneByteCommandParameters \
+}
+
 #pragma mark definitions
 jr_viscaMessageDefinition definitions[] = {
     // Generic 1-byte response: [90 50 xx FF] and ok for [90 50 0p FF]
@@ -381,7 +412,7 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_ONE_BYTE_RESPONSE,
         &jr_visca_handleOneByteInqResponseParameters
     },
-    // Generic 1-byte response: [90 50 0p FF] when you need the mask
+    // Generic 1-byte response: [90 50 Xp FF] when you need the mask because X may be non-zero
     {
         {0x50, 0x00},
         {0xff, 0xf0},
@@ -439,37 +470,13 @@ jr_viscaMessageDefinition definitions[] = {
     MESSAGE_SUBCOMMAND_SET(0x07, 0x00, JR_VISCA_MESSAGE_ZOOM_STOP),
     MESSAGE_SUBCOMMAND_SET(0x07, 0x02, JR_VISCA_MESSAGE_ZOOM_TELE_STANDARD),
     MESSAGE_SUBCOMMAND_SET(0x07, 0x03, JR_VISCA_MESSAGE_ZOOM_WIDE_STANDARD),
-    {
-        {0x01, 0x04, 0x07, 0x20},
-        {0xff, 0xff, 0xff, 0xf0},
-        4,
-        JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE,
-        &jr_visca_handleZoomFocusVariableParameters
-    },
-    {
-        {0x01, 0x04, 0x07, 0x30},
-        {0xff, 0xff, 0xff, 0xf0},
-        4,
-        JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE,
-        &jr_visca_handleZoomFocusVariableParameters
-    },
+    MESSAGE_SUBCOMMAND_P_VALUE_SET(0x07, 0x20, JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE),
+    MESSAGE_SUBCOMMAND_P_VALUE_SET(0x07, 0x30, JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE),
     MESSAGE_SUBCOMMAND_SET(0x08, 0x00, JR_VISCA_MESSAGE_FOCUS_STOP),
     MESSAGE_SUBCOMMAND_SET(0x08, 0x02, JR_VISCA_MESSAGE_FOCUS_FAR_STANDARD),
     MESSAGE_SUBCOMMAND_SET(0x08, 0x03, JR_VISCA_MESSAGE_FOCUS_NEAR_STANDARD),
-    {
-        {0x01, 0x04, 0x08, 0x20},
-        {0xff, 0xff, 0xff, 0xf0},
-        4,
-        JR_VISCA_MESSAGE_FOCUS_FAR_VARIABLE,
-        &jr_visca_handleZoomFocusVariableParameters
-    },
-    {
-        {0x01, 0x04, 0x08, 0x30},
-        {0xff, 0xff, 0xff, 0xf0},
-        4,
-        JR_VISCA_MESSAGE_FOCUS_NEAR_VARIABLE,
-        &jr_visca_handleZoomFocusVariableParameters
-    },
+    MESSAGE_SUBCOMMAND_P_VALUE_SET(0x08, 0x20, JR_VISCA_MESSAGE_FOCUS_FAR_VARIABLE),
+    MESSAGE_SUBCOMMAND_P_VALUE_SET(0x08, 0x30, JR_VISCA_MESSAGE_FOCUS_NEAR_VARIABLE),
     // Pan_TiltDrive
     {
         {0x01, 0x06, 0x01, 0x00, 0x00, 0x00, 0x00},
@@ -499,13 +506,7 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_CLEAR,
         NULL
     },
-    {   // 01 06 01 pp
-        {0x01, 0x06, 0x01, 0x00},
-        {0xff, 0xff, 0xff, 0x00},
-        4,
-        JR_VISCA_MESSAGE_PRESET_RECALL_SPEED,
-        &jr_visca_handlePresetSpeedParameters
-    },
+    SYSCMD_ONE_BYTE_VALUE_SET(0x01, JR_VISCA_MESSAGE_PRESET_RECALL_SPEED),
     {   // 01 06 02        VV    WW     0Y 0Y 0Y 0Y              0Z 0Z 0Z 0Z
         {0x01, 0x06, 0x02, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00},
         {0xff, 0xff, 0xff, 0x00, 0x00,  0xf0, 0xf0, 0xf0, 0xf0,  0xf0, 0xf0, 0xf0, 0xf0},
@@ -513,20 +514,8 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_ABSOLUTE_PAN_TILT,
         &jr_visca_handleAbsolutePanTiltPositionParameters
     },
-    {   // Home 81 01 06 04 FF
-        {0x01, 0x06, 0x04},
-        {0xff, 0xff, 0xff},
-        3,
-        JR_VISCA_MESSAGE_HOME,
-        NULL
-    },
-    {   // Reset 81 01 06 05 FF
-        {0x01, 0x06, 0x05},
-        {0xff, 0xff, 0xff},
-        3,
-        JR_VISCA_MESSAGE_RESET,
-        NULL
-    },
+    SYSCMD_SET(0x04, JR_VISCA_MESSAGE_HOME),
+    SYSCMD_SET(0x05, JR_VISCA_MESSAGE_RESET),
     {   // Cancel 81 2z FF - supported by some cameras but apparently not PTZOptics, which returns syntax error instead of cancel reply. But it does interrupt the current operation.
         {0x20},
         {0xf0},
@@ -534,27 +523,18 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_CANCEL,
         NULL
     },
-    {   // CAM_OSD Menu Enter 81 01 06 06 05 FF
-        {0x01, 0x06, 0x06, 0x05},
-        {0xff, 0xff, 0xff, 0xff},
-        4,
-        JR_VISCA_MESSAGE_MENU_ENTER,
-        NULL
-    },
-    {   // CAM_OSD Menu Return 81 01 06 06 04 FF
-        {0x01, 0x06, 0x06, 0x05},
-        {0xff, 0xff, 0xff, 0xff},
-        4,
-        JR_VISCA_MESSAGE_MENU_RETURN,
-        NULL
-    },
+    SYSCMD_SUBCOMMAND_SET(0x06, 0x05, JR_VISCA_MESSAGE_MENU_ENTER),
+    SYSCMD_SUBCOMMAND_SET(0x06, 0x04, JR_VISCA_MESSAGE_MENU_RETURN),
+    SYSCMD_ONE_BYTE_VALUE_SET(0x06, JR_VISCA_MESSAGE_SONY_MENU_MODE),
+    // Sony Menu Enter : 8x 01 7E 01 02 00 01 FF
     {
-        {0x60, 0x00},
-        {0xf0, 0x00},
-        2,
-        JR_VISCA_MESSAGE_ERROR_REPLY,
-        &jr_visca_handleErrorReplyParameters
+        {0x01, 0x7E, 0x01, 0x02, 0x00, 0x01},
+        {0xff, 0xff, 0xff, 0xff, 0xff, 0xff},
+        6,
+        JR_VISCA_MESSAGE_SONY_MENU_ENTER,
+        NULL
     },
+    SYSCMD_INQ(0x06, JR_VISCA_MESSAGE_MENU_MODE_INQ),
     // CAM_Bright 81 01 04 0D 00 00 0p 0q FF
     MESSAGE_PQRS_VALUE_SET(0x0D, JR_VISCA_MESSAGE_BRIGHT_DIRECT),
     MESSAGE_INQ(0x4D, JR_VISCA_MESSAGE_BRIGHT_POS_INQ),
@@ -603,10 +583,10 @@ jr_viscaMessageDefinition definitions[] = {
     MESSAGE_INQ(0x49, JR_VISCA_MESSAGE_COLOR_GAIN_INQ),
     // CAM_Shutter Direct 81 01 04 4A 00 00 0p 0q FF
     MESSAGE_PQRS_VALUE_SET(0x4A, JR_VISCA_MESSAGE_SHUTTER_VALUE),
-    MESSAGE_INQ(0x4A, JR_VISCA_MESSAGE_SHUTTER_VALUE_INQ),
+    MESSAGE_INQ(0x4A, JR_VISCA_MESSAGE_SHUTTER_POS_INQ),
     // Iris Direct 81 01 04 4B 00 00 0p 0q FF
     MESSAGE_PQRS_VALUE_SET(0x4B, JR_VISCA_MESSAGE_IRIS_VALUE),
-    MESSAGE_INQ(0x4B, JR_VISCA_MESSAGE_IRIS_VALUE_INQ),
+    MESSAGE_INQ(0x4B, JR_VISCA_MESSAGE_IRIS_POS_INQ),
     // CAM_ColorHue Direct 81 01 04 4F 00 00 00 0p FF
     // p: Color Hue setting 0h (− 14 dgrees) to Eh ( +14 degrees)
     MESSAGE_PQRS_VALUE_SET(0x4F, JR_VISCA_MESSAGE_COLOR_HUE_DIRECT),

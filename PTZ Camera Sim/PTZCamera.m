@@ -392,12 +392,13 @@
 - (void)navigateMenuPanDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection {
     // Only one of left/right and up/down should be set.
     // I used to translate events into keyboard navigation in my day job. That's why I'm not doing it now.
+    // You don't really want to remote control the sim menu
     switch (panDirection) {
         case JR_VISCA_PAN_DIRECTION_LEFT:
-            fprintf(stdout, "\nMenu Left");
+            fprintf(stdout, "  Menu Left\n");
             break;
         case JR_VISCA_PAN_DIRECTION_RIGHT:
-            fprintf(stdout, "\nMenu Right");
+            fprintf(stdout, "  Menu Right\n");
             break;
         case JR_VISCA_PAN_DIRECTION_STOP:
             break;
@@ -405,10 +406,10 @@
 
     switch (tiltDirection) {
         case JR_VISCA_TILT_DIRECTION_DOWN:
-            fprintf(stdout, "\nMenu Down");
+            fprintf(stdout, "  Menu Down\n");
             break;
         case JR_VISCA_TILT_DIRECTION_UP:
-            fprintf(stdout, "\nMenu Up");
+            fprintf(stdout, "  Menu Up\n");
             break;
         case JR_VISCA_TILT_DIRECTION_STOP:
             break;
