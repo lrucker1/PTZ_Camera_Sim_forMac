@@ -62,7 +62,9 @@
 #define JR_VISCA_MESSAGE_FOCUS_FAR_VARIABLE 29
 #define JR_VISCA_MESSAGE_FOCUS_NEAR_VARIABLE 30
 
-#define JR_VISCA_MESSAGE_SONY_MENU_ENTER 32
+#define JR_VISCA_MESSAGE_SONY_MENU_ENTER 31
+
+#define JR_VISCA_MESSAGE_MOTION_SYNC 32
 
 // Number convention for sys commands [81 01 06] and inqs [81 90 06]
 // Set: 0x6yy, where yy is the cmd ID
@@ -227,11 +229,6 @@ struct jr_viscaErrorReplyParameters {
     uint8_t errorType;
 };
 
-struct jr_viscaPresetSpeedParameters {
-    // 1-0x18
-    uint8_t presetSpeed;
-};
-
 struct jr_viscaCameraNumberParameters {
     // 1-7
     uint8_t cameraNum;
@@ -303,7 +300,6 @@ union jr_viscaMessageParameters
     struct jr_viscaPanTiltDriveParameters panTiltDriveParameters;
     struct jr_viscaCameraNumberParameters cameraNumberParameters;
     struct jr_viscaMemoryParameters memoryParameters;
-    struct jr_viscaPresetSpeedParameters presetSpeedParameters;
     struct jr_viscaAbsolutePanTiltPositionParameters absolutePanTiltPositionParameters;
     struct jr_viscaOneByteParameters oneByteParameters;
     struct jr_viscaInt16Parameters int16Parameters;

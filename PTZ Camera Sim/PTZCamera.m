@@ -64,6 +64,7 @@
 @property NSString *ipAddress;
 
 @property BOOL commandRunning;
+@property BOOL pantiltMoving, zoomMoving, focusMoving;
 @property dispatch_block_t cancelBlock;
 @property (strong) NSMutableDictionary *scenes;
 
@@ -259,6 +260,7 @@
         [self.scenes setObject:[self sceneDictionaryValue] forKey:[NSString stringWithFormat:@"%ld", (long)index]];
         [self writeScenesToDefaults];
         [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
+        fprintf(stdout, "set %ld done\n", index);
         if (doneBlock) {
             doneBlock();
         }
@@ -311,14 +313,40 @@
 }
 
 - (void)relativeZoomIn:(NSUInteger)delta {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self zoomIn:delta];
+    if (self.zoomMoving) {
+        return;
+    }
+    self.zoomMoving = YES;
+    dispatch_async(_recallQueue, ^{
+        while (self.zoomMoving && self.zoom < ZOOM_MAX) {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self zoomIn:delta];
+            });
+        }
+        self.zoomMoving = NO;
     });
 }
 
 - (void)relativeZoomOut:(NSUInteger)delta {
+    if (self.zoomMoving) {
+        return;
+    }
+    self.zoomMoving = YES;
+    dispatch_async(_recallQueue, ^{
+        while (self.zoomMoving && self.zoom > 0) {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self zoomOut:delta];
+            });
+        }
+        self.zoomMoving = NO;
+    });
+}
+
+- (void)zoomStop {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self zoomOut:delta];
+        self.zoomMoving = NO;
     });
 }
 
@@ -416,44 +444,67 @@
     }
 }
 
+// Relative means start moving and keep on until "stop".
 - (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock {
     if (self.menuVisible) {
         [self navigateMenuPanDirection:panDirection tiltDirection:tiltDirection];
         return;
     }
-    NSInteger pan = self.pan;
-    NSInteger tilt = self.tilt;
-    switch (panDirection) {
-        case JR_VISCA_PAN_DIRECTION_LEFT:
-            pan -= panS;
-            break;
-        case JR_VISCA_PAN_DIRECTION_RIGHT:
-            pan += panS;
-            break;
-        case JR_VISCA_PAN_DIRECTION_STOP:
-            break;
+    if (doneBlock) {
+        doneBlock();
     }
-
-    switch (tiltDirection) {
-        case JR_VISCA_TILT_DIRECTION_DOWN:
-            tilt -= tiltS;
-            break;
-        case JR_VISCA_TILT_DIRECTION_UP:
-            tilt += tiltS;
-            break;
-        case JR_VISCA_TILT_DIRECTION_STOP:
-            break;
+    if (self.pantiltMoving) {
+        if (panDirection == JR_VISCA_PAN_DIRECTION_STOP && tiltDirection == JR_VISCA_TILT_DIRECTION_STOP) {
+            self.pantiltMoving = NO;
+        }
+        return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (panDirection != JR_VISCA_PAN_DIRECTION_STOP) {
-            self.pan = MAX(PT_MIN, MIN(pan, PT_MAX));
+    dispatch_async(_recallQueue, ^{
+        NSInteger pan = self.pan;
+        NSInteger tilt = self.tilt;
+        self.pantiltMoving = YES;
+        BOOL moving = YES;
+        while (self.pantiltMoving && moving) {
+            nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
+            switch (panDirection) {
+                case JR_VISCA_PAN_DIRECTION_LEFT:
+                    pan -= panS;
+                    break;
+                case JR_VISCA_PAN_DIRECTION_RIGHT:
+                    pan += panS;
+                    break;
+                case JR_VISCA_PAN_DIRECTION_STOP:
+                    break;
+            }
+            
+            switch (tiltDirection) {
+                case JR_VISCA_TILT_DIRECTION_DOWN:
+                    tilt -= tiltS;
+                    break;
+                case JR_VISCA_TILT_DIRECTION_UP:
+                    tilt += tiltS;
+                    break;
+                case JR_VISCA_TILT_DIRECTION_STOP:
+                    break;
+            }
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if (panDirection != JR_VISCA_PAN_DIRECTION_STOP) {
+                    self.pan = MAX(PT_MIN, MIN(pan, PT_MAX));
+                }
+                if (tiltDirection != JR_VISCA_TILT_DIRECTION_STOP) {
+                    self.tilt = MAX(PT_MIN, MIN(tilt, PT_MAX));
+                }
+                fprintf(stdout, "pan %ld, tilt %ld\n", (long)self.pan, (long)self.tilt);
+            });
+            if (tiltS == 0) {
+                moving = labs(pan) < PT_MAX;
+            } else if (panS == 0) {
+                moving = labs(tilt) < PT_MAX;
+            } else {
+                moving = labs(pan) < PT_MAX && labs(tilt) < PT_MAX;
+            }
         }
-        if (tiltDirection != JR_VISCA_TILT_DIRECTION_STOP) {
-            self.tilt = MAX(PT_MIN, MIN(tilt, PT_MAX));
-        }
-        if (doneBlock) {
-            doneBlock();
-        }
+        self.pantiltMoving = NO;
     });
 }
 
@@ -597,7 +648,7 @@
     
     NSDictionary *scene = [self getRecallAtIndex:index];
     if (scene != nil) {
-        fprintf(stdout, "recall %s", [[scene debugDescription] UTF8String]);
+        fprintf(stdout, "recall %ld %s\n", (long)index, [[scene debugDescription] UTF8String]);
     } else {
         fprintf(stdout, "recall failed\n");
         return; // Yes, without calling the done block. This is emulating a PTZOptics camera bug.
@@ -653,7 +704,7 @@
 //        self.colorTempIndex = [scene sim_numberForKey:@"colorTempIndex" ifNil:0x37];
 //        self.autofocus = [scene sim_numberForKey:@"autofocus" ifNil:YES];
 //        self.focus = [scene sim_numberForKey:@"focus" ifNil:80];
-        fprintf(stdout, "recall done\n");
+        fprintf(stdout, "recall %ld done\n", index);
         if (self.cancelBlock) {
             dispatch_sync(dispatch_get_main_queue(), self.cancelBlock);
             self.cancelBlock = nil;

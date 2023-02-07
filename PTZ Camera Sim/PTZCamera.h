@@ -62,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)absoluteZoom:(NSUInteger)zoom;
 - (void)relativeZoomIn:(NSUInteger)delta;
 - (void)relativeZoomOut:(NSUInteger)delta;
+- (void)zoomStop;
 - (void)focusDirect:(NSUInteger)focus;
 - (void)relativeFocusFar:(NSUInteger)delta;
 - (void)relativeFocusNear:(NSUInteger)delta;

@@ -506,6 +506,16 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_CLEAR,
         NULL
     },
+    // CAM_PTZMotionSync 81 0A 11 13 xx FF
+    // xx is off/on [02 03]
+    // No Inq
+    {
+        {0x0A, 0x11, 0x13, 0x00},
+        {0xff, 0xff, 0xff, 0x00},
+        4,
+        JR_VISCA_MESSAGE_MOTION_SYNC,
+        NULL
+    },
     SYSCMD_ONE_BYTE_VALUE_SET(0x01, JR_VISCA_MESSAGE_PRESET_RECALL_SPEED),
     {   // 01 06 02        VV    WW     0Y 0Y 0Y 0Y              0Z 0Z 0Z 0Z
         {0x01, 0x06, 0x02, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00},

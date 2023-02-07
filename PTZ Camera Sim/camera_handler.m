@@ -169,6 +169,7 @@ int handle_camera(PTZCamera *camera) {
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_STOP:
                         fprintf(stdout, "CAM_Zoom Stop\n");
+                        [camera zoomStop];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_STANDARD:
@@ -242,12 +243,12 @@ int handle_camera(PTZCamera *camera) {
                                 break;
                         }
                         fprintf(stdout, "\n");
+                        sendAck(1, clientSocket);
                         [camera relativePanSpeed:messageParameters.panTiltDriveParameters.panSpeed
                                        tiltSpeed:messageParameters.panTiltDriveParameters.tiltSpeed
                                     panDirection:messageParameters.panTiltDriveParameters.panDirection
                                    tiltDirection:messageParameters.panTiltDriveParameters.tiltDirection
                                           onDone:^{sendCompletion(1, clientSocket);}];
-                        sendAckCompletion(1, clientSocket);
                         }
                         break;
                     case JR_VISCA_MESSAGE_CAMERA_NUMBER:
@@ -288,6 +289,10 @@ int handle_camera(PTZCamera *camera) {
                         fprintf(stdout, "IF_Clear\n");
                         sendCompletion(1, clientSocket);
                         break;
+                    case JR_VISCA_MESSAGE_MOTION_SYNC:
+                        fprintf(stdout, "CAM_PTZMotionSync\n");
+                        sendCompletion(1, clientSocket);
+                        break;
                     case JR_VISCA_MESSAGE_HOME:
                         fprintf(stdout, "Pan_TiltDrive Home\n");
                         sendAck(1, clientSocket);
@@ -312,10 +317,16 @@ int handle_camera(PTZCamera *camera) {
                         fprintf(stdout, "CAM_OSD Return\n");
                         sendAckCompletion(1, clientSocket);
                         break;
-                   case JR_VISCA_MESSAGE_PRESET_RECALL_SPEED:
-                        SET_CAM_VALUE(@"Preset Recall Speed", messageParameters.presetSpeedParameters.presetSpeed);
+                    case JR_VISCA_MESSAGE_MENU_MODE_INQ:
+                        fprintf(stdout, "SYS_MenuModeInq\n");
+                        response.oneByteParameters.byteValue = BOOL_TO_ONOFF(camera.menuVisible);
+                        sendMessage(JR_VISCA_MESSAGE_MENU_MODE_RESPONSE, response, clientSocket);
+                        break;
+                        break;
+                    case JR_VISCA_MESSAGE_PRESET_RECALL_SPEED:
+                        SET_CAM_VALUE(@"presetSpeed", messageParameters.oneByteParameters   .byteValue);
                         hex_print(buffer, consumed);
-                        fprintf(stdout, "Preset Recall Speed %hhu\n", messageParameters.presetSpeedParameters.presetSpeed);
+                        fprintf(stdout, "Preset Recall Speed %hhu\n", messageParameters.oneByteParameters   .byteValue);
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ABSOLUTE_PAN_TILT:
@@ -485,11 +496,12 @@ int handle_camera(PTZCamera *camera) {
                         BOOL unknown = messageType < 0;
                         fprintf(stdout, "%s: (0x%X) ", (unknown ? "unknown" : "unhandled"), messageType);
                         hex_print(buffer, consumed);
-                        fprintf(stdout, "\n");
-#if 1
+#if 0
+                        fprintf(stdout, " ErrorReply\n");
                         sendAck(1, clientSocket);
                         [camera cameraCancel:^{sendErrorReply(1, clientSocket, unknown ? JR_VISCA_ERROR_SYNTAX : JR_VISCA_ERROR_NOT_EXECUTABLE);}];
 #else
+                        fprintf(stdout, " Ignored\n");
                         sendAckCompletion(1, clientSocket);
 #endif
                         }

@@ -40,6 +40,7 @@ static AppDelegate *selfType;
 @property (strong) NSFileHandle* pipeReadHandle;
 @property (strong) NSPipe *pipe;
 @property (copy) NSImage *baseImage;
+@property BOOL filterInProgress, needsFilter;
 
 @end
 
@@ -239,6 +240,10 @@ static AppDelegate *selfType;
 
 // To simulate focus vs autofocus, we blur the image.
 - (void)applyImageFilters {
+    if (self.filterInProgress) {
+        self.needsFilter = YES;
+        return;
+    }
     BOOL useFocusFilter = self.camera.autofocus == NO && self.camera.focusPixelRadius > 1;
     BOOL useTempFilter = self.camera.wbMode == WB_MODE_COLOR;
     BOOL mirrorX = self.camera.flipH;
@@ -252,6 +257,7 @@ static AppDelegate *selfType;
         return;
     }
     
+    self.filterInProgress = YES;
     CIContext *context = [CIContext contextWithOptions:nil];
     CIImage *inputImage = [CIImage imageWithData:[self.baseImage TIFFRepresentation]];
 
@@ -291,6 +297,11 @@ static AppDelegate *selfType;
     });
 
     // Create an NSImage with the same size as the original; extent is not the same.
+    self.filterInProgress = NO;
+    // TODO: This is totally comp 101 level of request consolidation.
+    if (self.needsFilter) {
+        [self performSelector:_cmd withObject:nil afterDelay:0];
+    }
 }
 
 - (void)logError:(NSString *)msg
