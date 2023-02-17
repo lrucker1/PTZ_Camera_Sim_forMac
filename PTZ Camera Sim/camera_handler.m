@@ -174,12 +174,12 @@ int handle_camera(PTZCamera *camera) {
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_STANDARD:
                         fprintf(stdout, "CAM_Zoom Tele(in) Standard\n");
-                        [camera relativeZoomIn:1];
+                        [camera startZoomIn:1];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_WIDE_STANDARD:
                         fprintf(stdout, "CAM_Zoom Wide(out) Standard\n");
-                        [camera relativeZoomOut:1];
+                        [camera startZoomOut:1];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_FOCUS_FAR_VARIABLE:
@@ -208,12 +208,12 @@ int handle_camera(PTZCamera *camera) {
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_TELE_VARIABLE:
                         fprintf(stdout, "CAM_Zoom Tele(in) 0x%hx\n", messageParameters.oneByteParameters.byteValue);
-                        [camera relativeZoomIn:messageParameters.oneByteParameters.byteValue];
+                        [camera startZoomIn:messageParameters.oneByteParameters.byteValue];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_ZOOM_WIDE_VARIABLE:
                         fprintf(stdout, "CAM_Zoom Wide(out) 0x%hx\n", messageParameters.oneByteParameters.byteValue);
-                        [camera relativeZoomOut:messageParameters.oneByteParameters.byteValue];
+                        [camera startZoomOut:messageParameters.oneByteParameters.byteValue];
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_PAN_TILT_DRIVE: {
@@ -244,7 +244,7 @@ int handle_camera(PTZCamera *camera) {
                         }
                         fprintf(stdout, "\n");
                         sendAck(1, clientSocket);
-                        [camera relativePanSpeed:messageParameters.panTiltDriveParameters.panSpeed
+                        [camera startPanSpeed:messageParameters.panTiltDriveParameters.panSpeed
                                        tiltSpeed:messageParameters.panTiltDriveParameters.tiltSpeed
                                     panDirection:messageParameters.panTiltDriveParameters.panDirection
                                    tiltDirection:messageParameters.panTiltDriveParameters.tiltDirection

@@ -55,13 +55,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)recallAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
 - (void)cameraSetAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
 - (void)absolutePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock;
-- (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock;
+- (void)startPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock;
 - (void)cameraHome:(dispatch_block_t)doneBlock;
 - (void)cameraReset:(dispatch_block_t)doneBlock;
 - (void)cameraCancel:(dispatch_block_t)cancelBlock;
 - (void)absoluteZoom:(NSUInteger)zoom;
-- (void)relativeZoomIn:(NSUInteger)delta;
-- (void)relativeZoomOut:(NSUInteger)delta;
+- (void)startZoomIn:(NSUInteger)delta;
+- (void)startZoomOut:(NSUInteger)delta;
 - (void)zoomStop;
 - (void)focusDirect:(NSUInteger)focus;
 - (void)relativeFocusFar:(NSUInteger)delta;

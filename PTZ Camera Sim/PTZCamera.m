@@ -312,7 +312,7 @@
     });
 }
 
-- (void)relativeZoomIn:(NSUInteger)delta {
+- (void)startZoomIn:(NSUInteger)delta {
     if (self.zoomMoving) {
         return;
     }
@@ -328,7 +328,7 @@
     });
 }
 
-- (void)relativeZoomOut:(NSUInteger)delta {
+- (void)startZoomOut:(NSUInteger)delta {
     if (self.zoomMoving) {
         return;
     }
@@ -410,7 +410,7 @@
     });
 }
 
-/* Doc says osd menu navigation uses exact same command structure as relative PanTilt, except with magic numbers for the speed:
+/* Doc says osd menu navigation uses exact same command structure as directional PanTilt, except with magic numbers for the speed:
  Navigate Up 81 01 06 01 0E 0E 03 01 FF
  PanTilt  Up 81 01 06 01 VV WW 03 01 FF
  
@@ -444,8 +444,8 @@
     }
 }
 
-// Relative means start moving and keep on until "stop".
-- (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock {
+// Start moving and keep on until "stop".
+- (void)startPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock {
     if (self.menuVisible) {
         [self navigateMenuPanDirection:panDirection tiltDirection:tiltDirection];
         return;
@@ -507,7 +507,7 @@
         self.pantiltMoving = NO;
     });
 }
-
+// relative looks like absolute but with panDelta and tiltDelta
 - (void)absolutePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock {
     panS = MAX(1, MIN(panS, 0x18));
     tiltS = MAX(1, MIN(tiltS, 0x14));
