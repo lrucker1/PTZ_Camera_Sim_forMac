@@ -524,6 +524,13 @@ jr_viscaMessageDefinition definitions[] = {
         JR_VISCA_MESSAGE_ABSOLUTE_PAN_TILT,
         &jr_visca_handleAbsolutePanTiltPositionParameters
     },
+    {   // 01 06 03        VV    WW     0Y 0Y 0Y 0Y              0Z 0Z 0Z 0Z
+        {0x01, 0x06, 0x03, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00,  0x00, 0x00, 0x00, 0x00},
+        {0xff, 0xff, 0xff, 0x00, 0x00,  0xf0, 0xf0, 0xf0, 0xf0,  0xf0, 0xf0, 0xf0, 0xf0},
+        13,
+        JR_VISCA_MESSAGE_RELATIVE_PAN_TILT,
+        &jr_visca_handleAbsolutePanTiltPositionParameters
+    },
     SYSCMD_SET(0x04, JR_VISCA_MESSAGE_HOME),
     SYSCMD_SET(0x05, JR_VISCA_MESSAGE_RESET),
     {   // Cancel 81 2z FF - supported by some cameras but apparently not PTZOptics, which returns syntax error instead of cancel reply. But it does interrupt the current operation.

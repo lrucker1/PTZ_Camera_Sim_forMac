@@ -19,6 +19,7 @@
                 <outlet property="clipView" destination="piG-CQ-SJc" id="Yub-zw-KWK"/>
                 <outlet property="console" destination="nYF-8s-C02" id="wZB-to-s3a"/>
                 <outlet property="imageView" destination="QjU-Fd-6N9" id="kQz-K3-Fol"/>
+                <outlet property="osdMenuView" destination="Jog-Q2-tze" id="k2i-3q-O8n"/>
                 <outlet property="scrollView" destination="Efn-K0-PjI" id="Lbs-1U-QRP"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -172,7 +173,7 @@
                             <menuItem title="Delete" id="pa3-QI-u2k">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="delete:" target="-1" id="0Mk-Ml-PaM"/>
+                                    <action selector="delete:" target="Voe-Tx-rLC" id="xbG-ED-J4b"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
@@ -752,6 +753,10 @@
                                 </view>
                             </subviews>
                         </clipView>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="400" id="9fs-Rv-Apt"/>
+                            <constraint firstAttribute="height" constant="250" id="cVW-ZQ-hHg"/>
+                        </constraints>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ew7-lS-e6O">
                             <rect key="frame" x="-100" y="-100" width="383" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -854,14 +859,14 @@
                             </gridCell>
                         </gridCells>
                     </gridView>
-                    <box boxType="custom" borderType="none" cornerRadius="4" translatesAutoresizingMaskIntoConstraints="NO" id="Jog-Q2-tze">
+                    <box boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Jog-Q2-tze">
                         <rect key="frame" x="156" y="52" width="400" height="250"/>
                         <view key="contentView" appearanceType="darkAqua" translatesAutoresizingMaskIntoConstraints="NO" id="zKo-H9-QdF">
                             <rect key="frame" x="0.0" y="0.0" width="400" height="250"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <gridView fixedFrame="YES" xPlacement="leading" yPlacement="fill" rowAlignment="none" columnSpacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="yTO-Pk-f36">
-                                    <rect key="frame" x="12" y="148" width="164" height="89"/>
+                                    <rect key="frame" x="12" y="131" width="164" height="106"/>
                                     <rows>
                                         <gridRow yPlacement="top" id="Yf1-6p-gwY"/>
                                         <gridRow yPlacement="top" id="sGs-hy-cBN"/>
@@ -875,9 +880,8 @@
                                     </columns>
                                     <gridCells>
                                         <gridCell row="Yf1-6p-gwY" column="GYZ-Ya-sRb" id="Po7-iL-Eke">
-                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="aVU-XV-Cd7">
-                                                <rect key="frame" x="-2" y="76" width="57" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aVU-XV-Cd7">
+                                                <rect key="frame" x="-2" y="93" width="57" height="13"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="ADDRESS:" id="hR3-5u-d6C">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -886,9 +890,8 @@
                                             </textField>
                                         </gridCell>
                                         <gridCell row="Yf1-6p-gwY" column="zgG-js-lq5" id="ry9-mD-wSh">
-                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="LRu-N6-JbY">
-                                                <rect key="frame" x="92" y="76" width="64" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LRu-N6-JbY">
+                                                <rect key="frame" x="92" y="93" width="64" height="13"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="127.0.0.1" id="wkl-Aj-hJs">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -900,9 +903,8 @@
                                             </textField>
                                         </gridCell>
                                         <gridCell row="sGs-hy-cBN" column="GYZ-Ya-sRb" id="VGH-m1-Yim">
-                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="jyn-NW-HyK">
-                                                <rect key="frame" x="-2" y="57" width="91" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jyn-NW-HyK">
+                                                <rect key="frame" x="-2" y="74" width="91" height="13"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="PRESET SPEED:" id="ktr-Rw-kJe">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -911,9 +913,8 @@
                                             </textField>
                                         </gridCell>
                                         <gridCell row="sGs-hy-cBN" column="zgG-js-lq5" id="1nK-dM-6Qd">
-                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ODB-05-j2W">
-                                                <rect key="frame" x="92" y="57" width="18" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ODB-05-j2W">
+                                                <rect key="frame" x="92" y="74" width="18" height="13"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="24" id="KfL-I0-1Fw">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -925,9 +926,8 @@
                                             </textField>
                                         </gridCell>
                                         <gridCell row="iNW-Qo-426" column="GYZ-Ya-sRb" id="y5M-ry-9mL">
-                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="12u-HC-ThW">
-                                                <rect key="frame" x="-2" y="38" width="44" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="12u-HC-ThW">
+                                                <rect key="frame" x="-2" y="55" width="44" height="13"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="FOCUS:" id="OJl-qF-qNu">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -937,7 +937,7 @@
                                         </gridCell>
                                         <gridCell row="iNW-Qo-426" column="zgG-js-lq5" id="BAe-ac-jh7">
                                             <textField key="contentView" verticalHuggingPriority="750" ambiguous="YES" id="iBA-Or-BYZ">
-                                                <rect key="frame" x="92" y="38" width="74" height="13"/>
+                                                <rect key="frame" x="92" y="55" width="74" height="13"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="1" placeholderString="00" id="IOA-oP-Hon">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
@@ -950,9 +950,8 @@
                                             </textField>
                                         </gridCell>
                                         <gridCell row="aWn-X3-I1j" column="GYZ-Ya-sRb" id="nGA-DT-laF">
-                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="751" id="wyZ-2V-oct">
-                                                <rect key="frame" x="-2" y="19" width="24" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="wyZ-2V-oct">
+                                                <rect key="frame" x="-2" y="36" width="24" height="13"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="WB:" id="jrh-Gq-Y0a">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -961,9 +960,8 @@
                                             </textField>
                                         </gridCell>
                                         <gridCell row="aWn-X3-I1j" column="zgG-js-lq5" id="b5v-bg-IB2">
-                                            <popUpButton key="contentView" verticalHuggingPriority="750" id="hCN-QM-jhE">
-                                                <rect key="frame" x="92" y="17" width="52" height="16"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hCN-QM-jhE">
+                                                <rect key="frame" x="92" y="34" width="52" height="16"/>
                                                 <popUpButtonCell key="cell" type="push" title="MANUAL" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="5" imageScaling="proportionallyDown" inset="2" arrowPosition="noArrow" selectedItem="6Uj-U2-6GP" id="eSt-e2-Q5O">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" size="9" name="Menlo-Regular"/>
@@ -984,9 +982,8 @@
                                             </popUpButton>
                                         </gridCell>
                                         <gridCell row="235-kj-Syk" column="GYZ-Ya-sRb" id="slM-pa-AAV">
-                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="q0V-Eu-vah">
-                                                <rect key="frame" x="-2" y="0.0" width="77" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q0V-Eu-vah">
+                                                <rect key="frame" x="-2" y="0.0" width="77" height="30"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="COLOR TEMP:" id="b3U-sr-Jvx">
                                                     <font key="font" size="11" name="Menlo-Regular"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -996,11 +993,11 @@
                                         </gridCell>
                                         <gridCell row="235-kj-Syk" column="zgG-js-lq5" id="qXx-kN-Umw">
                                             <customView key="contentView" ambiguous="YES" id="KWb-CY-0EB">
-                                                <rect key="frame" x="94" y="0.0" width="70" height="13"/>
+                                                <rect key="frame" x="94" y="0.0" width="70" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="rc4-yC-OOR" userLabel="temp">
-                                                        <rect key="frame" x="-2" y="0.0" width="31" height="13"/>
+                                                        <rect key="frame" x="-2" y="17" width="31" height="13"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="2500" placeholderString="2500" id="4KK-2W-lE6">
                                                             <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="WpN-kG-sot"/>
@@ -1017,7 +1014,7 @@
                                                         </connections>
                                                     </textField>
                                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" id="K0f-IO-JwS">
-                                                        <rect key="frame" x="26" y="-4" width="13" height="18"/>
+                                                        <rect key="frame" x="26" y="13" width="13" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <stepperCell key="cell" controlSize="mini" continuous="YES" alignment="left" maxValue="55" doubleValue="55" id="DFU-nz-Ta6"/>
                                                         <connections>
@@ -1031,10 +1028,6 @@
                                 </gridView>
                             </subviews>
                         </view>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="250" id="KZe-aq-Iky"/>
-                            <constraint firstAttribute="width" constant="400" id="bbt-wI-hk3"/>
-                        </constraints>
                         <color key="fillColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <connections>
                             <binding destination="Voe-Tx-rLC" name="hidden" keyPath="camera.menuVisible" id="6cz-b8-Kdx">
@@ -1236,6 +1229,7 @@
                     <constraint firstItem="Jog-Q2-tze" firstAttribute="bottom" secondItem="Efn-K0-PjI" secondAttribute="bottom" id="8Z2-3o-P8J"/>
                     <constraint firstItem="Jog-Q2-tze" firstAttribute="trailing" secondItem="Efn-K0-PjI" secondAttribute="trailing" id="G0R-H4-3QD"/>
                     <constraint firstAttribute="bottom" secondItem="Vzu-Hj-TyR" secondAttribute="bottom" constant="98" id="H81-Xv-Yhk"/>
+                    <constraint firstItem="Jog-Q2-tze" firstAttribute="top" secondItem="Efn-K0-PjI" secondAttribute="top" id="J5u-fu-7pH"/>
                     <constraint firstItem="Vzu-Hj-TyR" firstAttribute="top" secondItem="STX-0S-HZc" secondAttribute="bottom" constant="16" id="Mir-FR-6w8"/>
                     <constraint firstItem="STX-0S-HZc" firstAttribute="top" secondItem="wn5-qp-0XN" secondAttribute="bottom" constant="15" id="XDb-IR-dVh"/>
                     <constraint firstItem="Efn-K0-PjI" firstAttribute="leading" secondItem="STX-0S-HZc" secondAttribute="trailing" constant="46" id="bGc-b6-iJJ"/>
@@ -1245,7 +1239,6 @@
                     <constraint firstItem="STX-0S-HZc" firstAttribute="leading" secondItem="RvU-FM-XVN" secondAttribute="leading" constant="35" id="hS7-yH-Ze0"/>
                     <constraint firstItem="Jog-Q2-tze" firstAttribute="top" secondItem="RvU-FM-XVN" secondAttribute="top" constant="11" id="j7d-4C-Cq4"/>
                     <constraint firstItem="MZA-Rc-eZd" firstAttribute="leading" secondItem="Jog-Q2-tze" secondAttribute="leading" id="mxq-W1-pSs"/>
-                    <constraint firstItem="Jog-Q2-tze" firstAttribute="top" secondItem="Efn-K0-PjI" secondAttribute="top" id="oNV-Qm-ea1"/>
                     <constraint firstAttribute="trailing" secondItem="Jog-Q2-tze" secondAttribute="trailing" constant="20" symbolic="YES" id="wkZ-ac-TCQ"/>
                     <constraint firstItem="wn5-qp-0XN" firstAttribute="top" secondItem="RvU-FM-XVN" secondAttribute="top" constant="20" symbolic="YES" id="x17-li-djt"/>
                 </constraints>

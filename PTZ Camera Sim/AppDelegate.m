@@ -96,7 +96,7 @@ static AppDelegate *selfType;
         do {
             result = handle_camera(self.camera);
         } while (result == 0);
-        printf("handle_camera failed, result = %d", result);
+        printf("handle_camera failed, result = %d. Make sure there's not another instance running", result);
     });
 
 }
@@ -114,10 +114,23 @@ static AppDelegate *selfType;
     return point;
 }
 
+- (NSImage *)menuImage:(NSRect)bounds {
+    NSSize imgSize = bounds.size;
+    
+    NSBitmapImageRep *bir = [self.osdMenuView bitmapImageRepForCachingDisplayInRect:bounds];
+    [bir setSize:imgSize];
+    [self.osdMenuView cacheDisplayInRect:bounds toBitmapImageRep:bir];
+    
+    NSImage* image = [[NSImage alloc] initWithSize:imgSize];
+    [image addRepresentation:bir];
+    return image;
+}
+
 // snapshot.jpg resolution options: 1920x1080 960x600 480x300
 - (void)writeCameraSnapshot {
     NSImage *camImage = self.imageView.image;
     NSSize docSize = self.scrollView.documentView.bounds.size;
+    NSSize snapshotSize = self.scrollView.contentSize;
     NSSize imgSize = camImage.size;
     NSRect visRect = self.scrollView.documentVisibleRect;
     // The scaling to make the image shrink to fit, separate from magnification, which visRect has already dealt with.
@@ -126,17 +139,29 @@ static AppDelegate *selfType;
 
     visRect.origin = NSMakePoint(visRect.origin.x * xScale, visRect.origin.y * yScale);
     visRect.size = NSMakeSize(visRect.size.width * xScale, visRect.size.height * yScale);
-    NSImage* image = [[NSImage alloc] initWithSize:docSize];
+    visRect = NSIntegralRect(visRect);
+    NSImage *image = [[NSImage alloc] initWithSize:snapshotSize];
     [image lockFocus];
-    NSRect dest = { NSZeroPoint, docSize };
+    NSRect dest = { NSZeroPoint, snapshotSize };
     [camImage drawInRect:dest fromRect:visRect operation:NSCompositingOperationCopy fraction:1];
+    if (self.camera.menuVisible) {
+        NSImage *menuImage = [self menuImage:dest];
+        [menuImage drawInRect:dest fromRect:dest operation:NSCompositingOperationSourceOver fraction:0.5];
+    }
     [image unlockFocus];
 
     NSData *imageData = [image TIFFRepresentation];
     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-    CFDataRef bookmark = (__bridge CFDataRef)([[NSUserDefaults standardUserDefaults] objectForKey:@"WebServerBookmark"]);
     imageData = [imageRep representationUsingType:NSBitmapImageFileTypeJPEG properties:imageProps];
+#if 0
+    // Debugging, only works with sandbox disabled.
+    BOOL result = [imageData writeToFile:PTZLocalhostImageFile atomically:NO];
+    if (!result) {
+        [self logMessage:@"Write failed"];
+    }
+#else
+    CFDataRef bookmark = (__bridge CFDataRef)([[NSUserDefaults standardUserDefaults] objectForKey:@"WebServerBookmark"]);
     if (bookmark == nil) {
         [self getSandboxPermission:imageData];
     } else {
@@ -147,12 +172,16 @@ static AppDelegate *selfType;
             [self getSandboxPermission:imageData];
         } else {
             CFURLStartAccessingSecurityScopedResource(urlRef);
-            [imageData writeToFile:PTZLocalhostImageFile atomically:YES];
+            BOOL result = [imageData writeToFile:PTZLocalhostImageFile atomically:NO];
             CFURLStopAccessingSecurityScopedResource(urlRef);
+            if (!result) {
+                [self logMessage:@"Write failed, deleting bookmark."];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"WebServerBookmark"];
+            }
         }
         CFRelease(urlRef);
     }
-    
+#endif
 }
 
 - (void)getSandboxPermission:(NSData *)imageData {
@@ -174,7 +203,7 @@ static AppDelegate *selfType;
                 if (error == NULL) {
                     [[NSUserDefaults standardUserDefaults] setObject:(__bridge id _Nullable)(bookmark) forKey:@"WebServerBookmark"];
                 }
-                [imageData writeToFile:PTZLocalhostImageFile atomically:YES];
+                [imageData writeToFile:PTZLocalhostImageFile atomically:NO];
             }
         }
    }];
@@ -302,6 +331,17 @@ static AppDelegate *selfType;
     if (self.needsFilter) {
         [self performSelector:_cmd withObject:nil afterDelay:0];
     }
+}
+
+- (BOOL)validateUserInterfaceItem:(NSMenuItem *)menuItem {
+    if (menuItem.action == @selector(delete:) && [NSApp keyWindow] == self.console.window) {
+        return YES;
+    }
+    return NO;
+}
+
+- (IBAction)delete:(id)sender {
+    [[self.console textStorage] setAttributedString:[NSAttributedString new]];
 }
 
 - (void)logError:(NSString *)msg

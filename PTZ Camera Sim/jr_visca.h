@@ -65,6 +65,7 @@
 #define JR_VISCA_MESSAGE_SONY_MENU_ENTER 31
 
 #define JR_VISCA_MESSAGE_MOTION_SYNC 32
+#define JR_VISCA_MESSAGE_RELATIVE_PAN_TILT 33
 
 // Number convention for sys commands [81 01 06] and inqs [81 90 06]
 // Set: 0x6yy, where yy is the cmd ID

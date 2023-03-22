@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "jr_socket.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -49,12 +50,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) CGFloat focusPixelRadius;
 @property (readonly) NSUInteger colorTemp;
 
+// Keep alive
+- (void)pingCamera:(jr_socket)clientSocket;
+
 // thread-safe visca command support
 - (void)safeSetNumber:(NSInteger)value forKey:(NSString *)key;
 
 - (void)recallAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
 - (void)cameraSetAtIndex:(NSInteger)index onDone:(dispatch_block_t)doneBlock;
 - (void)absolutePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock;
+- (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)deltaPan tilt:(NSInteger)deltaTilt onDone:(dispatch_block_t)doneBlock;
 - (void)startPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock;
 - (void)cameraHome:(dispatch_block_t)doneBlock;
 - (void)cameraReset:(dispatch_block_t)doneBlock;

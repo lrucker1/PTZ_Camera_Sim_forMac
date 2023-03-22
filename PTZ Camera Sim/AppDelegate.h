@@ -19,6 +19,7 @@
 @property (strong) IBOutlet NSImageView *imageView;
 @property (strong) IBOutlet NSClipView *clipView;
 @property (strong) IBOutlet NSScrollView *scrollView;
+@property (strong) IBOutlet NSView *osdMenuView;
 
 - (void)writeCameraSnapshot;
 

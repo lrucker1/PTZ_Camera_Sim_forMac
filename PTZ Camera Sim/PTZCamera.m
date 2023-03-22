@@ -69,6 +69,7 @@
 @property (strong) NSMutableDictionary *scenes;
 
 @property dispatch_queue_t recallQueue;
+@property NSTimer *timer;
 
 @end
 
@@ -309,6 +310,7 @@
 - (void)absoluteZoom:(NSUInteger)newZoom {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.zoom = MAX(0, MIN(newZoom, ZOOM_MAX));
+        [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
     });
 }
 
@@ -322,6 +324,7 @@
             nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self zoomIn:delta];
+                [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
             });
         }
         self.zoomMoving = NO;
@@ -338,6 +341,7 @@
             nanosleep((const struct timespec[]){{0, 100000000L}}, NULL);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self zoomOut:delta];
+                [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
             });
         }
         self.zoomMoving = NO;
@@ -401,6 +405,7 @@
 - (void)toggleMenu {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.menuVisible = !self.menuVisible;
+        [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
     });
 }
 
@@ -446,12 +451,12 @@
 
 // Start moving and keep on until "stop".
 - (void)startPanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS panDirection:(NSInteger)panDirection tiltDirection:(NSInteger)tiltDirection onDone:(dispatch_block_t)doneBlock {
+    if (doneBlock) {
+        doneBlock();
+    }
     if (self.menuVisible) {
         [self navigateMenuPanDirection:panDirection tiltDirection:tiltDirection];
         return;
-    }
-    if (doneBlock) {
-        doneBlock();
     }
     if (self.pantiltMoving) {
         if (panDirection == JR_VISCA_PAN_DIRECTION_STOP && tiltDirection == JR_VISCA_TILT_DIRECTION_STOP) {
@@ -494,6 +499,7 @@
                 if (tiltDirection != JR_VISCA_TILT_DIRECTION_STOP) {
                     self.tilt = MAX(PT_MIN, MIN(tilt, PT_MAX));
                 }
+                [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
                 fprintf(stdout, "pan %ld, tilt %ld\n", (long)self.pan, (long)self.tilt);
             });
             if (tiltS == 0) {
@@ -507,7 +513,15 @@
         self.pantiltMoving = NO;
     });
 }
-// relative looks like absolute but with panDelta and tiltDelta
+// relative looks like absolute but with deltaPan and deltaTilt
+- (void)relativePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)deltaPan tilt:(NSInteger)deltaTilt onDone:(dispatch_block_t)doneBlock {
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        self.pan += deltaPan;
+        self.tilt += deltaTilt;
+        [(AppDelegate *)[NSApp delegate] writeCameraSnapshot];
+    });
+}
+
 - (void)absolutePanSpeed:(NSUInteger)panS tiltSpeed:(NSUInteger)tiltS pan:(NSInteger)targetPan tilt:(NSInteger)targetTilt onDone:(dispatch_block_t)doneBlock {
     panS = MAX(1, MIN(panS, 0x18));
     tiltS = MAX(1, MIN(tiltS, 0x14));
@@ -715,5 +729,18 @@
     });
 }
 
+#pragma mark timeout
+
+- (void)pingCamera:(jr_socket)clientSocket {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.timer) {
+            [self.timer invalidate];
+        }
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:120 repeats:NO block:^(NSTimer * _Nonnull timer) {
+            // Disconnect
+            jr_socket_closeSocket(clientSocket);
+        }];
+    });
+}
 
 @end

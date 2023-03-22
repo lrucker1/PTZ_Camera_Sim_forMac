@@ -78,6 +78,8 @@ int handle_camera(PTZCamera *camera) {
         return -2;
     }
     
+    [camera pingCamera:clientSocket];
+
     [camera setSocketFD:serverSocket._serverSocket];
     
     fprintf(stdout, "ready\n");
@@ -87,6 +89,7 @@ int handle_camera(PTZCamera *camera) {
     
     ssize_t latestCount;
     while ((latestCount = jr_socket_receive(clientSocket, buffer + count, 1024 - count)) > 0) {
+        [camera pingCamera:clientSocket];
         count += latestCount;
         // printf("recv: ");
         // hex_print(buffer, count);
@@ -338,6 +341,17 @@ int handle_camera(PTZCamera *camera) {
                                        onDone:^{sendCompletion(1, clientSocket);}];
                         hex_print(buffer, consumed);
                         fprintf(stdout, "Pan_TiltDrive AbsolutePosition\n");
+                        sendAckCompletion(1, clientSocket);
+                        break;
+                    case JR_VISCA_MESSAGE_RELATIVE_PAN_TILT:
+                        sendAck(1, clientSocket);
+                        [camera relativePanSpeed:messageParameters.absolutePanTiltPositionParameters.panSpeed
+                                    tiltSpeed:messageParameters.absolutePanTiltPositionParameters.tiltSpeed
+                                          pan:messageParameters.absolutePanTiltPositionParameters.panPosition
+                                         tilt:messageParameters.absolutePanTiltPositionParameters.tiltPosition
+                                       onDone:^{sendCompletion(1, clientSocket);}];
+                        hex_print(buffer, consumed);
+                        fprintf(stdout, "Pan_TiltDrive RelativePosition\n");
                         sendAckCompletion(1, clientSocket);
                         break;
                     case JR_VISCA_MESSAGE_WB_MODE:
